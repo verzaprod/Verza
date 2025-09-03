@@ -94,25 +94,6 @@ For mobile development:
 ## 🏗️ Project Architecture
 
 ```
-Verza/
-├── 📁 src/
-│   ├── 📁 app/                    # Expo Router Pages
-│   │   ├── 📄 _layout.tsx         # Root layout component
-│   │   ├── 📄 index.tsx           # Home page
-│   │   └── 📄 +not-found.tsx      # 404 error page
-│   └── 📄 global.css              # Global Tailwind styles
-├── 📁 .expo/                      # Expo build artifacts (auto-generated)
-├── ⚙️ app.json                    # Expo app configuration
-├── ⚙️ babel.config.js             # Babel transpiler config
-├── ⚙️ metro.config.js             # Metro bundler config
-├── ⚙️ tailwind.config.js          # Tailwind CSS configuration
-├── ⚙️ tsconfig.json               # TypeScript configuration
-├── 📄 package.json                # Dependencies and scripts
-├── 📄 global.d.ts                 # Global TypeScript definitions
-├── 📄 nativewind-env.d.ts         # NativeWind type definitions
-└── 📄 README.md                   # Project documentation
-```
-
 src/
 ├── app/                           # Expo Router pages
 │   ├── _layout.tsx               # Main layout with providers
@@ -182,7 +163,7 @@ src/
 │   └── index.ts                  # Utility exports
 │
 └── global.css                    # NativeWind global styles
-
+```
 ---
 
 ## 🛠️ Technology Stack
@@ -281,15 +262,6 @@ export default function Component() {
 }
 ```
 
-### Responsive Design
-
-```tsx
-<View className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
-  <Text className="text-sm md:text-base lg:text-lg">
-    Responsive text
-  </Text>
-</View>
-```
 
 ### Platform-Specific Styles
 

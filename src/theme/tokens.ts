@@ -1,14 +1,14 @@
 export const THEME_TOKENS = {
   colors: {
-    primaryGreen: '', // Will be replaced with actual hex
-    secondaryAccent: '#FF6B35', // Will be replaced
-    backgroundLight: '#FFFFFF',
-    backgroundDark: '#1A1A1A',
-    textPrimaryLight: '#2C2C2C',
-    textPrimaryDark: '#FFFFFF',
-    textSecondary: '#666666',
-    error: '#FF4444',
-    success: '#00C851',
+    primaryGreen: '#16A34A', 
+    secondaryAccent: '#22C55E',
+    backgroundLight: '#F9FAFB',
+    backgroundDark: '#0A0F0D',
+    textPrimaryLight: '#111827',
+    textPrimaryDark: '#F9FAFB',
+    textSecondary: '#6B7280',
+    error: '#EF4444',
+    success: '#10B981',
   },
   spacing: {
     xs: 4,
