@@ -1,6 +1,6 @@
 export const THEME_TOKENS = {
   colors: {
-    primaryGreen: '#00C851', // Will be replaced with actual hex
+    primaryGreen: '', // Will be replaced with actual hex
     secondaryAccent: '#FF6B35', // Will be replaced
     backgroundLight: '#FFFFFF',
     backgroundDark: '#1A1A1A',

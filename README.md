@@ -737,3 +737,7 @@ Now for the Confirm Passphrase screen, we have a heading "Confirm Passphrase", t
 Next is the Success page, showing a checkmark image I'll provide, also, centered on the page is a Success message and then finally there's a Start Verification button.
 
 also, make sure that the Keyboard doesn't block the view for the input fields when it is active. and animations should be the smoothest I've ever seen. as much as possible, stick to the design given. and make the maximum number of lines for each file to be 150 and anything other than that is a code smell that needs real refactoring. 
+
+
+
+// "@types/react-native": "^0.72.8",

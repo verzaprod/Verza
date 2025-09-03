@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { TouchableOpacity, View } from "react-native"
 import Svg, { Circle } from "react-native-svg"
