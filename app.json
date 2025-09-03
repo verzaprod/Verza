@@ -1,18 +1,43 @@
 {
-  "scheme": "acme",
-  "userInterfaceStyle": "automatic",
-  "orientation": "default",
-  "web": {
-    "output": "static"
-  },
-  "plugins": [
-    [
+  "expo": {
+    "name": "Verza",
+    "slug": "verza",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "verza",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
       "expo-router",
-      {
-        "origin": "https://n"
-      }
-    ]
-  ],
-  "name": "Verza",
-  "slug": "Verza"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
 }
