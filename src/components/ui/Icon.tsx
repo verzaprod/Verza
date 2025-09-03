@@ -2,13 +2,19 @@ import React from 'react';
 import { View, ViewStyle } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
+import VerzaLogoIcon from "@/assets/images/icon.svg";
+import OnboardingImage1 from "@/assets/images/onboarding1.svg";
+import OnboardingImage2 from "@/assets/images/onboarding2.svg";
+import OnboardingImage3 from "@/assets/images/onboarding3.svg";
+import OnboardingBackIcon from "@/assets/images/chevron-left.svg";
+import OnboardingNextIcon from "@/assets/images/chevron-right.svg";
+
 interface IconProps {
   name: string;
   size?: number;
   color?: string;
   style?: ViewStyle;
-  SvgComponent?: React.ComponentType<SvgProps>; // Will be replaced with actual SVGs
-}
+  SvgComponent?: React.ComponentType<SvgProps>; 
 
 export const Icon: React.FC<IconProps> = ({ 
   name, 

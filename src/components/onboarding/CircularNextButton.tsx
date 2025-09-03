@@ -11,7 +11,7 @@ interface CircularNextButtonProps {
 
 export const CircularNextButton: React.FC<CircularNextButtonProps> = ({ onPress, progress }) => {
   const theme = useTheme()
-  const size = 60
+  const size = 100
   const strokeWidth = 3
   const radius = (size - strokeWidth) / 2
   const circumference = radius * 2 * Math.PI
@@ -29,7 +29,7 @@ export const CircularNextButton: React.FC<CircularNextButtonProps> = ({ onPress,
       }}
     >
       <Svg width={size} height={size} style={{ position: "absolute" }}>
-        <Circle cx={size / 2} cy={size / 2} r={radius} stroke="#E2E8F0" strokeWidth={strokeWidth} fill="none" />
+        <Circle cx={size / 2} cy={size / 2} r={radius} stroke="#F9FAFB" strokeWidth={strokeWidth} fill="none" />
         <Circle
           cx={size / 2}
           cy={size / 2}
