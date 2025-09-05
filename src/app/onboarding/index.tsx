@@ -79,7 +79,7 @@ export default function OnboardingScreen() {
           }}
         >
           <View className="items-center mb-2 mt-0">
-            <Icon name={currentData.image} size={500} color={theme.colors.primaryGreen} />
+            <Icon name={currentData.image} size={200} color={theme.colors.primaryGreen} />
           </View>
 
           <View className="items-center mb-20">
@@ -137,7 +137,7 @@ export default function OnboardingScreen() {
           </View>
 
           <View className="items-center mb-15">
-            <Icon name={currentData.image} size={1200} color={theme.colors.primaryGreen} />
+            <Icon name={currentData.image} size={200} color={theme.colors.primaryGreen} />
           </View>
 
           <CircularNextButton onPress={handleNext} progress={progress} />

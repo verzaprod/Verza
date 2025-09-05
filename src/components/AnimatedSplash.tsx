@@ -61,7 +61,7 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Animated.View style={logoAnimatedStyle}>
-          <Icon name="verza-logo" size={40} color={theme.colors.primaryGreen} />
+          <Icon name="verza-logo" size={100} color={theme.colors.primaryGreen} />
         </Animated.View>
         <Animated.View style={[{ marginLeft: 2 }, textAnimatedStyle]}>
           <Text
@@ -81,13 +81,13 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
         style={[
           {
             position: "absolute",
-            bottom: 60,
-            right: 30,
+            bottom: 0,
+            right: -20,
           },
           bottomImageAnimatedStyle,
         ]}
       >
-        <Icon size={24} name="splash-illustration" color={theme.colors.primaryGreen} />
+        <Icon size={200} name="splash-illustration" color={theme.colors.primaryGreen} />
       </Animated.View>
     </View>
   )
