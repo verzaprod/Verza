@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, Pressable } from "react-native"
 import { useRouter } from "expo-router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
@@ -57,65 +57,92 @@ export default function OnboardingScreen() {
 
   return (
     <View
+      className="flex-1"
       style={{
-        flex: 1,
         backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
       }}
     >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingHorizontal: 20,
-          paddingVertical: 16,
-        }}
-      >
+      <View className="flex-row justify-between items-center px-5 py-4">
         <BackButton onPress={handleBack} />
         <SkipButton onPress={handleSkip} />
       </View>
 
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          paddingHorizontal: 20,
-        }}
-      >
-        <View style={{ alignItems: "center", marginBottom: 60 }}>
-          <Icon name={currentData.image} size={200} color={theme.colors.primaryGreen} />
-        </View>
+      {(currentPage != 1) && 
+        (<ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: 20,
+          }}
+        >
+          <View className="items-center mb-2 mt-0">
+            <Icon name={currentData.image} size={500} color={theme.colors.primaryGreen} />
+          </View>
 
-        <View style={{ alignItems: "center", marginBottom: 80 }}>
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "bold",
-              color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
-          >
-            {currentData.title}
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: theme.colors.textSecondary,
-              textAlign: "center",
-              lineHeight: 24,
-              paddingHorizontal: 20,
-            }}
-          >
-            {currentData.subtitle}
-          </Text>
-        </View>
+          <View className="items-center mb-20">
+            <Text className="text-4xl font -bold text-center mb-4 px-2"
+              style={{
+                fontFamily: theme.fonts.onboardingHeading,
+                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+              }}
+            >
+              {currentData.title}
+            </Text>
+            <Text className="text-base text-center px-5"
+              style={{
+                color: theme.colors.textSecondary,
+                textAlign: "center",
+                lineHeight: 24,
+              }}
+            >
+              {currentData.subtitle}
+            </Text>
+          </View>
 
-        <CircularNextButton onPress={handleNext} progress={progress} />
-      </ScrollView>
+          <CircularNextButton onPress={handleNext} progress={progress} />
+        </ScrollView>)
+      } 
+
+      {(currentPage === 1) &&
+        (<ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: 20,
+          }}
+        >
+          <View className="items-center mb-20">
+            <Text
+              className="text-3xl font-bold text-center mb-4 px-5"
+              style={{
+                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+              }}
+            >
+              {currentData.title}
+            </Text>
+
+            <Text
+              className="text-base text-center px-5"
+              style={{
+                color: theme.colors.textSecondary,
+                lineHeight: 24,
+              }}
+            >
+              {currentData.subtitle}
+            </Text>
+          </View>
+
+          <View className="items-center mb-15">
+            <Icon name={currentData.image} size={1200} color={theme.colors.primaryGreen} />
+          </View>
+
+          <CircularNextButton onPress={handleNext} progress={progress} />
+        </ScrollView>)
+      }
     </View>
   )
 }

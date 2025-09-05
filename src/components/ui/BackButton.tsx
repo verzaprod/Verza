@@ -34,7 +34,7 @@ export const BackButton: React.FC<BackButtonProps> = ({ onPress }) => {
         justifyContent: "center",
       }}
     >
-      <Icon name="arrow-left" size={20} color="#FFFFFF" />
+      <Icon name="chevron-left" size={20} color="#1e1e1e"/>
     </TouchableOpacity>
   )
 }

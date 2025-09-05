@@ -1,6 +1,6 @@
 import type React from "react"
 import { useEffect } from "react"
-import { View, Text } from "react-native"
+import { View, Text, } from "react-native"
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay } from "react-native-reanimated"
 import { useTheme } from "@/theme/ThemeProvider"
 import { Icon } from "./ui/Icon"
@@ -44,7 +44,7 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
       bottomImageTranslateY.value = withDelay(1800, withTiming(0, { duration: 600 }))
 
       // Complete animation after 3 seconds
-      setTimeout(onAnimationComplete, 3000)
+      setTimeout(onAnimationComplete, 5000)
     }
 
     animateSequence()
@@ -61,12 +61,13 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Animated.View style={logoAnimatedStyle}>
-          <Icon name="verza-logo" size={60} color={theme.colors.primaryGreen} />
+          <Icon name="verza-logo" size={40} color={theme.colors.primaryGreen} />
         </Animated.View>
-        <Animated.View style={[{ marginLeft: 16 }, textAnimatedStyle]}>
+        <Animated.View style={[{ marginLeft: 2 }, textAnimatedStyle]}>
           <Text
             style={{
               fontSize: 32,
+              fontFamily: "SansationLight",
               fontWeight: "bold",
               color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
             }}
@@ -86,7 +87,7 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
           bottomImageAnimatedStyle,
         ]}
       >
-        <Icon name="splash-decoration" size={80} color={theme.colors.primaryGreen} />
+        <Icon size={24} name="splash-illustration" color={theme.colors.primaryGreen} />
       </Animated.View>
     </View>
   )

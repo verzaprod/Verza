@@ -10,6 +10,12 @@ export const THEME_TOKENS = {
     error: '#EF4444',
     success: '#10B981',
   },
+  fonts: {
+    onboardingHeading: "Urbanist-Bold",
+    onboardingTagline: "SFPro",
+    welcomeHeading: "Urbanist-Bold",
+    welcomeTagline: "Urbanist-ExtraBold",
+  },
   spacing: {
     xs: 4,
     sm: 8,
