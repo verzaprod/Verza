@@ -47,8 +47,8 @@ export default function VerifyEmailScreen() {
           <BackButton />
         </View>
 
-        <View className="fle x-1">
-          <View className="items-start mb-10">
+        <View>
+          <View className="items-start mb-20">
             <Text className="mb-2"
               style={{
                 fontSize: 28,
@@ -68,7 +68,7 @@ export default function VerifyEmailScreen() {
             </Text>
           </View>
 
-          <View style={{ marginBottom: 40, marginTop: 40 }}>
+          <View style={{ marginBottom: 40 }}>
             <InputBoxes value={otp} onChangeText={setOtp} length={4} type="otp" />
           </View>
 

@@ -32,7 +32,7 @@ export default function CreatePinScreen() {
       <View
         style={{
           flex: 1,
-          backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+          backgroundColor: theme.colors.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingHorizontal: 20,
@@ -42,13 +42,13 @@ export default function CreatePinScreen() {
           <BackButton />
         </View>
 
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <View style={{ alignItems: "flex-start", marginBottom: 40 }}>
+        <View>
+          <View style={{ alignItems: "flex-start", marginBottom: 80 }}>
             <Text
               style={{
                 fontSize: 28,
-                fontWeight: "bold",
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                fontFamily: theme.fonts.welcomeHeading,
+                color: theme.colors.textPrimary,
                 marginBottom: 8,
               }}
             >
