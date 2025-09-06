@@ -16,8 +16,8 @@ export default function Layout() {
   const [loaded] = useFonts({
     SansationLight: require('@/assets/fonts/Sansation-Light.ttf'),
     SFPro: require('@/assets/fonts/sf-pro-med.ttf'),
-    'Urbanist-Bold': require('@/assets/fonts/Urbanist-Bold.ttf'),
-    'Urbanist-ExtraBold': require('@/assets/fonts/Urbanist-ExtraBold.ttf'),
+    UrbanistBold: require('@/assets/fonts/Urbanist-Bold.ttf'),
+    UrbanistExtraBold: require('@/assets/fonts/Urbanist-ExtraBold.ttf'),
   });
 
   useEffect(() => {

@@ -26,16 +26,17 @@ export const Icon: React.FC<IconProps> = ({
   style,
 }) => {
   const source = iconSources[name];
+  const finalWidth = style?.width || size;
+  const finalHeight = style?.height || size;
 
   if (source) {
     return (
-      <View style={[{ width: size, height: size }, style]}>
+      <View style={[{ width: finalWidth, height: finalHeight }, style]}>
         <Image 
           source={source}
           style={{ 
-            width: size, 
-            height: size,
-            tintColor: color,
+            width: "100%", 
+            height: "100%",
           }}
           resizeMode="contain"
         />
@@ -48,8 +49,8 @@ export const Icon: React.FC<IconProps> = ({
     <View 
       style={[
         {
-          width: size,
-          height: size,
+          width: finalWidth,
+          height: finalHeight,
           backgroundColor: '#E5E7EB',
           borderRadius: 4,
         },

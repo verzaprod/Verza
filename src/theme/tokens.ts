@@ -11,10 +11,10 @@ export const THEME_TOKENS = {
     success: '#10B981',
   },
   fonts: {
-    onboardingHeading: "Urbanist-Bold",
+    onboardingHeading: "UrbanistBold",
     onboardingTagline: "SFPro",
-    welcomeHeading: "Urbanist-Bold",
-    welcomeTagline: "Urbanist-ExtraBold",
+    welcomeHeading: "UrbanistBold",
+    welcomeTagline: "UrbanistExtraBold",
   },
   spacing: {
     xs: 4,

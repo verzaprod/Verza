@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { View, Text, ScrollView, Pressable } from "react-native"
+import { View, Text, ScrollView, Pressable, Dimensions } from "react-native"
 import { useRouter } from "expo-router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
@@ -7,6 +7,7 @@ import { BackButton } from "@/components/ui/BackButton"
 import { SkipButton } from "@/components/ui/SkipButton"
 import { CircularNextButton } from "@/components/onboarding/CircularNextButton"
 import { Icon } from "@/components/ui/Icon"
+import { WIDTH, HEIGHT } from "@/constants"
 
 const onboardingData = [
   {
@@ -31,6 +32,8 @@ export default function OnboardingScreen() {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
   const [currentPage, setCurrentPage] = useState(0)
+  const width = WIDTH
+  const height = HEIGHT
 
   const handleNext = () => {
     if (currentPage < onboardingData.length - 1) {
@@ -65,7 +68,8 @@ export default function OnboardingScreen() {
       }}
     >
       <View className="flex-row justify-between items-center px-5 py-4">
-        <BackButton onPress={handleBack} />
+        {(currentPage != 0) && <BackButton onPress={handleBack} />}
+        {(currentPage == 0) && <View />}
         <SkipButton onPress={handleSkip} />
       </View>
 
@@ -74,26 +78,31 @@ export default function OnboardingScreen() {
           contentContainerStyle={{
             flex: 1,
             alignItems: "center",
-            justifyContent: "center",
-            paddingHorizontal: 20,
           }}
         >
-          <View className="items-center mb-2 mt-0">
-            <Icon name={currentData.image} size={200} color={theme.colors.primaryGreen} />
+          <View className="w-full items-center mb-2 mt-[-20px] ml-4">
+            <Icon 
+              name={currentData.image} 
+              style={{
+                width,
+                height
+              }}
+            />
           </View>
 
-          <View className="items-center mb-20">
+          <View className="items -center mb-10">
             <Text className="text-4xl font -bold text-center mb-4 px-2"
               style={{
                 fontFamily: theme.fonts.onboardingHeading,
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                color: theme.colors.textPrimary
               }}
             >
               {currentData.title}
             </Text>
             <Text className="text-base text-center px-5"
               style={{
-                color: theme.colors.textSecondary,
+                fontFamily: theme.fonts.onboardingTagline,
+                color: theme.colors.textPrimary,
                 textAlign: "center",
                 lineHeight: 24,
               }}
@@ -115,20 +124,22 @@ export default function OnboardingScreen() {
             paddingHorizontal: 20,
           }}
         >
-          <View className="items-center mb-20">
+          <View className="items-center mb-[-42px]">
             <Text
-              className="text-3xl font-bold text-center mb-4 px-5"
+              className="text-4xl font-bold text-center mb-4 px-5"
               style={{
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                fontFamily: theme.fonts.onboardingHeading,
+                color: theme.colors.textPrimary,
               }}
             >
               {currentData.title}
             </Text>
 
             <Text
-              className="text-base text-center px-5"
+              className="text-center px-5"
               style={{
-                color: theme.colors.textSecondary,
+                fontFamily: theme.fonts.onboardingTagline,
+                color: theme.colors.textPrimary,
                 lineHeight: 24,
               }}
             >
@@ -136,8 +147,14 @@ export default function OnboardingScreen() {
             </Text>
           </View>
 
-          <View className="items-center mb-15">
-            <Icon name={currentData.image} size={200} color={theme.colors.primaryGreen} />
+          <View className="items-center mt-0">
+            <Icon 
+              name={currentData.image} 
+              style={{
+                width,
+                height
+              }} 
+            />
           </View>
 
           <CircularNextButton onPress={handleNext} progress={progress} />

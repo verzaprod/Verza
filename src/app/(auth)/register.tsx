@@ -8,13 +8,13 @@ import { InputBox } from '@/components/ui/InputBox';
 import { Icon } from '@/components/ui/Icon';
 import { useAuthStore } from '@/store/authStore';
 import { apiClient } from '@/api/client';
+import { WIDTH, HEIGHT } from '@/constants';
 
 export default function RegisterScreen() {
   const theme = useTheme();
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const { setEmail } = useAuthStore();
-
 
   const handleContinue = async () => {
     if (!emailOrPhone.trim()) return;
@@ -39,16 +39,18 @@ export default function RegisterScreen() {
         className="flex-1" 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View className="flex-1 px-6 justify-center">
+        <View className="flex-1 px-6 align-center justify-center">
           <View className="mb-8">
             <Text 
-              className="text-3xl font-bold mb-2"
-              style={{ color: theme.colors.textPrimary }}
+              className="text-3xl text-center font-bold mb-2"
+              style={{ 
+                color: theme.colors.textPrimary 
+              }}
             >
               Welcome to Verza
             </Text>
             <Text 
-              className="text-lg"
+              className="text-lg text-center"
               style={{ color: theme.colors.textSecondary }}
             >
               Enter your email or phone number to get started
@@ -56,7 +58,13 @@ export default function RegisterScreen() {
           </View>
 
           <View className="mb-8">
-            <Icon name="register-illustration" size={200} />
+            <Icon 
+              name="welcome" 
+              style={{
+                width: WIDTH, 
+                height: HEIGHT
+              }}
+            />
           </View>
 
           <View className="space-y-4">
