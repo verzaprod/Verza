@@ -33,9 +33,9 @@ export const THEME_TOKENS = {
     subtle: {
       shadowColor: '#000000',
       shadowOffset: { width: 10, height: 28 },
-      shadowOpacity: 2,
+      shadowOpacity: 0,
       shadowRadius: 10,
-      elevation: 6,
+      elevation: 7,
     },
   },
 } as const;
