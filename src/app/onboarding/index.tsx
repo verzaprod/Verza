@@ -62,7 +62,7 @@ export default function OnboardingScreen() {
     <View
       className="flex-1"
       style={{
-        backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+        backgroundColor: theme.colors.background,
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
       }}
