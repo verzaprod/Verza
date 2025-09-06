@@ -14,7 +14,6 @@ export const THEME_TOKENS = {
     onboardingHeading: "UrbanistBold",
     onboardingTagline: "SFPro",
     welcomeHeading: "UrbanistBold",
-    welcomeTagline: "UrbanistExtraBold",
   },
   spacing: {
     xs: 4,

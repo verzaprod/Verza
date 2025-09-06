@@ -38,7 +38,7 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
         <ActivityIndicator size="small" color="white" />
       ) : (
         <Text 
-          className="text-lg font-semibold"
+          className="text-lg font-bold"
           style={{ 
             color: variant === 'primary' ? 'white' : theme.colors.primaryGreen 
           }}

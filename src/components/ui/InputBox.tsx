@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { TextInput, View, TextInputProps } from 'react-native';
+import { TextInput, View, TextInputProps, ViewStyle, StyleProp } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useTheme } from '@/theme/ThemeProvider';
 
-interface InputBoxProps extends TextInputProps {
+interface InputBoxProps extends Omit<TextInputProps, 'style'> {
   variant?: 'rounded' | 'box';
   active?: boolean;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const InputBox: React.FC<InputBoxProps> = ({
