@@ -54,7 +54,7 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
     <View
       style={{
         flex: 1,
-        backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+        backgroundColor: theme.colors.background,
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -69,7 +69,7 @@ export const AnimatedSplash: React.FC<AnimatedSplashProps> = ({ onAnimationCompl
               fontSize: 32,
               fontFamily: "SansationLight",
               fontWeight: "bold",
-              color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+              color: theme.colors.textPrimary,
             }}
           >
             Verza
