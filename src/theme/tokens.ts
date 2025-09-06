@@ -9,6 +9,8 @@ export const THEME_TOKENS = {
     textSecondary: '#6B7280',
     error: '#EF4444',
     success: '#10B981',
+    boxBorder: "#DDDDDD",
+    boxText: "#757575",
   },
   fonts: {
     onboardingHeading: "UrbanistBold",

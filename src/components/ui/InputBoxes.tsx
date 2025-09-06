@@ -21,14 +21,16 @@ export const InputBoxes: React.FC<InputBoxesProps> = ({ value, onChangeText, len
   }
 
   return (
-    <View style={{ position: "relative" }}>
+    <View 
+      className="relative"
+    >
       <TextInput
         ref={inputRef}
         value={value}
         onChangeText={onChangeText}
         maxLength={length}
         keyboardType="numeric"
-        secureTextEntry={type === "pin"}
+        // secureTextEntry={type === "pin"}
         style={{
           position: "absolute",
           opacity: 0,
@@ -41,7 +43,7 @@ export const InputBoxes: React.FC<InputBoxesProps> = ({ value, onChangeText, len
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          gap: 12,
+          gap: 20,
         }}
       >
         {Array.from({ length }).map((_, index) => (
@@ -50,20 +52,20 @@ export const InputBoxes: React.FC<InputBoxesProps> = ({ value, onChangeText, len
             onPress={handlePress}
             style={{
               flex: 1,
-              height: 60,
+              height: 65,
               borderWidth: 1,
-              borderColor: value.length > index ? theme.colors.primaryGreen : "#E2E8F0",
-              borderRadius: 8,
+              borderColor: value.length > index ? theme.colors.primaryGreen : theme.colors.boxBorder,
+              borderRadius: theme.borderRadius.lg,
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+              backgroundColor: theme.colors.background,
             }}
           >
             <Text
               style={{
                 fontSize: 24,
                 fontWeight: "600",
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                color: theme.colors.boxText,
               }}
             >
               {type === "pin" && value[index] ? "•" : value[index] || ""}

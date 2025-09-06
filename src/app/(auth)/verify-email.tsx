@@ -37,7 +37,7 @@ export default function VerifyEmailScreen() {
       <View
         style={{
           flex: 1,
-          backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+          backgroundColor: theme.colors.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingHorizontal: 20,
@@ -47,14 +47,13 @@ export default function VerifyEmailScreen() {
           <BackButton />
         </View>
 
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <View style={{ alignItems: "flex-start", marginBottom: 40 }}>
-            <Text
+        <View className="fle x-1">
+          <View className="items-start mb-10">
+            <Text className="mb-2"
               style={{
                 fontSize: 28,
-                fontWeight: "bold",
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
-                marginBottom: 8,
+                fontFamily: theme.fonts.welcomeHeading,
+                color: theme.colors.textPrimary,
               }}
             >
               Verify Your Email
@@ -69,7 +68,7 @@ export default function VerifyEmailScreen() {
             </Text>
           </View>
 
-          <View style={{ marginBottom: 40 }}>
+          <View style={{ marginBottom: 40, marginTop: 40 }}>
             <InputBoxes value={otp} onChangeText={setOtp} length={4} type="otp" />
           </View>
 
@@ -80,9 +79,9 @@ export default function VerifyEmailScreen() {
           <View style={{ alignItems: "center" }}>
             <Text style={{ color: theme.colors.textSecondary }}>
               Didn't receive code?{" "}
-              <TouchableOpacity onPress={handleResend}>
-                <Text style={{ color: theme.colors.primaryGreen }}>Resend</Text>
-              </TouchableOpacity>
+                <Text style={{ color: theme.colors.primaryGreen }} onPress={handleResend}>
+                  Resend
+                </Text>
             </Text>
           </View>
         </View>
