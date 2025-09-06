@@ -31,11 +31,11 @@ export const THEME_TOKENS = {
   },
   shadows: {
     subtle: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      shadowColor: '#000000',
+      shadowOffset: { width: 10, height: 28 },
+      shadowOpacity: 2,
+      shadowRadius: 10,
+      elevation: 6,
     },
   },
 } as const;

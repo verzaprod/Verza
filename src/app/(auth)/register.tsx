@@ -22,11 +22,12 @@ export default function RegisterScreen() {
     setLoading(true);
     try {
       const result = await apiClient.sendVerificationCode(emailOrPhone);
-      if (result.success) {
-        setEmail(emailOrPhone);
-        // TODO: send Push Notifs
-        router.push('/(auth)/verify-email');
-      }
+      // if (result.success) {
+      //   setEmail(emailOrPhone);
+      //   // TODO: send Push Notifs
+      //   router.push('/(auth)/verify-email');
+      // }
+      router.push('/(auth)/verify-email');
     } catch (error) {
       console.error('Error sending verification code:', error);
       // TODO: show an error message to the user

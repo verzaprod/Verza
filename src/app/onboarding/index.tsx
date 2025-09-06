@@ -32,8 +32,6 @@ export default function OnboardingScreen() {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
   const [currentPage, setCurrentPage] = useState(0)
-  const width = WIDTH
-  const height = HEIGHT
 
   const handleNext = () => {
     if (currentPage < onboardingData.length - 1) {
@@ -68,12 +66,12 @@ export default function OnboardingScreen() {
       }}
     >
       <View className="flex-row justify-between items-center px-5 py-4">
-        {(currentPage != 0) && <BackButton onPress={handleBack} />}
-        {(currentPage == 0) && <View />}
+        {(currentPage !== 0) && <BackButton onPress={handleBack} />}
+        {(currentPage === 0) && <View />}
         <SkipButton onPress={handleSkip} />
       </View>
 
-      {(currentPage != 1) && 
+      {(currentPage !== 1) && 
         (<ScrollView
           contentContainerStyle={{
             flex: 1,
@@ -84,14 +82,14 @@ export default function OnboardingScreen() {
             <Icon 
               name={currentData.image} 
               style={{
-                width,
-                height
+                width: WIDTH,
+                height: HEIGHT
               }}
             />
           </View>
 
-          <View className="items -center mb-10">
-            <Text className="text-4xl font -bold text-center mb-4 px-2"
+          <View className="mb-10">
+            <Text className="text-4xl text-center mb-4 px-2"
               style={{
                 fontFamily: theme.fonts.onboardingHeading,
                 color: theme.colors.textPrimary
@@ -151,8 +149,8 @@ export default function OnboardingScreen() {
             <Icon 
               name={currentData.image} 
               style={{
-                width,
-                height
+                width: WIDTH,
+                height: HEIGHT
               }} 
             />
           </View>

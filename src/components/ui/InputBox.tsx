@@ -41,7 +41,7 @@ export const InputBox: React.FC<InputBoxProps> = ({
     <Animated.View
       style={[
         {
-          borderWidth: variant === 'box' ? 1 : 2,
+          borderWidth: variant === 'box' ? 1 : .5,
           borderRadius: variant === 'rounded' ? theme.borderRadius.full : theme.borderRadius.md,
           backgroundColor: theme.colors.background,
         },
