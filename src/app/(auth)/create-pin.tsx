@@ -23,7 +23,7 @@ export default function CreatePinScreen() {
 
     setTimeout(() => {
       setLoading(false)
-      router.push("/(auth)/backup-passphrase")
+      router.replace("/(auth)/backup-passphrase")
     }, 2000)
   }
 

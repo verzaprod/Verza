@@ -58,7 +58,7 @@ export default function ConfirmPassphraseScreen() {
       
       setTimeout(() => {
         setLoading(false)
-        router.push('/(auth)/success')
+        router.replace('/(auth)/success')
       }, 1500)
     } catch (error) {
       console.error('Error confirming passphrase:', error)
