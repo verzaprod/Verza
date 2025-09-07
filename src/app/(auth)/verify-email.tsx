@@ -23,7 +23,7 @@ export default function VerifyEmailScreen() {
 
     setTimeout(() => {
       setLoading(false)
-      router.push("/create-pin")
+      router.push("/(auth)/create-pin")
     }, 2000)
   }
 

@@ -21,7 +21,7 @@ export default function RegisterScreen() {
     
     setLoading(true);
     try {
-      const result = await apiClient.sendVerificationCode(emailOrPhone);
+      // const result = await apiClient.sendVerificationCode(emailOrPhone);
       // if (result.success) {
       //   setEmail(emailOrPhone);
       //   // TODO: send Push Notifs
