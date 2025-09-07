@@ -17,6 +17,12 @@ const iconSources: Record<string, any> = {
   'chevron-right': require('@/assets/images/chevron-right.png'),
   'welcome': require('@/assets/images/welcome-1.png'),
   'splash-illustration': require('@/assets/images/splash-illustration-1.png'),
+  'copy': require('@/assets/images/copy.png'),
+  'save': require('@/assets/images/save.png'),
+  'id-card': require('@/assets/images/id-card.png'),
+  'driver-license': require('@/assets/images/driver-license.png'),
+  'passport': require('@/assets/images/passport.png'),
+  'success': require('@/assets/images/success.png'),
 };
 
 export const Icon: React.FC<IconProps> = ({ 

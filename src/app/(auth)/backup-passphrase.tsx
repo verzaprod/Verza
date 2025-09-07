@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
 import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
-import { Icon } from "@/components/ui/Icon"
 import { PassphraseGrid } from "@/components/auth/PassphraseGrid"
 import { PassphraseActions } from "@/components/auth/PassphraseActions"
 import { apiClient } from "@/api/client"
@@ -68,7 +67,7 @@ export default function BackupPassphraseScreen() {
   }
 
   const handleContinue = () => {
-    router.push('/(auth)/confirm-passphrase')
+    router.replace('/(auth)/confirm-passphrase')
   }
 
   return (
@@ -79,19 +78,17 @@ export default function BackupPassphraseScreen() {
       <View
         style={{
           flex: 1,
-          backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+          backgroundColor: theme.colors.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingHorizontal: 20,
         }}
       >
-        {/* Header */}
         <View style={{ paddingVertical: 16 }}>
           <BackButton />
         </View>
 
-        {/* Content */}
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View>
           <View style={{ alignItems: "flex-start", marginBottom: 40 }}>
             <Text
               style={{

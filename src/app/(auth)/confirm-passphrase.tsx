@@ -74,26 +74,19 @@ export default function ConfirmPassphraseScreen() {
       <View
         style={{
           flex: 1,
-          backgroundColor: theme.isDark ? theme.colors.backgroundDark : theme.colors.backgroundLight,
+          backgroundColor: theme.colors.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           paddingHorizontal: 20,
         }}
       >
-        {/* Header */}
-        <View style={{ paddingVertical: 16 }}>
-          <BackButton />
-        </View>
-
-        {/* Content */}
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          {/* Title Section */}
-          <View style={{ alignItems: "flex-start", marginBottom: 40 }}>
+        <View>
+          <View style={{ alignItems: "flex-start", marginBottom: 40, marginTop: 40 }}>
             <Text
               style={{
                 fontSize: 28,
                 fontWeight: "bold",
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                color: theme.colors.textPrimary,
                 marginBottom: 8,
               }}
             >
@@ -105,19 +98,10 @@ export default function ConfirmPassphraseScreen() {
                 color: theme.colors.textSecondary,
               }}
             >
-              Select the first 3 words in the correct order
+              Select the first 3 words in the correct order to confirm your passphrase.
             </Text>
           </View>
 
-          {/* Selected Words Display */}
-          <View style={{ marginBottom: 32 }}>
-            <SelectedWordsDisplay 
-              selectedWords={selectedWords}
-              onRemoveWord={(word) => setSelectedWords(prev => prev.filter(w => w !== word))}
-            />
-          </View>
-
-          {/* Word Selection Grid */}
           <View style={{ marginBottom: 40 }}>
             <WordChipGrid
               words={shuffledWords}
@@ -126,7 +110,6 @@ export default function ConfirmPassphraseScreen() {
             />
           </View>
 
-          {/* Continue Button */}
           <CTAButton
             title="Continue"
             onPress={handleContinue}
