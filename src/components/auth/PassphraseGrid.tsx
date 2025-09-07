@@ -44,7 +44,7 @@ export const PassphraseGrid: React.FC<PassphraseGridProps> = ({ words, loading =
       {words.map((word, index) => (
         <View
           key={index}
-          className="flex-1 min-w-[45%]"
+          className="flex-1 min-w-[30%]"
           style={{
             height: 60,
             backgroundColor: `${theme.colors.textSecondary}1A`, // 10% opacity
