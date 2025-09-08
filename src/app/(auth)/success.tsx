@@ -2,7 +2,7 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import { Icon } from "@/components/ui/Icon";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useRouter } from "expo-router";
-import { View, Text, Image, KeyboardAvoidingView, Platform, } from "react-native";
+import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 
 export default function Success() {
   
@@ -10,7 +10,7 @@ export default function Success() {
   const router = useRouter();
 
   const handleStartKYC = () => {
-    router.replace("/(kyc)/");
+    router.replace("/(kyc)/selection-type");
   }
 
   return (

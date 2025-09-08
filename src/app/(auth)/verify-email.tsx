@@ -39,7 +39,6 @@ export default function VerifyEmailScreen() {
           flex: 1,
           backgroundColor: theme.colors.background,
           paddingTop: insets.top,
-          paddingBottom: insets.bottom,
           paddingHorizontal: 20,
         }}
       >

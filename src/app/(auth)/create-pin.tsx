@@ -28,13 +28,16 @@ export default function CreatePinScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }} 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+    >
       <View
         style={{
           flex: 1,
           backgroundColor: theme.colors.background,
           paddingTop: insets.top,
-          paddingBottom: insets.bottom,
           paddingHorizontal: 20,
         }}
       >
