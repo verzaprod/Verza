@@ -25,23 +25,34 @@ export default function BackupPassphraseScreen() {
   }, [])
 
   const generatePassphrase = async () => {
-    try {
-      const result = await apiClient.generatePassphrase()
-      if (result.success && result.data) {
-        setPassphrase(result.data.words)
-      } else {
-        // Fallback demo words
-        setPassphrase([
-          'abandon', 'ability', 'able', 'about',
-          'above', 'absent', 'absorb', 'abstract',
-          'absurd', 'abuse', 'access', 'accident'
-        ])
-      }
-    } catch (error) {
-      console.error('Error generating passphrase:', error)
-    } finally {
+    setLoading(true)
+
+    setTimeout(() => {
       setLoading(false)
-    }
+      setPassphrase([
+        'abandon', 'ability', 'able', 'about',
+        'above', 'absent', 'allow', 'abstract',
+        'absurd', 'abuse', 'access', 'accident'
+      ])
+    }, 2000)
+
+    // try {
+    //   const result = await apiClient.generatePassphrase()
+    //   if (result.success && result.data) {
+    //     setPassphrase(result.data.words)
+    //   } else {
+    //     // Fallback demo words
+    //     setPassphrase([
+    //       'abandon', 'ability', 'able', 'about',
+    //       'above', 'absent', 'absorb', 'abstract',
+    //       'absurd', 'abuse', 'access', 'accident'
+    //     ])
+    //   }
+    // } catch (error) {
+    //   console.error('Error generating passphrase:', error)
+    // } finally {
+    //   setLoading(false)
+    // }
   }
 
   const handleCopy = async () => {
@@ -85,7 +96,7 @@ export default function BackupPassphraseScreen() {
         }}
       >
         <View style={{ paddingVertical: 16 }}>
-          <BackButton />
+          {/* <BackButton /> */}
         </View>
 
         <View>

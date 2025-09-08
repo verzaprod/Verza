@@ -20,24 +20,24 @@ export default function RegisterScreen() {
     if (!emailOrPhone.trim()) return;
     
     setLoading(true);
-    // setTimeout(() => { 
-    //   setLoading(false);
-    //   router.replace('/(auth)/verify-email');
-    // }, 2000)
-
-    try {
-      const result = await apiClient.sendVerificationCode(emailOrPhone);
-      // if (result.success) {
-      //   setEmail(emailOrPhone);
-      router.replace('/(auth)/verify-email');
-      // }
-    } catch (error) {
-      console.error('Error sending verification code:', error);
-      // TODO: show an error message to the user
-      Alert.alert("Registration failed!", "Please try again.")
-    } finally {
+    setTimeout(() => { 
       setLoading(false);
-    }
+      router.replace('/(auth)/verify-email');
+    }, 2000)
+
+    // try {
+    //   // const result = await apiClient.sendVerificationCode(emailOrPhone);
+    //   // if (result.success) {
+    //   //   setEmail(emailOrPhone);
+    //   // router.replace('/(auth)/verify-email');
+    //   // }
+    // } catch (error) {
+    //   console.error('Error sending verification code:', error);
+    //   // TODO: show an error message to the user
+    //   Alert.alert("Registration failed!", "Please try again.")
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
