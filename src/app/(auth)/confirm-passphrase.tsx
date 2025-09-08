@@ -3,12 +3,9 @@ import { View, Text, KeyboardAvoidingView, Platform } from "react-native"
 import { useRouter } from "expo-router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
-import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { WordChipGrid } from "@/components/auth/WordChipGrid"
-import { SelectedWordsDisplay } from "@/components/auth/SelectedWordsDisplay"
 
-// Mock words for demo - in real app this would come from the previous screen
 const DEMO_WORDS = [
   'abandon', 'ability', 'able', 'about',
   'above', 'absent', 'absorb', 'abstract',
@@ -40,8 +37,6 @@ export default function ConfirmPassphraseScreen() {
       setSelectedWords(prev => [...prev, word])
     }
   }
-
-  const isWordSelected = (word: string) => selectedWords.includes(word)
 
   const isCorrectSequence = () => {
     return selectedWords.length === 3 && 
