@@ -58,7 +58,7 @@ export const IDTypeCard: React.FC<IDTypeCardProps> = ({
 
       <View className="flex-1">
         <Text
-          className="text-lg font-se mibold mb-1"
+          className="text-lg mb-1"
           style={{
             color: theme.colors.textPrimary,
             fontFamily: theme.fonts.welcomeHeading,

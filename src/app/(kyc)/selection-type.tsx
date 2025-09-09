@@ -78,7 +78,7 @@ export default function SelectionType() {
           </Text>
         </View>
 
-        <View className="flex-1 gap-8">
+        <View className="gap-8 mb-20">
           {idTypes.map((idType) => (
             <IDTypeCard
               key={idType.id}
