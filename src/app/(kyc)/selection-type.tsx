@@ -2,7 +2,6 @@ import { useState } from "react"
 import { View, Text, SafeAreaView, KeyboardAvoidingView, Platform } from "react-native"
 import { useRouter } from "expo-router"
 import { useTheme } from "@/theme/ThemeProvider"
-import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { IDTypeCard } from "@/components/kyc/IDTypeCard"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -38,7 +37,8 @@ export default function SelectionType() {
 
   const handleContinue = () => {
     if (selectedType) {
-      router.push(`/(kyc)/doc-capture?type=${selectedType}`)
+      // router.push(`/(kyc)/doc-capture?type=${selectedType}`)
+      router.push(`/(kyc)/selfie-note`)
     }
   }
 
