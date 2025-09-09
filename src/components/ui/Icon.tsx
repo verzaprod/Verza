@@ -28,6 +28,7 @@ const iconSources: Record<string, any> = {
   'left-pattern': require('@/assets/images/left-pattern.png'),
   'note-list': require('@/assets/images/note-list.png'),
   'shield-check': require('@/assets/images/shield-check.png'),
+  'shield': require('@/assets/images/shield.png'),
 };
 
 export const Icon: React.FC<IconProps> = ({ 

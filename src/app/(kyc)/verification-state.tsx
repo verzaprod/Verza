@@ -54,9 +54,10 @@ export default function VerificationState() {
 
         <View className="items-center mb-16">
           <Text
-            className="text-3xl font-bold mb-4 text-center"
+            className="text-3xl mb-4 text-center"
             style={{
               color: theme.colors.textPrimary,
+              fontFamily: theme.fonts.welcomeHeading,
             }}
           >
             Verifying Your Identity
@@ -65,6 +66,7 @@ export default function VerificationState() {
             className="text-base text-center leading-6 px-4"
             style={{
               color: theme.colors.textSecondary,
+              fontFamily: theme.fonts.onboardingTagline,
             }}
           >
             Please wait while we verify your documents and identity

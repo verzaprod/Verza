@@ -10,8 +10,8 @@ export const VerificationIcon: React.FC = () => {
     <View
       className="items-center justify-center"
       style={{
-        width: 120,
-        height: 120,
+        width: 100,
+        height: 100,
         backgroundColor: 'white',
         borderRadius: 60,
         ...theme.shadows.subtle,
@@ -21,14 +21,14 @@ export const VerificationIcon: React.FC = () => {
         style={{
           width: 80,
           height: 80,
-          backgroundColor: `${theme.colors.primaryGreen}20`,
+          // backgroundColor: `${theme.colors.primaryGreen}20`,
           borderRadius: 40,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         <Icon 
-          name="shield-check" 
+          name="shield" 
           size={48}
           color={theme.colors.primaryGreen}
         />
