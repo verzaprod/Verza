@@ -28,18 +28,19 @@ export default function SelfieNote() {
         backgroundColor: theme.colors.background 
       }}
     >
-      <View className="flex-1 px-6">
+      <View className="flex-1 px-6 justify-center">
 
-        <View className="flex-1 justify-center items-center">
+        <View className="items-center">
           <View className="mb-12">
             <SelfieIllustration />
           </View>
 
           <View className="mb-8 items-center">
             <Text
-              className="text-3xl font-bold mb-3 text-center"
+              className="text-3xl mb-3 text-center"
               style={{
-                color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+                color: theme.colors.textPrimary,
+                fontFamily: theme.fonts.welcomeHeading,
               }}
             >
               Take a Selfie
@@ -48,6 +49,7 @@ export default function SelfieNote() {
               className="text-base text-center leading-6"
               style={{
                 color: theme.colors.textSecondary,
+                fontFamily: theme.fonts.onboardingTagline,
               }}
             >
               We need to verify that you're the person in the document
@@ -59,7 +61,7 @@ export default function SelfieNote() {
           </View>
         </View>
 
-        <View className="pb-6">
+        <View className="pb-6 mt-8">
           <CTAButton
             title="Take Selfie"
             onPress={handleTakeSelfie}

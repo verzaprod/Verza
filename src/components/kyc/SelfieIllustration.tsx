@@ -7,7 +7,7 @@ export const SelfieIllustration: React.FC = () => {
     <View className="relative items-center justify-center">
       <View 
         className="absolute left-0"
-        style={{ top: 20, left: -120 }}
+        style={{ top: 0, left: -120 }}
       >
         <Icon 
           name="left-pattern" 
@@ -17,7 +17,7 @@ export const SelfieIllustration: React.FC = () => {
 
       <View 
         className="absolute right-0"
-        style={{ top: 20, right: -120 }}
+        style={{ top: 40, right: -120 }}
       >
         <Icon 
           name="right-pattern" 
@@ -26,17 +26,17 @@ export const SelfieIllustration: React.FC = () => {
       </View>
 
       <View
-        className="bg-gray-200 rounded-3xl p-6"
+        className="bg-gray-200 rounded-3xl p-6 mx-4"
         style={{
-          width: 220,
-          height: 280,
+          width: 140,
+          height: 160,
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
         <Icon 
           name="face" 
-          style={{ width: 180, height: 220 }}
+          style={{ width: 140, height: 140 }}
         />
       </View>
     </View>
