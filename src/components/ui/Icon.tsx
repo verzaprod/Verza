@@ -23,6 +23,11 @@ const iconSources: Record<string, any> = {
   'driver-license': require('@/assets/images/driver-license.png'),
   'passport': require('@/assets/images/passport.png'),
   'success': require('@/assets/images/success.png'),
+  'face': require('@/assets/images/face.png'),
+  'right-pattern': require('@/assets/images/right-pattern.png'),
+  'left-pattern': require('@/assets/images/left-pattern.png'),
+  'note-list': require('@/assets/images/note-list.png'),
+  'shield-check': require('@/assets/images/shield-check.png'),
 };
 
 export const Icon: React.FC<IconProps> = ({ 
