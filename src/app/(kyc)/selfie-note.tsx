@@ -18,7 +18,8 @@ export default function SelfieNote() {
   const theme = useTheme()
 
   const handleTakeSelfie = () => {
-    router.push("/(kyc)/selfie-capture")
+    // router.push("/(kyc)/selfie-capture")
+    router.push("/(kyc)/verification-state")
   }
 
   return (
