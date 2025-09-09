@@ -21,7 +21,6 @@ export const VerificationIcon: React.FC = () => {
         style={{
           width: 80,
           height: 80,
-          // backgroundColor: `${theme.colors.primaryGreen}20`,
           borderRadius: 40,
           alignItems: 'center',
           justifyContent: 'center',

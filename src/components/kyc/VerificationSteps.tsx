@@ -19,7 +19,6 @@ export const VerificationSteps: React.FC<VerificationStepsProps> = ({ steps }) =
     <View className="gap-4">
       {steps.map((step, index) => (
         <View key={step.id} className="flex-row items-center">
-          {/* Step Icon */}
           <View
             className="mr-4"
             style={{
@@ -55,7 +54,6 @@ export const VerificationSteps: React.FC<VerificationStepsProps> = ({ steps }) =
             )}
           </View>
 
-          {/* Step Label */}
           <Text
             className="flex-1 text-base"
             style={{
