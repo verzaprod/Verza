@@ -10,7 +10,7 @@ export default function Success({
   title,
   buttonText,
 }: {
-  redirectType: string;
+  redirectType: "kyc" | "auth";
   tagline: string;
   title: string;
   buttonText: string;
@@ -18,7 +18,7 @@ export default function Success({
   const theme = useTheme();
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleNavigation = () => {
     if (redirectType === "kyc") {
       router.push("/(tabs)/home");
     } else {
@@ -59,7 +59,7 @@ export default function Success({
           {tagline}
         </Text>
 
-        <CTAButton title={buttonText} onPress={handleClick} />
+        <CTAButton title={buttonText} onPress={handleNavigation} />
       </View>
     </KeyboardAvoidingView>
   );
