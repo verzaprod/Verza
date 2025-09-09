@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { View, Text, SafeAreaView } from "react-native"
+import { View, Text, SafeAreaView, KeyboardAvoidingView, Platform } from "react-native"
 import { useRouter } from "expo-router"
 import { useTheme } from "@/theme/ThemeProvider"
 import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { IDTypeCard } from "@/components/kyc/IDTypeCard"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 type IDType = 'passport' | 'driver-license' | 'id-card'
 
@@ -32,6 +33,7 @@ const idTypes = [
 export default function SelectionType() {
   const router = useRouter()
   const theme = useTheme()
+  const insets = useSafeAreaInsets()
   const [selectedType, setSelectedType] = useState<IDType | null>('passport')
 
   const handleContinue = () => {
@@ -41,24 +43,26 @@ export default function SelectionType() {
   }
 
   return (
-    <SafeAreaView 
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" 
+        ? "padding" : "height"}
       style={{ 
         flex: 1, 
-        backgroundColor: theme.colors.background 
+        paddingTop: insets.top, 
+        backgroundColor: theme.colors.background,
       }}
     >
-      <View className="flex-1 px-5">
-        {/* Header */}
-        <View className="py-4">
-          <BackButton />
-        </View>
-
-        {/* Title Section */}
+      <View className="flex-1 px-6"
+        style={{
+          paddingTop: 20,
+        }}
+      >
         <View className="mb-8">
           <Text
-            className="text-3xl font-bold mb-3"
+            className="text-3xl mb-3"
             style={{
-              color: theme.isDark ? theme.colors.textPrimaryDark : theme.colors.textPrimaryLight,
+              color: theme.colors.textPrimary,
+              fontFamily: theme.fonts.welcomeHeading
             }}
           >
             Select ID Type
@@ -67,14 +71,14 @@ export default function SelectionType() {
             className="text-base leading-6"
             style={{
               color: theme.colors.textSecondary,
+              fontFamily: theme.fonts.onboardingTagline
             }}
           >
             Choose the type of identification document you'd like to use
           </Text>
         </View>
 
-        {/* ID Type Cards */}
-        <View className="flex-1 gap-4">
+        <View className="flex-1 gap-8">
           {idTypes.map((idType) => (
             <IDTypeCard
               key={idType.id}
@@ -87,15 +91,12 @@ export default function SelectionType() {
           ))}
         </View>
 
-        {/* Continue Button */}
-        <View className="pb-6">
-          <CTAButton
-            title="Continue"
-            onPress={handleContinue}
-            disabled={!selectedType}
-          />
-        </View>
+        <CTAButton
+          title="Continue"
+          onPress={handleContinue}
+          disabled={!selectedType}
+        />
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   )
 }
