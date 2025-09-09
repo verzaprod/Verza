@@ -4,13 +4,17 @@ import { useTheme } from "@/theme/ThemeProvider";
 import { useRouter } from "expo-router";
 import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 
-export default function Success() {
+export default function Success({ redirectType, tagline, title, buttonText }: { redirectType: string, tagline: string, title: string, buttonText: string }) {
   
   const theme = useTheme();
   const router = useRouter();
 
-  const handleStartKYC = () => {
-    router.replace("/(kyc)/selection-type");
+  const handleClick = () => {
+    if (redirectType === "kyc") {
+      router.push("/(tabs)/home");
+    } else {
+      router.replace("/(kyc)/selection-type");
+    }
   }
 
   return (
@@ -30,7 +34,7 @@ export default function Success() {
             marginVertical: 20,
           }}
         >
-          Success!
+          {title}
         </Text>
         <Text
           className="text-center text-lg mb-10 px-4"
@@ -39,12 +43,12 @@ export default function Success() {
             fontFamily: theme.fonts.onboardingTagline,
           }}
         >
-          Your wallet has been created successfully. Let’s verify your identity to unlock all features.
+          {tagline}
         </Text>
 
         <CTAButton 
-          title="Start KYC Verification"
-          onPress={handleStartKYC}
+          title={buttonText}
+          onPress={handleClick}
         />
       </View>
     </KeyboardAvoidingView>
