@@ -1,7 +1,6 @@
 import { View, Text, SafeAreaView } from "react-native"
 import { useRouter } from "expo-router"
 import { useTheme } from "@/theme/ThemeProvider"
-// import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { SelfieIllustration } from "@/components/kyc/SelfieIllustration"
 import { InstructionList } from "@/components/kyc/InstructionList"

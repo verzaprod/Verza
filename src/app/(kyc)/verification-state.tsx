@@ -15,7 +15,7 @@ const verificationSteps = [
 export default function VerificationState() {
   const router = useRouter()
   const theme = useTheme()
-  const [progress, setProgress] = useState(98)
+  const [progress, setProgress] = useState(70)
   const [currentSteps, setCurrentSteps] = useState(verificationSteps)
 
   useEffect(() => {
@@ -47,7 +47,6 @@ export default function VerificationState() {
       }}
     >
       <View className="flex-1 px-6 justify-center">
-        {/* Verification Icon */}
         <View className="items-center mb-12">
           <VerificationIcon />
         </View>
