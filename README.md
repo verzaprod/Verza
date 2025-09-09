@@ -1,71 +1,55 @@
-<div align="center">
-  <h1>🔐 Verza</h1>
-  <p><strong>Verify Once, Use Everywhere</strong></p>
-  <p>A comprehensive reusable KYC (Know Your Customer) verification platform built with React Native and Expo Router</p>
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Expo SDK](https://img.shields.io/badge/Expo%20SDK-53.0.22-blue.svg)](https://expo.dev/)
-  [![React Native](https://img.shields.io/badge/React%20Native-0.79.5-green.svg)](https://reactnative.dev/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
-</div>
+# Verza
 
----
+**Verify Once, Use Everywhere**
 
-## 🌟 Overview
+A cross-platform KYC verification platform that enables users to complete identity verification once and reuse it across multiple services. Built with React Native, Expo Router, and NativeWind.
 
-**Verza** is a revolutionary KYC verification platform that allows users to complete their identity verification once and reuse it across multiple platforms and services. Built with modern technologies including React Native, Expo Router, and NativeWind, Verza provides a seamless cross-platform experience for both mobile and web applications.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Expo SDK](https://img.shields.io/badge/Expo%20SDK-53.0.22-blue.svg)](https://expo.dev/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.79.5-green.svg)](https://reactnative.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
 
-### ✨ Key Features
+## Overview
 
-- 🔒 **One-Time Verification** - Complete KYC once, use everywhere
-- 📱 **Cross-Platform Support** - iOS, Android, and Web compatibility
-- 🎨 **Modern UI/UX** - Built with NativeWind (Tailwind CSS for React Native)
-- 🔐 **Secure Integration** - Powered by Onfido SDK for reliable identity verification
-- ⚡ **Lightning Fast** - Optimized performance with Expo Router
-- 🌓 **Dark Mode Support** - Automatic light/dark theme switching
-- 📐 **Responsive Design** - Optimized for all screen sizes
-- 🔧 **TypeScript Ready** - Full type safety and enhanced developer experience
+Verza is a reusable KYC verification platform that streamlines identity verification across multiple platforms. Users complete verification once and can authenticate seamlessly across integrated services.
 
----
+### Key Features
 
-## 🚀 Quick Start
+- **One-Time Verification** - Complete KYC once, use everywhere
+- **Cross-Platform Support** - iOS, Android, and Web compatibility
+- **Modern UI/UX** - Built with NativeWind (Tailwind CSS for React Native)
+- **Secure Integration** - Powered by Onfido SDK for enterprise-grade verification
+- **Performance Optimized** - Built with Expo Router and React Native best practices
+- **Dark Mode Support** - Automatic theme switching
+- **Type Safety** - Full TypeScript implementation
+
+## Quick Start
 
 ### Prerequisites
 
-Before getting started, ensure you have the following installed:
-
-- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
-- **npm** or **yarn** - Package manager
+- **Node.js** (v18 or higher)
+- **npm** or **yarn** package manager
 - **Expo CLI** - [Installation Guide](https://docs.expo.dev/get-started/installation/)
-- **Git** - Version control
-
-For mobile development:
-- **iOS Simulator** (macOS only) - Xcode required
-- **Android Studio** - For Android emulator
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository:
    ```bash
    git clone https://github.com/mighty-odewumi/Verza.git
    cd Verza
    ```
 
-2. **Install dependencies**
+2. Install dependencies:
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. **Start the development server**
+3. Start the development server:
    ```bash
-   npm start
-   # or
-   yarn start
+   npx expo start
    ```
 
-4. **Run on your preferred platform**
+4. Run on your platform:
    ```bash
    # iOS (macOS only)
    npm run ios
@@ -77,139 +61,29 @@ For mobile development:
    npm run web
    ```
 
----
+## Technology Stack
 
-## 📋 Available Scripts
+- **React Native** `0.79.5` - Cross-platform mobile development
+- **Expo** `53.0.22` - React Native platform and toolchain
+- **Expo Router** `5.1.5` - File-based routing system
+- **TypeScript** `5.8.3` - Type-safe JavaScript
+- **NativeWind** `4.0.1` - Tailwind CSS for React Native
+- **Onfido SDK** `15.0.0` - Identity verification
+- **React Native Reanimated** `3.17.4` - Smooth animations
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `npm start` | Start Expo development server | Development |
-| `npm run android` | Launch on Android device/emulator | Mobile Testing |
-| `npm run ios` | Launch on iOS device/simulator | Mobile Testing |
-| `npm run web` | Launch in web browser | Web Testing |
-| `npm run deploy` | Export and deploy to web | Production |
+## Configuration
 
----
+### Environment Variables
 
-## 🏗️ Project Architecture
+Create a `.env.local` file:
 
-```
-src/
-├── app/                           # Expo Router pages
-│   ├── _layout.tsx               # Main layout with providers
-│   ├── index.tsx                 # Entry point (redirects to splash)
-│   ├── splash.tsx                # Splash screen
-│   ├── onboarding/
-│   │   ├── _layout.tsx           # Onboarding layout
-│   │   ├── index.tsx             # First onboarding slide
-│   │   ├── identity.tsx          # Second onboarding slide  
-│   │   └── access.tsx            # Third onboarding slide
-│   ├── auth/
-│   │   ├── _layout.tsx           # Auth layout
-│   │   ├── register.tsx          # Registration screen
-│   │   ├── verify-email.tsx      # Email verification
-│   │   ├── create-pin.tsx        # PIN creation
-│   │   ├── backup-passphrase.tsx # Passphrase backup
-│   │   ├── confirm-passphrase.tsx# Passphrase confirmation
-│   │   └── success.tsx           # Success screen
-│   └── home/
-│       └── index.tsx             # Home/KYC entry screen
-│
-├── components/                    # Reusable components
-│   ├── ui/                       # Basic UI components
-│   │   ├── Icon.tsx              # Generic icon component
-│   │   ├── CTAButton.tsx         # Primary action button
-│   │   ├── InputBox.tsx          # Base input component
-│   │   ├── OTPInput.tsx          # OTP/PIN input boxes
-│   │   ├── CircularProgress.tsx  # Circular progress for onboarding
-│   │   └── BackButton.tsx        # Reusable back button
-│   ├── layout/                   # Layout components
-│   │   ├── SafeLayout.tsx        # Safe area wrapper
-│   │   └── KeyboardAwareLayout.tsx # Keyboard handling wrapper
-│   ├── onboarding/               # Onboarding-specific components
-│   │   ├── OnboardingSlide.tsx   # Base slide component
-│   │   └── CircularNextButton.tsx # Next button with progress
-│   ├── auth/                     # Auth-specific components
-│   │   ├── PassphraseGrid.tsx    # 3x4 passphrase grid
-│   │   ├── WordChip.tsx          # Selectable word chips
-│   │   └── VerificationHeader.tsx # Header for verification screens
-│   └── AnimatedSplash.tsx        # Splash screen animation
-│
-├── theme/                        # Theme system
-│   ├── tokens.ts                 # Design tokens
-│   ├── ThemeProvider.tsx         # Theme context provider
-│   └── index.ts                  # Theme exports
-│
-├── store/                        # State management
-│   ├── authStore.ts              # Authentication state
-│   ├── onboardingStore.ts        # Onboarding progress
-│   └── index.ts                  # Store exports
-│
-├── api/                          # API layer
-│   ├── client.ts                 # Base API client
-│   ├── auth.ts                   # Auth API calls
-│   ├── wallet.ts                 # Wallet API calls
-│   └── types.ts                  # API response types
-│
-├── types/                        # TypeScript types
-│   ├── auth.ts                   # Auth-related types
-│   ├── navigation.ts             # Navigation types
-│   └── index.ts                  # Type exports
-│
-├── utils/                        # Utility functions
-│   ├── validation.ts             # Input validation
-│   ├── storage.ts                # Secure storage helpers
-│   ├── clipboard.ts              # Clipboard operations
-│   └── index.ts                  # Utility exports
-│
-└── global.css                    # NativeWind global styles
-```
----
-
-## 🛠️ Technology Stack
-
-### Core Framework
-- **[React Native](https://reactnative.dev/)** `0.79.5` - Cross-platform mobile development
-- **[Expo](https://expo.dev/)** `53.0.22` - React Native platform and toolchain
-- **[Expo Router](https://docs.expo.dev/router/)** `5.1.5` - File-based routing system
-- **[TypeScript](https://www.typescriptlang.org/)** `5.8.3` - Type-safe JavaScript
-
-### Styling & UI
-- **[NativeWind](https://www.nativewind.dev/)** `4.0.1` - Tailwind CSS for React Native
-- **[Tailwind CSS](https://tailwindcss.com/)** `3.4.0` - Utility-first CSS framework
-- **[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)** `3.17.4` - Smooth animations
-
-### KYC Integration
-- **[Onfido React Native SDK](https://github.com/onfido/react-native-sdk)** `15.0.0` - Identity verification
-
-### Navigation & Safety
-- **[React Native Safe Area Context](https://github.com/th3rdwave/react-native-safe-area-context)** `5.4.0` - Safe area handling
-- **[React Native Screens](https://github.com/software-mansion/react-native-screens)** `4.11.1` - Native screen management
-
----
-
-## ⚙️ Configuration
-
-### Expo Configuration
-
-The `app.json` file contains essential app configuration:
-
-```json
-{
-  "name": "Verza",
-  "slug": "Verza",
-  "scheme": "verza",
-  "userInterfaceStyle": "automatic",
-  "orientation": "default",
-  "web": {
-    "output": "static"
-  }
-}
+```env
+ONFIDO_API_TOKEN=your_onfido_api_token
+EXPO_PUBLIC_API_URL=https://your-api-domain.com
+EXPO_PUBLIC_ENVIRONMENT=development
 ```
 
-### TypeScript Configuration
-
-Path mapping is configured for cleaner imports:
+### TypeScript Path Mapping
 
 ```json
 {
@@ -222,213 +96,86 @@ Path mapping is configured for cleaner imports:
 }
 ```
 
-### Tailwind CSS Setup
+## KYC Integration
 
-Custom configuration for React Native compatibility:
+Verza integrates with Onfido SDK for enterprise-grade identity verification:
 
-```javascript
-module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset")],
-  theme: {
-    extend: {},
-  },
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
-  plugins: [],
+### Setup
+
+```tsx
+import { Onfido } from '@onfido/react-native-sdk';
+
+const startVerification = async () => {
+  try {
+    const result = await Onfido.start({
+      sdkToken: 'your_sdk_token',
+      flowSteps: {
+        welcome: true,
+        documentCapture: true,
+        faceCapture: true,
+      },
+    });
+    // Handle successful verification
+  } catch (error) {
+    // Handle verification error
+  }
 };
 ```
 
----
+### Features
 
-## 🎨 Styling Guide
+- Document capture (passport, ID cards, driving licenses)
+- Biometric verification with liveness detection
+- Real-time processing and fraud detection
 
-Verza uses **NativeWind** to bring Tailwind CSS to React Native with full feature parity.
-
-### Basic Usage
-
-```tsx
-import { View, Text } from 'react-native';
-
-export default function Component() {
-  return (
-    <View className="flex-1 bg-white p-4">
-      <Text className="text-2xl font-bold text-center text-gray-900 dark:text-white">
-        Welcome to Verza
-      </Text>
-    </View>
-  );
-}
-```
-
-
-### Platform-Specific Styles
-
-```tsx
-<View className="p-4 web:shadow-lg ios:shadow-sm android:elevation-2">
-  <Text className="text-base web:text-lg native:text-sm">
-    Platform-aware styling
-  </Text>
-</View>
-```
-
-### Dark Mode Support
-
-```tsx
-<View className="bg-white dark:bg-gray-900">
-  <Text className="text-gray-900 dark:text-white">
-    Automatic dark mode
-  </Text>
-</View>
-```
-
----
-
-## 🔐 KYC Integration
-
-Verza integrates with **Onfido SDK** for robust identity verification:
-
-### Setup Process
-
-1. **Obtain Onfido API Credentials**
-   - Sign up for an Onfido account
-   - Generate API tokens from the dashboard
-   - Configure webhook endpoints
-
-2. **Environment Configuration**
-   ```env
-   ONFIDO_API_TOKEN=your_onfido_token_here
-   ONFIDO_WEBHOOK_SECRET=your_webhook_secret
-   EXPO_PUBLIC_API_URL=your_backend_api_url
-   ```
-
-3. **Verification Workflow**
-   ```tsx
-   import { Onfido } from '@onfido/react-native-sdk';
-   
-   const startVerification = async () => {
-     try {
-       const result = await Onfido.start({
-         sdkToken: 'your_sdk_token',
-         flowSteps: {
-           welcome: true,
-           documentCapture: true,
-           faceCapture: true,
-         },
-       });
-       // Handle successful verification
-     } catch (error) {
-       // Handle verification error
-     }
-   };
-   ```
-
-### Verification Features
-
-- **Document Capture** - Passport, ID cards, driving licenses
-- **Biometric Verification** - Facial recognition and liveness detection
-- **Address Verification** - Proof of address documents
-- **Real-time Processing** - Instant verification results
-- **Fraud Detection** - Advanced security measures
-
----
-
-## 🚀 Deployment
+## Deployment
 
 ### Web Deployment
-
-Deploy your web app using the built-in export functionality:
 
 ```bash
 npm run deploy
 ```
 
-This command:
-1. Exports the project for web (`expo export -p web`)
-2. Deploys using EAS CLI (`eas-cli deploy`)
-
 ### Mobile App Store Deployment
-
-Build and deploy mobile apps using Expo Application Services:
 
 ```bash
 # Install EAS CLI
 npm install -g @expo/eas-cli
 
-# Configure your project
+# Configure and build
 eas build:configure
-
-# Build for iOS and Android
 eas build --platform all
 
 # Submit to app stores
 eas submit
 ```
 
-### Environment-Specific Builds
+## Platform Support
 
-```bash
-# Development build
-eas build --profile development
+| Platform | Status | Version |
+|----------|--------|---------|
+| iOS | Supported | iOS 13+ |
+| Android | Supported | API 21+ |
+| Web | Supported | Modern browsers |
 
-# Preview build
-eas build --profile preview
+## Contributing
 
-# Production build
-eas build --profile production
-```
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/name`
+3. Make your changes
+4. Commit: `git commit -m 'Add feature'`
+5. Push: `git push origin feature/name`
+6. Open a Pull Request
 
----
+## License
 
-## 🧪 Development Guidelines
+MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Code Style
+## Support
 
-- Use **TypeScript** for all new files
-- Follow **React Native best practices**
-- Implement **responsive design patterns**
-- Use **semantic HTML elements** for web compatibility
-- Maintain **accessibility standards**
-
-### Component Structure
-
-```tsx
-// MyComponent.tsx
-import React from 'react';
-import { View, Text } from 'react-native';
-
-interface MyComponentProps {
-  title: string;
-  subtitle?: string;
-}
-
-export default function MyComponent({ title, subtitle }: MyComponentProps) {
-  return (
-    <View className="p-4 bg-white dark:bg-gray-900">
-      <Text className="text-xl font-bold text-gray-900 dark:text-white">
-        {title}
-      </Text>
-      {subtitle && (
-        <Text className="text-gray-600 dark:text-gray-300 mt-2">
-          {subtitle}
-        </Text>
-      )}
-    </View>
-  );
-}
-```
-
-### File Organization
-
-- **Components**: Reusable UI components in `/src/components/`
-- **Screens**: Page-level components using Expo Router in `/src/app/`
-- **Utils**: Helper functions in `/src/utils/`
-- **Types**: TypeScript definitions in `/src/types/`
-- **Hooks**: Custom React hooks in `/src/hooks/`
-- **Services**: API and external service integrations in `/src/services/`
-
----
+- [Documentation](https://docs.expo.dev/)
+- [GitHub Issues](https://github.com/mighty-odewumi/Verza/issues)
+- [GitHub Discussions](https://github.com/mighty-odewumi/Verza/discussions)
 
 ## 🔧 Environment Variables
 
@@ -502,7 +249,7 @@ git remote add upstream https://github.com/mighty-odewumi/Verza.git
 npm install
 
 # Start development server
-npm start
+npx expo start
 ```
 
 ### Code Guidelines
@@ -512,18 +259,6 @@ npm start
 - Add tests for new features
 - Update documentation as needed
 - Ensure cross-platform compatibility
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 Verza Contributors
-```
 
 
 ## 🆘 Support & Help
