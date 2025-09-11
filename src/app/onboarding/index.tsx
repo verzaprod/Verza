@@ -42,7 +42,7 @@ export default function OnboardingScreen() {
   }
 
   const handleSkip = () => {
-    router.replace("/register")
+    router.replace("/(auth)/register")
   }
 
   const handleBack = () => {

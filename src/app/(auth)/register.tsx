@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useTheme } from '@/theme/ThemeProvider';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { InputBox } from '@/components/ui/InputBox';
 import { Icon } from '@/components/ui/Icon';
-import { useAuthStore } from '@/store/authStore';
-import { apiClient } from '@/api/client';
+// import { useAuthStore } from '@/store/authStore';
+// import { apiClient } from '@/api/client';
 import { WIDTH, HEIGHT } from '@/constants';
 
 export default function RegisterScreen() {
   const theme = useTheme();
+  const router = useRouter();
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  const { setEmail } = useAuthStore();
+  // const { setEmail } = useAuthStore();
 
   const handleContinue = async () => {
     if (!emailOrPhone.trim()) return;
