@@ -35,7 +35,7 @@ Verza is a reusable KYC verification platform that streamlines identity verifica
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/mighty-odewumi/Verza.git
+   git clone https://github.com/verzaprod/Verza.git
    cd Verza
    ```
 
@@ -174,8 +174,8 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 ## Support
 
 - [Documentation](https://docs.expo.dev/)
-- [GitHub Issues](https://github.com/mighty-odewumi/Verza/issues)
-- [GitHub Discussions](https://github.com/mighty-odewumi/Verza/discussions)
+- [GitHub Issues](https://github.com/verzaprod/Verza/issues)
+- [GitHub Discussions](https://github.com/verzaprod/Verza/discussions)
 
 ## 🔧 Environment Variables
 
@@ -243,7 +243,7 @@ git clone https://github.com/YOUR_USERNAME/Verza.git
 cd Verza
 
 # Add upstream remote
-git remote add upstream https://github.com/mighty-odewumi/Verza.git
+git remote add upstream https://github.com/verzaprod/Verza.git
 
 # Install dependencies
 npm install
@@ -270,8 +270,8 @@ npx expo start
 - ⚡ [React Native Documentation](https://reactnative.dev/docs/getting-started)
 
 ### Community
-- 💬 [GitHub Discussions](https://github.com/mighty-odewumi/Verza/discussions)
-- 🐛 [Report Issues](https://github.com/mighty-odewumi/Verza/issues)
+- 💬 [GitHub Discussions](https://github.com/verzaprod/Verza/discussions)
+- 🐛 [Report Issues](https://github.com/verzaprod/Verza/issues)
 - 📧 [Email Support](mailto:support@verza.app)
 
 ### Quick Links
