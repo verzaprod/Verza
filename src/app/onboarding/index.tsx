@@ -37,12 +37,12 @@ export default function OnboardingScreen() {
     if (currentPage < onboardingData.length - 1) {
       setCurrentPage(currentPage + 1)
     } else {
-      router.replace("/(auth)/register")
+      router.replace("/(auth)")
     }
   }
 
   const handleSkip = () => {
-    router.replace("/(auth)/register")
+    router.replace("/(auth)")
   }
 
   const handleBack = () => {
