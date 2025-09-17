@@ -1,0 +1,27 @@
+{
+  "name": "verza-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for Verza VC Registry",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
+    "deploy:base": "hardhat run scripts/deploy.js --network base",
+    "verify": "hardhat verify",
+    "node": "hardhat node",
+    "generate-bindings": "abigen --abi ./artifacts/contracts/VCRegistry.sol/VCRegistry.json --pkg contracts --out ../pkg/contracts/vcregistry.go"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts-upgradeable": "^4.9.3",
+    "@openzeppelin/hardhat-upgrades": "^2.2.1",
+    "hardhat": "^2.19.0",
+    "chai": "^4.3.7",
+    "ethers": "^6.8.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3"
+  }
+}

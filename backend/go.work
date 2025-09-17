@@ -1,0 +1,16 @@
+go 1.22
+
+use (
+	./pkg/common
+	./pkg/kms
+	./pkg/security
+	./pkg/vc
+	./services/anchor-svc
+	./services/api-gateway
+	./services/did-svc
+	./services/issuer-svc
+	./services/ml-svc
+	./services/verifier-svc
+	./pkg/blockchain
+	./pkg/database
+)
