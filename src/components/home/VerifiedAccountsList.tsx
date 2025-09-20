@@ -51,7 +51,7 @@ export const VerifiedAccountsList: React.FC<VerifiedAccountsListProps> = ({ acco
               >
                 {account.name}
               </Text>
-              {index === accounts.length - 1 && (
+              {account.status === "verified" && (
                 <View className="flex-row justify-between items-center">
                   <Text
                     className="text-sm"
