@@ -29,6 +29,12 @@ const iconSources: Record<string, any> = {
   'note-list': require('@/assets/images/note-list.png'),
   'shield-check': require('@/assets/images/shield-check.png'),
   'shield': require('@/assets/images/shield.png'),
+  'avatar': require('@/assets/images/avatar.png'),
+  'cancel': require('@/assets/images/cancel.png'),
+  'remove': require('@/assets/images/remove.png'),
+  'wifi': require('@/assets/images/wifi.png'),
+  'plus': require('@/assets/images/plus.png'),
+  'notification': require('@/assets/images/notification.png'),
 };
 
 export const Icon: React.FC<IconProps> = ({ 
