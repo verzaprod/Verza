@@ -9,22 +9,25 @@ import { Icon } from '@/components/ui/Icon';
 // import { useAuthStore } from '@/store/authStore';
 // import { apiClient } from '@/api/client';
 import { WIDTH, HEIGHT } from '@/constants';
+import { useAuth, useSignUp } from '@clerk/clerk-expo';
 
 export default function RegisterScreen() {
   const theme = useTheme();
   const router = useRouter();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [loading, setLoading] = useState(false);
+  // const [pendingVerification, setPendingVerification] = useState(false);
   // const { setEmail } = useAuthStore();
 
-  const handleContinue = async () => {
-    if (!emailOrPhone.trim()) return;
+  // const handleContinue = async () => {
+  //   if (!emailOrPhone.trim()) return;
     
-    setLoading(true);
-    setTimeout(() => { 
-      setLoading(false);
-      router.replace('/(auth)/verify-email');
-    }, 2000)
+  //   setLoading(true);
+  //   setTimeout(() => { 
+  //     setLoading(false);
+  //     router.replace('/(auth)/verify-email');
+  //   }, 2000)
 
     // try {
     //   // const result = await apiClient.sendVerificationCode(emailOrPhone);
@@ -39,7 +42,26 @@ export default function RegisterScreen() {
     // } finally {
     //   setLoading(false);
     // }
-  };
+  // };
+
+  const onSignUpPress = async () => {
+    if (!emailOrPhone.trim()) return
+
+    if (!isLoaded) return
+
+    try {
+      await signUp.create({
+        emailAddressOrPhoneNumber: emailOrPhone,
+      })
+
+      // Send user an email with verification code
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
+
+      router.push("/(auth)/verify-email")
+    } catch (err) {
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }
 
   return (
     <SafeAreaView 
@@ -96,7 +118,7 @@ export default function RegisterScreen() {
 
             <CTAButton
               title="Continue"
-              onPress={handleContinue}
+              onPress={onSignUpPress}
               loading={loading}
               disabled={!emailOrPhone.trim()}
             />
