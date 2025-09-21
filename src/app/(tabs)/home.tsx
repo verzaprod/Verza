@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/Icon"
 import { UserIDCard } from "@/components/home/UserIdCard"
 import { VerifiedAccountsList } from "@/components/home/VerifiedAccountsList"
 import { AddAccountButton } from "@/components/home/AddAccountButton"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const verifiedAccounts = [
   { id: '1', name: 'Respress', status: 'verified' },
@@ -13,13 +14,17 @@ const verifiedAccounts = [
 
 export default function HomeScreen() {
   const theme = useTheme()
+  const insets = useSafeAreaInsets();
 
   return (
     <SafeAreaView 
       style={{ 
         flex: 1, 
-        backgroundColor: theme.colors.background 
+        backgroundColor: theme.colors.background,
+        paddingTop: insets.top,
+
       }}
+
     >
       <ScrollView className="flex-1 px-6" showsVerticalScrollIndicator={false}>
         <View className="flex-row justify-between items-center py-4">

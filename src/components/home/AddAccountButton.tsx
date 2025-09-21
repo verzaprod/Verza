@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { useTheme } from '@/theme/ThemeProvider'
 import { Icon } from '@/components/ui/Icon'
 
@@ -24,7 +24,7 @@ export const AddAccountButton: React.FC = () => {
       }}
       onPress={handleAddAccount}
     >
-      <TouchableOpacity
+      <View
         className="items-center justify-center"
         style={{
           width: 60,
@@ -34,7 +34,7 @@ export const AddAccountButton: React.FC = () => {
         }}
       >
         <Icon name="plus" size={24} color="white" />
-      </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   )
 }
