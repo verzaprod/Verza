@@ -6,8 +6,6 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { CTAButton } from '@/components/ui/CTAButton';
 import { InputBox } from '@/components/ui/InputBox';
 import { Icon } from '@/components/ui/Icon';
-// import { useAuthStore } from '@/store/authStore';
-// import { apiClient } from '@/api/client';
 import { WIDTH, HEIGHT } from '@/constants';
 import { useAuth, useSignUp } from '@clerk/clerk-expo';
 
@@ -17,32 +15,6 @@ export default function RegisterScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  // const [pendingVerification, setPendingVerification] = useState(false);
-  // const { setEmail } = useAuthStore();
-
-  // const handleContinue = async () => {
-  //   if (!emailOrPhone.trim()) return;
-    
-  //   setLoading(true);
-  //   setTimeout(() => { 
-  //     setLoading(false);
-  //     router.replace('/(auth)/verify-email');
-  //   }, 2000)
-
-    // try {
-    //   // const result = await apiClient.sendVerificationCode(emailOrPhone);
-    //   // if (result.success) {
-    //   //   setEmail(emailOrPhone);
-    //   // router.replace('/(auth)/verify-email');
-    //   // }
-    // } catch (error) {
-    //   console.error('Error sending verification code:', error);
-    //   // TODO: show an error message to the user
-    //   Alert.alert("Registration failed!", "Please try again.")
-    // } finally {
-    //   setLoading(false);
-    // }
-  // };
 
   const onSignUpPress = async () => {
     if (!emailOrPhone.trim()) return
@@ -50,16 +22,20 @@ export default function RegisterScreen() {
     if (!isLoaded) return
 
     try {
+      setLoading(true)
       await signUp.create({
         emailAddressOrPhoneNumber: emailOrPhone,
       })
 
       // Send user an email with verification code
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' })
-
       router.push("/(auth)/verify-email")
     } catch (err) {
+      setLoading(false)
       console.error(JSON.stringify(err, null, 2))
+      Alert.alert("Registration Failed", `${err.errors[0].longMessage}`)
+    } finally {
+      setLoading(false)
     }
   }
 
