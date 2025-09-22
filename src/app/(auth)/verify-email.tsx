@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native"
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from "react-native"
 import { useRouter } from "expo-router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
@@ -25,7 +25,7 @@ export default function VerifyEmailScreen() {
     try {
       // Use the code the user provided to attempt verification
       setLoading(true)
-      
+
       const signUpAttempt = await signUp.attemptEmailAddressVerification({
         code: otp,
       })
@@ -43,7 +43,12 @@ export default function VerifyEmailScreen() {
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+      setLoading(false)
       console.error(JSON.stringify(err, null, 2))
+      // console.error(err.errors[0].longMessage)
+      Alert.alert("Registration Failed", `${err.errors[0].longMessage}`)
+    } finally {
+      setLoading(false)
     }
   }
 
