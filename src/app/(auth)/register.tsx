@@ -24,7 +24,7 @@ export default function RegisterScreen() {
     try {
       setLoading(true)
       await signUp.create({
-        emailAddressOrPhoneNumber: emailOrPhone,
+        emailAddress: emailOrPhone,
       })
 
       // Send user an email with verification code
