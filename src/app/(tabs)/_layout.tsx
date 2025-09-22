@@ -8,7 +8,7 @@ export default function TabsLayout() {
       {/* <Stack /> */}
        <Tabs screenOptions={{ headerShown: false }}>  
          <Tabs.Screen  
-           name="Home"  
+           name="home"  
            options={{
              tabBarLabel: 'Home',
              tabBarIcon: ({ color, size }) => (
