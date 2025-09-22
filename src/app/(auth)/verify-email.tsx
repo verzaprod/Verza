@@ -16,7 +16,6 @@ export default function VerifyEmailScreen() {
 
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
-  const [newAttempt, setNewAttempt] = useState(null)
   
   const onVerifyPress = async () => {
     if (otp.length !== 6) return
