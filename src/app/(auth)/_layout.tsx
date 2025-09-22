@@ -13,6 +13,7 @@ export default function AuthLayout() {
     <>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
         <Stack.Screen name="auth-success" options={{ headerShown: false }} />
         <Stack.Screen name="backup-passphrase" options={{ headerShown: false }} />
         <Stack.Screen name="confirm-passphrase" options={{ headerShown: false }} />
