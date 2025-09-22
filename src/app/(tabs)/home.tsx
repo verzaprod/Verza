@@ -8,6 +8,9 @@ import { AccountsList } from "@/components/home/AccountsList"
 import { CircularAddButton } from "@/components/home/CircularAddButton"
 import { AddAccountButton } from "@/components/home/AddAccountButton"
 import { UserIDCard } from "@/components/home/UserIDCard"
+import { useRouter } from "expo-router"
+import { useClerk }from "@clerk/clerk-expo"
+
 
 const verifiedAccounts = [
   { id: '1', name: 'Respress', status: 'verified' },
@@ -18,6 +21,21 @@ const verifiedAccounts = [
 export default function DashboardScreen() {
   const theme = useTheme()
   const insets = useSafeAreaInsets()
+
+  const { signOut } = useClerk()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      // Redirect to your desired page
+      router.replace('/')
+    } catch (err) {
+      // See https://clerk.com/docs/custom-flows/error-handling
+      // for more info on error handling
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }
 
   return (
     <SafeAreaView 
@@ -56,6 +74,8 @@ export default function DashboardScreen() {
         <View style={{ alignItems: 'center', paddingBottom: theme.spacing.xl }}>
           <AddAccountButton />
         </View>
+
+
       </ScrollView>
     </SafeAreaView>
   )
