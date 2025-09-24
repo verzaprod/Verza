@@ -30,7 +30,7 @@ export default function SignInScreen() {
       
       const signInAttempt = await signIn.create({
         identifier: emailOrPhone,
-        password,
+        // password,
       });
 
       if (signInAttempt.status === 'complete') {
