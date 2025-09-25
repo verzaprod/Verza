@@ -102,6 +102,7 @@ const insets = useSafeAreaInsets();
               onChangeText={setEmailAddress}
               keyboardType="email-address"
               autoCapitalize="none"
+              returnKeyType="next"
             />
 
             <View className="mb-4" />
@@ -112,6 +113,7 @@ const insets = useSafeAreaInsets();
               onChangeText={setPassword}
               keyboardType="default"
               secureTextEntry
+              returnKeyType="done"
             />
 
             <View className="mb-4" />
