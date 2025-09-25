@@ -33,7 +33,6 @@ export default function DashboardScreen() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      // Redirect to your desired page
       router.replace("/(auth)/sign-in");
     } catch (err) {
       console.error(JSON.stringify(err, null, 2));

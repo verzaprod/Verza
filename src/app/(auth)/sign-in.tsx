@@ -27,12 +27,8 @@ export default function SignInScreen() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { 
-    pinCreated, 
-    passphraseBackedUp, 
-    setAuthenticated, 
-    setFirstTimeUser 
-  } = useAuthStore();
+  const { pinCreated, passphraseBackedUp, setAuthenticated, setFirstTimeUser } =
+    useAuthStore();
 
   const onSignInPress = async () => {
     if (!emailAddress.trim() || !password.trim()) {
@@ -57,7 +53,7 @@ export default function SignInScreen() {
 
         if (hasCompletedOnboarding) {
           setFirstTimeUser(false);
-
+          setAuthenticated(true);
           router.replace("/(tabs)/home");
         } else {
           setFirstTimeUser(true);
@@ -69,7 +65,6 @@ export default function SignInScreen() {
             router.replace("/(tabs)/home");
           }
         }
-        
       } else {
         console.log("Sign-in incomplete:", signInAttempt.status);
         Alert.alert(
@@ -105,7 +100,7 @@ export default function SignInScreen() {
       className="flex-1"
       style={{
         backgroundColor: theme.colors.background,
-        paddingBottom: insets.bottom
+        paddingBottom: insets.bottom,
       }}
     >
       <KeyboardAvoidingView

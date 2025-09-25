@@ -6,6 +6,7 @@ import { useTheme } from "@/theme/ThemeProvider"
 import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { InputBoxes } from "@/components/ui/InputBoxes"
+import { useAuthStore } from "@/store/authStore"
 
 export default function CreatePinScreen() {
   const router = useRouter()
@@ -13,6 +14,8 @@ export default function CreatePinScreen() {
   const insets = useSafeAreaInsets()
   const [pin, setPin] = useState("")
   const [loading, setLoading] = useState(false)
+
+  const { setPinCreated } = useAuthStore();
 
   const handleCreatePin = async () => {
     if (pin.length !== 4) return
@@ -23,6 +26,7 @@ export default function CreatePinScreen() {
 
     setTimeout(() => {
       setLoading(false)
+      setPinCreated(true);
       router.replace("/(auth)/backup-passphrase")
     }, 2000)
   }

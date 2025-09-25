@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { WordChipGrid } from "@/components/auth/WordChipGrid"
+import { useAuthStore } from "@/store/authStore"
 
 const DEMO_WORDS = [
   'abandon', 'ability', 'able', 'about',
@@ -21,6 +22,8 @@ export default function ConfirmPassphraseScreen() {
   const [shuffledWords, setShuffledWords] = useState<string[]>([])
   const [selectedWords, setSelectedWords] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+
+  const { setPassphraseBackedUp, setOnboardingComplete } = useAuthStore();
 
   useEffect(() => {
     // Shuffle the words for selection
@@ -53,6 +56,8 @@ export default function ConfirmPassphraseScreen() {
       
       setTimeout(() => {
         setLoading(false)
+        setPassphraseBackedUp(true);
+        setOnboardingComplete(true);
         router.replace('/(auth)/auth-success')
       }, 1500)
     } catch (error) {
