@@ -21,13 +21,25 @@ interface AuthState {
 
 const secureStorage = {
   getItem: async (name: string): Promise<string | null> => {
-    return await SecureStore.getItemAsync(name);
+    try {
+      return await SecureStore.getItemAsync(name);
+    } catch (error) {
+      console.warn("SecureStore getItem erorr", error);
+    } 
   },
   setItem: async (name: string, value: string): Promise<void> => {
-    await SecureStore.setItemAsync(name, value);
+    try {
+      await SecureStore.setItemAsync(name, value);
+    } catch (error) {
+      console.warn("SecureStore getItem erorr", error);
+    } 
   },
   removeItem: async (name: string): Promise<void> => {
-    await SecureStore.deleteItemAsync(name);
+    try {
+      await SecureStore.deleteItemAsync(name);
+    } catch (error) {
+      console.warn("SecureStore getItem erorr", error);
+    } ;
   },
 };
 
@@ -42,8 +54,14 @@ export const useAuthStore = create<AuthState>()(
       isFirstTimeUser: true,
       setEmail: (email) => set({ userEmail: email }),
       setOnboardingComplete: (complete) => set({ onboardingComplete: complete }),
-      setPinCreated: (created) => set({ pinCreated: created }),
-      setPassphraseBackedUp: (backed) => set({ passphraseBackedUp: backed }),
+      setPinCreated: (created) => {
+        console.log("Setting pinCreated:", created);
+        set({ pinCreated: created });
+      },
+      setPassphraseBackedUp: (backed) => {
+        console.log("Setting PassphraseBackedup:", backed);
+        set({ passphraseBackedUp: backed });
+      },
       setFirstTimeUser: (isFirstTime) => set({ isFirstTimeUser: isFirstTime}),
       setAuthenticated: (authenticated) => set({isAuthenticated: authenticated}),
       completeOnboarding: () => set({

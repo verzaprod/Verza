@@ -9,8 +9,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
-import { Redirect } from "expo-router";
-import { AuthWrapper } from "@/components/auth/AuthWrapper";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,7 +36,6 @@ export default function Layout() {
     <ClerkProvider tokenCache={tokenCache}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <AuthWrapper>
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen
@@ -47,9 +44,9 @@ export default function Layout() {
               />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(kyc)" options={{ headerShown: false }} />
             </Stack>
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-          </AuthWrapper>
         </ThemeProvider>
       </SafeAreaProvider>
     </ClerkProvider>

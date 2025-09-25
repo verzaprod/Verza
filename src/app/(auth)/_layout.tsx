@@ -1,12 +1,19 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { Redirect, Stack } from "expo-router";
+import { useAuthStore } from "@/store/authStore";
 
 export default function AuthLayout() {
   
   const { isSignedIn } = useAuth();
+  const { pinCreated, passphraseBackedUp } = useAuthStore();
 
   if (isSignedIn) {
-    return <Redirect href={"/(tabs)/home"} />
+
+    const hasCompletedOnboarding = pinCreated && passphraseBackedUp;
+
+    if (hasCompletedOnboarding) {
+      return <Redirect href={"/(tabs)/home"} />
+    }
   }
 
   return (
