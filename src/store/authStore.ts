@@ -8,10 +8,14 @@ interface AuthState {
   onboardingComplete: boolean;
   pinCreated: boolean;
   passphraseBackedUp: boolean;
+  isFirstTimeUser: boolean;
   setEmail: (email: string) => void;
   setOnboardingComplete: (complete: boolean) => void;
   setPinCreated: (created: boolean) => void;
   setPassphraseBackedUp: (backed: boolean) => void;
+  setFirstTimeUser: (isFirstTime: boolean) => void;
+  setAuthenticated: (authenticated: boolean) => void;
+  completeOnboarding: () => void;
   reset: () => void;
 }
 
@@ -29,22 +33,32 @@ const secureStorage = {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       isAuthenticated: false,
       userEmail: null,
       onboardingComplete: false,
       pinCreated: false,
       passphraseBackedUp: false,
+      isFirstTimeUser: true,
       setEmail: (email) => set({ userEmail: email }),
       setOnboardingComplete: (complete) => set({ onboardingComplete: complete }),
       setPinCreated: (created) => set({ pinCreated: created }),
       setPassphraseBackedUp: (backed) => set({ passphraseBackedUp: backed }),
+      setFirstTimeUser: (isFirstTime) => set({ isFirstTimeUser: isFirstTime}),
+      setAuthenticated: (authenticated) => set({isAuthenticated: authenticated}),
+      completeOnboarding: () => set({
+        onboardingComplete: true, 
+        pinCreated: true,
+        passphraseBackedUp: true,
+        isFirstTimeUser: false,
+      }),
       reset: () => set({
         isAuthenticated: false,
         userEmail: null,
         onboardingComplete: false,
         pinCreated: false,
         passphraseBackedUp: false,
+        isFirstTimeUser: true,
       }),
     }),
     {

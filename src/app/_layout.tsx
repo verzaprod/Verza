@@ -1,15 +1,16 @@
 import "../global.css";
 import React, { useEffect } from "react";
 import { Stack } from "expo-router/stack";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemeProvider } from "@/theme/ThemeProvider";
-import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Redirect } from "expo-router";
+import { AuthWrapper } from "@/components/auth/AuthWrapper";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,10 +18,10 @@ export default function Layout() {
   const colorScheme = useColorScheme();
 
   const [loaded] = useFonts({
-    SansationLight: require('@/assets/fonts/Sansation-Light.ttf'),
-    SFPro: require('@/assets/fonts/sf-pro-med.ttf'),
-    UrbanistBold: require('@/assets/fonts/Urbanist-Bold.ttf'),
-    UrbanistExtraBold: require('@/assets/fonts/Urbanist-ExtraBold.ttf'),
+    SansationLight: require("@/assets/fonts/Sansation-Light.ttf"),
+    SFPro: require("@/assets/fonts/sf-pro-med.ttf"),
+    UrbanistBold: require("@/assets/fonts/Urbanist-Bold.ttf"),
+    UrbanistExtraBold: require("@/assets/fonts/Urbanist-ExtraBold.ttf"),
   });
 
   useEffect(() => {
@@ -37,13 +38,18 @@ export default function Layout() {
     <ClerkProvider tokenCache={tokenCache}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+          <AuthWrapper>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(onboarding)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+          </AuthWrapper>
         </ThemeProvider>
       </SafeAreaProvider>
     </ClerkProvider>
