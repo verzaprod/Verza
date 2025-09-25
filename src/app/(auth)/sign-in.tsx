@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, Alert, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useTheme } from '@/theme/ThemeProvider';
-import { CTAButton } from '@/components/ui/CTAButton';
-import { InputBox } from '@/components/ui/InputBox';
-import { Icon } from '@/components/ui/Icon';
-import { WIDTH, HEIGHT } from '@/constants';
-import { useSignIn } from '@clerk/clerk-expo';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { useTheme } from "@/theme/ThemeProvider";
+import { CTAButton } from "@/components/ui/CTAButton";
+import { InputBox } from "@/components/ui/InputBox";
+import { Icon } from "@/components/ui/Icon";
+import { WIDTH, HEIGHT } from "@/constants";
+import { useSignIn } from "@clerk/clerk-expo";
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 export default function SignInScreen() {
   const theme = useTheme();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { signIn, setActive, isLoaded } = useSignIn();
-  const [emailOrPhone, setEmailOrPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSignInPress = async () => {
-    if (!emailOrPhone.trim() || !password.trim()) {
+    if (!emailAddress.trim() || !password.trim()) {
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
@@ -27,22 +36,27 @@ export default function SignInScreen() {
 
     try {
       setLoading(true);
-      
+
       const signInAttempt = await signIn.create({
-        identifier: emailOrPhone,
-        // password,
+        identifier: emailAddress,
+        password,
       });
 
-      if (signInAttempt.status === 'complete') {
+      if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
         router.replace("/(tabs)/home");
       } else {
         console.log("Sign-in incomplete:", signInAttempt.status);
-        Alert.alert("Sign In Failed", "Unable to complete sign in. Please try again.");
+        Alert.alert(
+          "Sign In Failed",
+          "Unable to complete sign in. Please try again."
+        );
       }
     } catch (err) {
       console.error("Sign-in error:", err);
-      const errorMessage = err?.errors?.[0]?.longMessage || "Sign in failed. Please check your credentials.";
+      const errorMessage =
+        err?.errors?.[0]?.longMessage ||
+        "Sign in failed. Please check your credentials.";
       Alert.alert("Sign In Failed", errorMessage);
     } finally {
       setLoading(false);
@@ -51,7 +65,10 @@ export default function SignInScreen() {
 
   const handleForgotPassword = () => {
     // TODO: Implement forgot password flow
-    Alert.alert("Forgot Password", "Password reset functionality will be implemented soon.");
+    Alert.alert(
+      "Forgot Password",
+      "Password reset functionality will be implemented soon."
+    );
   };
 
   const handleCreateAccount = () => {
@@ -59,31 +76,31 @@ export default function SignInScreen() {
   };
 
   return (
-    <SafeAreaView 
-      className="flex-1" 
-      style={{ 
-        backgroundColor: theme.colors.background, 
+    <SafeAreaView
+      className="flex-1"
+      style={{
+        backgroundColor: theme.colors.background,
+        paddingBottom: insets.bottom
       }}
     >
-      <KeyboardAvoidingView 
-        className="flex-1" 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      <KeyboardAvoidingView
+        className="flex-1"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View className="flex-1 justify-center">
-          {/* Header Section */}
-          <View className="mb-8 px-6">
-            <Text 
+          <View className="px-6">
+            <Text
               className="text-3xl text-center font-bold mb-2"
-              style={{ 
+              style={{
                 color: theme.colors.textPrimary,
                 fontFamily: theme.fonts.welcomeHeading,
               }}
             >
               Welcome Back
             </Text>
-            <Text 
+            <Text
               className="text-lg text-center"
-              style={{ 
+              style={{
                 color: theme.colors.textSecondary,
                 fontFamily: theme.fonts.onboardingTagline,
               }}
@@ -92,62 +109,45 @@ export default function SignInScreen() {
             </Text>
           </View>
 
-          {/* Illustration */}
-          <View className="items-center justify-center mb-8">
-            <Icon 
-              name="welcome" 
+          <View className="items-center justify-center mb-10">
+            <Icon
+              name="welcome"
               style={{
-                width: WIDTH * 0.8, 
+                width: WIDTH * 0.8,
                 height: HEIGHT * 0.8,
               }}
             />
           </View>
 
-          {/* Form Section */}
           <View className="space-y-6 px-6">
             <InputBox
-              placeholder="Enter email or phone number"
-              value={emailOrPhone}
-              onChangeText={setEmailOrPhone}
+              placeholder="Email e.g. michaeljackson@gmail.com"
+              value={emailAddress}
+              onChangeText={setEmailAddress}
               keyboardType="email-address"
               autoCapitalize="none"
             />
-            
+
+            <View className="mb-4" />
+
             <InputBox
-              placeholder="Enter your password"
+              placeholder="Password e.g. X8df!90EO"
               value={password}
               onChangeText={setPassword}
               secureTextEntry
               autoCapitalize="none"
             />
 
-            {/* Forgot Password Link */}
-            <TouchableOpacity 
-              onPress={handleForgotPassword}
-              style={{ alignSelf: 'flex-end' }}
-            >
-              <Text
-                style={{
-                  color: theme.colors.primaryGreen,
-                  fontSize: 14,
-                  fontWeight: '600',
-                }}
-              >
-                Forgot Password?
-              </Text>
-            </TouchableOpacity>
-            
-            <View className="mb-4"/>
+            <View className="mb-4" />
 
             <CTAButton
               title="Sign In"
               onPress={onSignInPress}
               loading={loading}
-              disabled={!emailOrPhone.trim() || !password.trim()}
+              disabled={!emailAddress.trim() || !password.trim()}
             />
 
-            {/* Create Account Link */}
-            <View className="flex-row justify-center items-center mt-6">
+            <View className="flex-row justify-center items-center mt-4">
               <Text
                 style={{
                   color: theme.colors.textSecondary,
@@ -161,7 +161,7 @@ export default function SignInScreen() {
                   style={{
                     color: theme.colors.primaryGreen,
                     fontSize: 16,
-                    fontWeight: '600',
+                    fontWeight: "600",
                   }}
                 >
                   Create Account
