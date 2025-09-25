@@ -120,7 +120,7 @@ const insets = useSafeAreaInsets();
               title="Continue"
               onPress={onSignUpPress}
               loading={loading}
-              disabled={!emailAddress.trim()}
+              disabled={!emailAddress.trim() || !password.trim()}
             />
           </View>
 
