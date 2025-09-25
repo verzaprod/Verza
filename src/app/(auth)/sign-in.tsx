@@ -126,6 +126,7 @@ export default function SignInScreen() {
               onChangeText={setEmailAddress}
               keyboardType="email-address"
               autoCapitalize="none"
+              returnKeyType="next"
             />
 
             <View className="mb-4" />
@@ -136,6 +137,7 @@ export default function SignInScreen() {
               onChangeText={setPassword}
               secureTextEntry
               autoCapitalize="none"
+              returnKeyType="done"
             />
 
             <View className="mb-4" />
