@@ -15,7 +15,8 @@ import { InputBox } from "@/components/ui/InputBox";
 import { Icon } from "@/components/ui/Icon";
 import { WIDTH, HEIGHT } from "@/constants";
 import { useSignIn } from "@clerk/clerk-expo";
-import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useAuthStore } from "@/store/authStore";
 
 export default function SignInScreen() {
   const theme = useTheme();
@@ -25,6 +26,9 @@ export default function SignInScreen() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { pinCreated, passphraseBackedUp, setAuthenticated, setFirstTimeUser } =
+    useAuthStore();
 
   const onSignInPress = async () => {
     if (!emailAddress.trim() || !password.trim()) {
@@ -44,7 +48,23 @@ export default function SignInScreen() {
 
       if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
-        router.replace("/(tabs)/home");
+
+        const hasCompletedOnboarding = pinCreated && passphraseBackedUp;
+
+        if (hasCompletedOnboarding) {
+          setFirstTimeUser(false);
+          setAuthenticated(true);
+          router.replace("/(tabs)/home");
+        } else {
+          setFirstTimeUser(true);
+          if (!pinCreated) {
+            router.replace("/(auth)/create-pin");
+          } else if (!passphraseBackedUp) {
+            router.replace("/(auth)/backup-passphrase");
+          } else {
+            router.replace("/(tabs)/home");
+          }
+        }
       } else {
         console.log("Sign-in incomplete:", signInAttempt.status);
         Alert.alert(
@@ -80,7 +100,7 @@ export default function SignInScreen() {
       className="flex-1"
       style={{
         backgroundColor: theme.colors.background,
-        paddingBottom: insets.bottom
+        paddingBottom: insets.bottom,
       }}
     >
       <KeyboardAvoidingView
