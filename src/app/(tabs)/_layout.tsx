@@ -3,6 +3,7 @@ import { Icon } from "@/components/ui/Icon";
 import { useTheme } from "@/theme/ThemeProvider";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Entypo from "@expo/vector-icons/Entypo";
 
 export default function TabsLayout() {
   const theme = useTheme();
@@ -37,6 +38,15 @@ export default function TabsLayout() {
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5 name="user-check" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="verifiers"
+          options={{
+            tabBarLabel: "Verifiers",
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="shop" size={size} color={color} />
             ),
           }}
         />
