@@ -1,21 +1,21 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { useTheme } from '@/theme/ThemeProvider'
-import { Icon } from '@/components/ui/Icon'
+import React from "react";
+import { View, Text } from "react-native";
+import { useTheme } from "@/theme/ThemeProvider";
+import { Icon } from "@/components/ui/Icon";
 
 export const ProfileHeader: React.FC = () => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
-    <View style={{ alignItems: 'center', marginBottom: theme.spacing.xxl }}>
+    <View style={{ alignItems: "center", marginBottom: theme.spacing.xxl }}>
       <View
         style={{
           width: 120,
           height: 120,
           borderRadius: 60,
           backgroundColor: theme.colors.primaryGreen,
-          alignItems: 'center',
-          justifyContent: 'center',
+          alignItems: "center",
+          justifyContent: "center",
           marginBottom: theme.spacing.lg,
         }}
       >
@@ -25,7 +25,7 @@ export const ProfileHeader: React.FC = () => {
       <Text
         style={{
           fontSize: 24,
-          fontWeight: 'bold',
+          fontWeight: "bold",
           color: theme.colors.textPrimary,
           fontFamily: theme.fonts.welcomeHeading,
           marginBottom: theme.spacing.xs,
@@ -43,5 +43,5 @@ export const ProfileHeader: React.FC = () => {
         helloworld@gmail.com
       </Text>
     </View>
-  )
-}
+  );
+};
