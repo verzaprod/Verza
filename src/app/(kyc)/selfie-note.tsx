@@ -18,7 +18,6 @@ export default function SelfieNote() {
 
   const handleTakeSelfie = () => {
     router.push("/(kyc)/selfie-capture")
-    // router.push("/(kyc)/verification-tracker")
   }
 
   return (

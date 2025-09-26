@@ -40,7 +40,6 @@ export default function SelectionType() {
 
   const handleContinue = () => {
     if (selectedType) {
-      // router.push(`/(kyc)/doc-capture?type=${selectedType}`)
       setDocumentType(selectedType)
       setCurrentStep('docs')
       router.push(`/(kyc)/doc-capture`)
@@ -48,10 +47,8 @@ export default function SelectionType() {
   }
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" 
-        ? "padding" : "height"}
-      style={{ 
+    <SafeAreaView 
+      style={{
         flex: 1, 
         paddingTop: insets.top, 
         backgroundColor: theme.colors.background,
@@ -102,6 +99,6 @@ export default function SelectionType() {
           disabled={!selectedType}
         />
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
