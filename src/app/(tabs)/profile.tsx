@@ -9,7 +9,7 @@ import { AddCredentialButton } from "@/components/profile/AddCredentialButton";
 const credentials = [
   { id: "1", type: "ID Card", status: "verified", icon: "id-card" },
   { id: "2", type: "Passport", status: "verified", icon: "passport" },
-  { id: "3", type: "Proof of Address", status: "pending", icon: "home" },
+  { id: "3", type: "Address", status: "pending", icon: "home" },
 ];
 
 export default function ProfileScreen() {
@@ -21,7 +21,7 @@ export default function ProfileScreen() {
       style={{
         flex: 1,
         backgroundColor: theme.colors.background,
-        paddingTop: insets.top,
+        paddingTop: insets.top + 24,
       }}
     >
       <ScrollView
