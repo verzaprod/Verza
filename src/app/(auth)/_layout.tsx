@@ -1,12 +1,13 @@
-import { useAuth, useClerk } from "@clerk/clerk-expo";
+import { useAuth, useClerk, useUser } from "@clerk/clerk-expo";
 import { Redirect, Stack } from "expo-router";
 import { useAuthStore } from "@/store/authStore";
 
 export default function AuthLayout() {
   const { isSignedIn } = useAuth();
-  const { pinCreated, passphraseBackedUp } = useAuthStore();
+  const { pinCreated, passphraseBackedUp, reset } = useAuthStore();
 
   // const { signOut } = useClerk();
+  // const { user } = useUser();
 
   if (isSignedIn) {
     const hasCompletedOnboarding = pinCreated && passphraseBackedUp;
@@ -16,7 +17,10 @@ export default function AuthLayout() {
     }
   }
 
+  // console.log("User", user);
+
   // signOut();
+  // reset()
 
   return (
     <>

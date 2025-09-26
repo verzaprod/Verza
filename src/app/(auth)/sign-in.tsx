@@ -14,7 +14,7 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import { InputBox } from "@/components/ui/InputBox";
 import { Icon } from "@/components/ui/Icon";
 import { WIDTH, HEIGHT } from "@/constants";
-import { useSignIn } from "@clerk/clerk-expo";
+import { useAuth, useSignIn, useUser } from "@clerk/clerk-expo";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/authStore";
 
@@ -23,12 +23,23 @@ export default function SignInScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { signIn, setActive, isLoaded } = useSignIn();
+  const { isSignedIn } = useAuth();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { pinCreated, passphraseBackedUp, setAuthenticated, setFirstTimeUser } =
-    useAuthStore();
+  const { user } = useUser();
+
+  const {
+    pinCreated,
+    passphraseBackedUp,
+    setAuthenticated,
+    setFirstTimeUser,
+    isFirstTimeUser,
+    isAuthenticated,
+  } = useAuthStore();
+
+  console.log("Firsttimeuser", isFirstTimeUser, user);
 
   const onSignInPress = async () => {
     if (!emailAddress.trim() || !password.trim()) {
@@ -49,22 +60,23 @@ export default function SignInScreen() {
       if (signInAttempt.status === "complete") {
         await setActive({ session: signInAttempt.createdSessionId });
 
-        const hasCompletedOnboarding = pinCreated && passphraseBackedUp;
+        router.replace("/(tabs)/home");
+        // const hasCompletedOnboarding = pinCreated && passphraseBackedUp;
 
-        if (hasCompletedOnboarding) {
-          setFirstTimeUser(false);
-          setAuthenticated(true);
-          router.replace("/(tabs)/home");
-        } else {
-          setFirstTimeUser(true);
-          if (!pinCreated) {
-            router.replace("/(auth)/create-pin");
-          } else if (!passphraseBackedUp) {
-            router.replace("/(auth)/backup-passphrase");
-          } else {
-            router.replace("/(tabs)/home");
-          }
-        }
+        // if (hasCompletedOnboarding) {
+        //   setFirstTimeUser(false);
+        //   setAuthenticated(true);
+        //   router.replace("/(tabs)/home");
+        // } else {
+        //   setFirstTimeUser(true);
+        //   if (!pinCreated) {
+        //     router.replace("/(auth)/create-pin");
+        //   } else if (!passphraseBackedUp) {
+        //     router.replace("/(auth)/backup-passphrase");
+        //   } else {
+        //     router.replace("/(tabs)/home");
+        //   }
+        // }
       } else {
         console.log("Sign-in incomplete:", signInAttempt.status);
         Alert.alert(
@@ -169,27 +181,29 @@ export default function SignInScreen() {
               disabled={!emailAddress.trim() || !password.trim()}
             />
 
-            <View className="flex-row justify-center items-center mt-4">
-              <Text
-                style={{
-                  color: theme.colors.textSecondary,
-                  fontSize: 16,
-                }}
-              >
-                Don't have an account?{" "}
-              </Text>
-              <TouchableOpacity onPress={handleCreateAccount}>
+            {user && (
+              <View className="flex-row justify-center items-center mt-4">
                 <Text
                   style={{
-                    color: theme.colors.primaryGreen,
+                    color: theme.colors.textSecondary,
                     fontSize: 16,
-                    fontWeight: "600",
                   }}
                 >
-                  Create Account
+                  Don't have an account?{" "}
                 </Text>
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity onPress={handleCreateAccount}>
+                  <Text
+                    style={{
+                      color: theme.colors.primaryGreen,
+                      fontSize: 16,
+                      fontWeight: "600",
+                    }}
+                  >
+                    Create Account
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </View>
       </KeyboardAvoidingView>

@@ -7,6 +7,7 @@ import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { InputBoxes } from "@/components/ui/InputBoxes"
 import { useSignUp } from "@clerk/clerk-expo"
+import { useAuthStore } from "@/store/authStore"
 
 export default function VerifyEmailScreen() {
   const router = useRouter()
@@ -16,6 +17,7 @@ export default function VerifyEmailScreen() {
 
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
+  const { setFirstTimeUser, setAuthenticated } = useAuthStore();
   
   const onVerifyPress = async () => {
     if (otp.length !== 6) return
@@ -32,6 +34,8 @@ export default function VerifyEmailScreen() {
 
       if (signUpAttempt.status === 'complete') {
         await setActive({ session: signUpAttempt.createdSessionId })
+        setFirstTimeUser(true);
+        setAuthenticated(true);
         router.replace('/(auth)/create-pin')
         
       } else if (signUpAttempt.status === 'missing_requirements') {

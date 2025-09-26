@@ -16,6 +16,7 @@ import { AddAccountButton } from "@/components/home/AddAccountButton";
 import { UserIDCard } from "@/components/home/UserIDCard";
 import { useRouter } from "expo-router";
 import { useClerk } from "@clerk/clerk-expo";
+import { useAuthStore } from "@/store/authStore";
 
 const verifiedAccounts = [
   { id: "1", name: "Respress", status: "verified" },
@@ -26,13 +27,15 @@ const verifiedAccounts = [
 export default function DashboardScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-
+  const { setAuthenticated } = useAuthStore();
+ 
   const { signOut } = useClerk();
   const router = useRouter();
 
   const handleSignOut = async () => {
     try {
       await signOut();
+      setAuthenticated(false);
       router.replace("/(auth)/sign-in");
     } catch (err) {
       console.error(JSON.stringify(err, null, 2));
