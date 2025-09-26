@@ -33,7 +33,7 @@ export const VerifierCard: React.FC<VerifierCardProps> = ({ verifier }) => {
   }
 
   const handlePress = () => {
-    router.push(`/(kyc)/selection-type?verifierId=${verifier.id}`)
+    router.push(`/(kyc)/escrow-confirmation?verifierId=${verifier.id}`)
   }
 
   return (
