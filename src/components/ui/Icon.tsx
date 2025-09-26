@@ -36,7 +36,8 @@ const iconSources: Record<string, any> = {
   'plus': require('@/assets/images/plus.png'),
   'notification': require('@/assets/images/notification.png'),
   'home': require('@/assets/images/home-32.png'), 
-  'profile': require('@/assets/images/profile-32.png'),
+  // 'profile': require('@/assets/images/profile-32.png'),
+  'profile': require('@/assets/images/profile-apply.png'),
 
 };
 

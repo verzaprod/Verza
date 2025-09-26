@@ -9,7 +9,7 @@ import { AddCredentialButton } from "@/components/profile/AddCredentialButton";
 const credentials = [
   { id: "1", type: "ID Card", status: "verified", icon: "id-card" },
   { id: "2", type: "Passport", status: "verified", icon: "passport" },
-  { id: "3", type: "Address", status: "pending", icon: "home" },
+  { id: "3", type: "Driver's\nLicense", status: "pending", icon: "driver-license" },
 ];
 
 export default function ProfileScreen() {
@@ -39,6 +39,7 @@ export default function ProfileScreen() {
               color: theme.colors.textPrimary,
               fontFamily: theme.fonts.welcomeHeading,
               marginBottom: theme.spacing.lg,
+              textAlign: "center",
             }}
           >
             Enlisted Credentials
