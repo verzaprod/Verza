@@ -26,7 +26,6 @@ export const DashboardHeader: React.FC = () => {
           style={{
             width: 24,
             height: 24,
-            // backgroundColor: '#16A34A',
             borderRadius: 12,
             alignItems: 'center',
             justifyContent: 'center',

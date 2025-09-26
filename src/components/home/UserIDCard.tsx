@@ -11,11 +11,11 @@ export const UserIDCard: React.FC = () => {
       className="p-6 rounded-3xl"
       style={{
         backgroundColor: theme.colors.primaryGreen,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.15,
-        shadowRadius: 20,
-        elevation: 8,
+        shadowRadius: 40,
+        elevation: 40,
       }}
     >
       <View className="flex-row justify-between items-start mb-6">
@@ -29,7 +29,7 @@ export const UserIDCard: React.FC = () => {
       </View>
 
       <Text
-        className="text-3xl font-bold mb-8"
+        className="text-3xl mb-8 text-center"
         style={{ 
           color: 'white',
           fontFamily: theme.fonts.welcomeHeading,
@@ -40,8 +40,8 @@ export const UserIDCard: React.FC = () => {
 
       <View className="flex-row justify-end">
         <Text
-          className="text-xl font-semibold opacity-90"
-          style={{ color: 'white' }}
+          className="text-xl font- opacity-90"
+          style={{ color: 'white', fontFamily: theme.fonts.welcomeHeading }}
         >
           Verza
         </Text>

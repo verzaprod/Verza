@@ -15,9 +15,9 @@ export const AddAccountButton: React.FC = () => {
     <TouchableOpacity
       className="items-center justify-center"
       style={{
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 90,
+        height: 90,
+        borderRadius: 50,
         borderWidth: 3,
         borderColor: theme.colors.primaryGreen,
         backgroundColor: 'transparent',
@@ -27,8 +27,8 @@ export const AddAccountButton: React.FC = () => {
       <View
         className="items-center justify-center"
         style={{
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           borderRadius: 30,
           backgroundColor: theme.colors.primaryGreen,
         }}
