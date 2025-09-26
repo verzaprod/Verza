@@ -1,9 +1,10 @@
 import { Tabs, Stack } from "expo-router";
 import { Icon } from "@/components/ui/Icon";
 import { useTheme } from "@/theme/ThemeProvider";
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 export default function TabsLayout() {
-  
   const theme = useTheme();
 
   return (
@@ -14,20 +15,20 @@ export default function TabsLayout() {
           animation: "shift",
           // tabBarShowLabel: false,
           tabBarActiveTintColor: theme.colors.primaryGreen,
-          tabBarIconStyle: { marginTop: 4 },
           tabBarStyle: {
             height: 60,
-          }
+            paddingTop: 8,
+            backgroundColor: theme.colors.background,
+          },
         }}
       >
         <Tabs.Screen
           name="home"
           options={{
             tabBarLabel: "Home",
-            tabBarIcon: ({ color, size, }) => (
-              <Icon name="home" size={size} color={color} />
+            tabBarIcon: ({ color, size }) => (
+              <Feather name="home" size={size} color={color} />
             ),
-            headerShown: false,
           }}
         />
         <Tabs.Screen
@@ -35,9 +36,8 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: "Profile",
             tabBarIcon: ({ color, size }) => (
-              <Icon name="profile" size={size} color={color} />
+              <FontAwesome5 name="user-check" size={size} color={color} />
             ),
-            headerShown: false,
           }}
         />
       </Tabs>
