@@ -243,7 +243,6 @@ export default function EscrowConfirmation() {
           />
         </View>
 
-        {/* {isProcessing && <ActivityIndicator />} */}
       </ScrollView>
     </SafeAreaView>
   );

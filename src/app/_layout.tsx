@@ -9,6 +9,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import ErrorBoundary from "react-native-error-boundary";
+import { ErrorFallback } from "@/components/ErrorFallback";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,22 +35,31 @@ export default function Layout() {
   }
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
-      <SafeAreaProvider>
-        <ThemeProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="(onboarding)"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(kyc)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-        </ThemeProvider>
-      </SafeAreaProvider>
-    </ClerkProvider>
+    <ErrorBoundary
+      onError={(error, stackTrace) =>
+        console.log("Error occurred:", error, stackTrace)
+      }
+      FallbackComponent={({ error, resetError }) => (
+        <ErrorFallback error={error} onReset={resetError} />
+      )}
+    >
+      <ClerkProvider tokenCache={tokenCache}>
+        <SafeAreaProvider>
+          <ThemeProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(onboarding)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(kyc)" options={{ headerShown: false }} />
+            </Stack>
+            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+          </ThemeProvider>
+        </SafeAreaProvider>
+      </ClerkProvider>
+    </ErrorBoundary>
   );
 }

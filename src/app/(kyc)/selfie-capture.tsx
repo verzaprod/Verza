@@ -15,7 +15,9 @@ export default function SelfieCapture() {
   const [selfieImage, setSelfieImageLocal] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
 
-  const { setSelfieImage, setCurrentStep } = useKYCStore()
+  // const { setSelfieImage, setCurrentStep } = useKYCStore()
+  const setSelfieImage = useKYCStore((state) => state.setSelfieImage);
+  const setCurrentStep = useKYCStore((state) => state.setCurrentStep);
 
   const handleSelfieCapture = async () => {
     try {
@@ -47,10 +49,10 @@ export default function SelfieCapture() {
       // Simulate upload delay
       await new Promise(resolve => setTimeout(resolve, 2000))
       
-      setSelfieImage(selfieImage)
+      // setSelfieImage(selfieImage)
       setCurrentStep('processing')
       
-      router.push('/(kyc)/verification-tracker')
+      router.replace('/(kyc)/verification-tracker')
     } catch (error) {
       Alert.alert('Upload Failed', 'Please try again.')
     } finally {
