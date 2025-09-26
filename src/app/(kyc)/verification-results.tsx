@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { apiService } from "@/services/api/apiService";
+import { useKYCStore } from "@/store/kycStore";
 
 interface VerificationResult {
   status: "verified" | "rejected" | "pending_review";
@@ -31,13 +32,16 @@ export default function VerificationResults() {
   const theme = useTheme();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { escrowId } = useLocalSearchParams();
   const [result, setResult] = useState<VerificationResult | null>(null);
   const [showProofDetails, setShowProofDetails] = useState(false);
+
+  const escrowId = useKYCStore((state) => state.escrowId);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
+        if (!escrowId) return;
+
         const response = await apiService.getVerificationResults(
           escrowId as string
         );
@@ -56,6 +60,7 @@ export default function VerificationResults() {
     if (result?.vcDetails?.proofHash) {
       // Clipboard.setString(result.vcDetails.proofHash)
       // Show toast notification
+      console.log("Proof hash copied to clipboard", result.vcDetails.proofHash);
     }
   };
 

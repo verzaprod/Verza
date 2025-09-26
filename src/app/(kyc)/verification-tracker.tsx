@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { apiService } from "@/services/api/apiService";
+import { useKYCStore } from "@/store/kycStore";
 
 interface VerificationStatus {
   escrowId: string;
@@ -23,14 +24,21 @@ export default function VerificationTracker() {
   const theme = useTheme();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { escrowId } = useLocalSearchParams();
   const [verificationStatus, setVerificationStatus] =
     useState<VerificationStatus | null>(null);
+
+  const { escrowId, setCurrentStep } = useKYCStore((state) => ({
+    escrowId: state.escrowId,
+    setCurrentStep: state.setCurrentStep,
+  }));
 
   useEffect(() => {
     // Poll verification status
     const pollStatus = async () => {
       try {
+
+        if (!escrowId) return;
+
         const response = await apiService.getVerificationStatus(
           escrowId as string
         );
@@ -40,7 +48,7 @@ export default function VerificationTracker() {
         if (data.status === "completed") {
           // Auto-redirect to results page after 2 seconds
           setTimeout(() => {
-            router.push(`/(kyc)/verification-results?escrowId=${escrowId}`);
+            router.push(`/(kyc)/verification-results`);
           }, 2000);
         }
       } catch (error) {
@@ -48,10 +56,12 @@ export default function VerificationTracker() {
       }
     };
 
-    pollStatus();
-    const interval = setInterval(pollStatus, 5000); // Poll every 5 seconds
-
-    return () => clearInterval(interval);
+    if (escrowId) {
+      pollStatus();
+      const interval = setInterval(pollStatus, 5000);
+  
+      return () => clearInterval(interval);
+    }
   }, [escrowId]);
 
   const getStepIcon = (status: string) => {
@@ -240,7 +250,7 @@ export default function VerificationTracker() {
             <Button
               text="View Results"
               onPress={() =>
-                router.push(`/(kyc)/verification-results?escrowId=${escrowId}`)
+                router.push(`/(kyc)/verification-results`)
               }
             />
           )}
