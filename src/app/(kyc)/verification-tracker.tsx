@@ -1,81 +1,95 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
-import { useRouter, useLocalSearchParams } from 'expo-router'
-import { useTheme } from '@/theme/ThemeProvider'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Icon } from '@/components/ui/Icon'
-import { Button } from '@/components/ui/Button'
+import React, { useState, useEffect } from "react";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { useTheme } from "@/theme/ThemeProvider";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Icon } from "@/components/ui/Icon";
+import { Button } from "@/components/ui/Button";
+import { apiService } from "@/services/api/apiService";
 
 interface VerificationStatus {
-  escrowId: string
-  status: 'submitted' | 'in_progress' | 'completed' | 'failed'
+  escrowId: string;
+  status: "submitted" | "in_progress" | "completed" | "failed";
   steps: {
-    id: string
-    label: string
-    status: 'completed' | 'active' | 'pending'
-    timestamp?: string
-  }[]
-  estimatedCompletion?: string
+    id: string;
+    label: string;
+    status: "completed" | "active" | "pending";
+    timestamp?: string;
+  }[];
+  estimatedCompletion?: string;
 }
 
 export default function VerificationTracker() {
-  const theme = useTheme()
-  const router = useRouter()
-  const insets = useSafeAreaInsets()
-  const { escrowId } = useLocalSearchParams()
-  const [verificationStatus, setVerificationStatus] = useState<VerificationStatus | null>(null)
+  const theme = useTheme();
+  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const { escrowId } = useLocalSearchParams();
+  const [verificationStatus, setVerificationStatus] =
+    useState<VerificationStatus | null>(null);
 
   useEffect(() => {
     // Poll verification status
     const pollStatus = async () => {
       try {
-        const response = await fetch(`/api/escrow/status/${escrowId}`)
-        const data = await response.json()
-        setVerificationStatus(data)
-        
-        if (data.status === 'completed') {
+        const response = await apiService.getVerificationStatus(
+          escrowId as string
+        );
+        const data = await response.json();
+        setVerificationStatus(data);
+
+        if (data.status === "completed") {
           // Auto-redirect to results page after 2 seconds
           setTimeout(() => {
-            router.push(`/(kyc)/verification-results?escrowId=${escrowId}`)
-          }, 2000)
+            router.push(`/(kyc)/verification-results?escrowId=${escrowId}`);
+          }, 2000);
         }
       } catch (error) {
-        console.error('Failed to fetch status:', error)
+        console.error("Failed to fetch status:", error);
       }
-    }
+    };
 
-    pollStatus()
-    const interval = setInterval(pollStatus, 5000) // Poll every 5 seconds
+    pollStatus();
+    const interval = setInterval(pollStatus, 5000); // Poll every 5 seconds
 
-    return () => clearInterval(interval)
-  }, [escrowId])
+    return () => clearInterval(interval);
+  }, [escrowId]);
 
   const getStepIcon = (status: string) => {
     switch (status) {
-      case 'completed': return '✓'
-      case 'active': return '⋯'
-      case 'pending': return '○'
-      default: return '○'
+      case "completed":
+        return "✓";
+      case "active":
+        return "⋯";
+      case "pending":
+        return "○";
+      default:
+        return "○";
     }
-  }
+  };
 
   const getStepColor = (status: string) => {
     switch (status) {
-      case 'completed': return theme.colors.primaryGreen
-      case 'active': return '#F59E0B'
-      case 'pending': return theme.colors.textSecondary
-      default: return theme.colors.textSecondary
+      case "completed":
+        return theme.colors.primaryGreen;
+      case "active":
+        return "#F59E0B";
+      case "pending":
+        return theme.colors.textSecondary;
+      default:
+        return theme.colors.textSecondary;
     }
-  }
+  };
 
   if (!verificationStatus) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
+      >
         <View className="flex-1 justify-center items-center">
           <Text style={{ color: theme.colors.textSecondary }}>Loading...</Text>
         </View>
       </SafeAreaView>
-    )
+    );
   }
 
   return (
@@ -91,15 +105,15 @@ export default function VerificationTracker() {
         showsVerticalScrollIndicator={false}
       >
         <View style={{ paddingTop: 20, paddingBottom: 40 }}>
-          <View style={{ alignItems: 'center', marginBottom: 32 }}>
+          <View style={{ alignItems: "center", marginBottom: 32 }}>
             <View
               style={{
                 width: 80,
                 height: 80,
-                backgroundColor: theme.colors.primaryGreen + '20',
+                backgroundColor: theme.colors.primaryGreen + "20",
                 borderRadius: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems: "center",
+                justifyContent: "center",
                 marginBottom: 16,
               }}
             >
@@ -109,10 +123,10 @@ export default function VerificationTracker() {
             <Text
               style={{
                 fontSize: 24,
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 color: theme.colors.textPrimary,
                 fontFamily: theme.fonts.welcomeHeading,
-                textAlign: 'center',
+                textAlign: "center",
                 marginBottom: 8,
               }}
             >
@@ -123,7 +137,7 @@ export default function VerificationTracker() {
               style={{
                 fontSize: 16,
                 color: theme.colors.textSecondary,
-                textAlign: 'center',
+                textAlign: "center",
               }}
             >
               Tracking your identity verification
@@ -141,7 +155,7 @@ export default function VerificationTracker() {
             <Text
               style={{
                 fontSize: 18,
-                fontWeight: '600',
+                fontWeight: "600",
                 color: theme.colors.textPrimary,
                 marginBottom: 20,
               }}
@@ -158,15 +172,15 @@ export default function VerificationTracker() {
                       height: 32,
                       borderRadius: 16,
                       backgroundColor: getStepColor(step.status),
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      alignItems: "center",
+                      justifyContent: "center",
                       marginRight: 16,
                     }}
                   >
                     <Text
                       style={{
-                        color: 'white',
-                        fontWeight: 'bold',
+                        color: "white",
+                        fontWeight: "bold",
                         fontSize: 16,
                       }}
                     >
@@ -178,7 +192,7 @@ export default function VerificationTracker() {
                     <Text
                       style={{
                         fontSize: 16,
-                        fontWeight: '500',
+                        fontWeight: "500",
                         color: theme.colors.textPrimary,
                         marginBottom: 2,
                       }}
@@ -205,7 +219,7 @@ export default function VerificationTracker() {
                 style={{
                   marginTop: 20,
                   padding: 12,
-                  backgroundColor: theme.colors.primaryGreen + '10',
+                  backgroundColor: theme.colors.primaryGreen + "10",
                   borderRadius: theme.borderRadius.md,
                 }}
               >
@@ -213,7 +227,7 @@ export default function VerificationTracker() {
                   style={{
                     fontSize: 14,
                     color: theme.colors.primaryGreen,
-                    textAlign: 'center',
+                    textAlign: "center",
                   }}
                 >
                   Estimated completion: {verificationStatus.estimatedCompletion}
@@ -222,14 +236,16 @@ export default function VerificationTracker() {
             )}
           </View>
 
-          {verificationStatus.status === 'completed' && (
+          {verificationStatus.status === "completed" && (
             <Button
               text="View Results"
-              onPress={() => router.push(`/(kyc)/verification-results?escrowId=${escrowId}`)}
+              onPress={() =>
+                router.push(`/(kyc)/verification-results?escrowId=${escrowId}`)
+              }
             />
           )}
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
