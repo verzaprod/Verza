@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
 import { apiService } from "@/services/api/apiService";
+import { useKYCStore } from "@/store/kycStore";
 // import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 
 interface VerifierDetails {
@@ -31,6 +32,7 @@ export default function EscrowConfirmation() {
   const insets = useSafeAreaInsets();
   const { verifierId } = useLocalSearchParams();
   const [isProcessing, setIsProcessing] = useState(false);
+  const { setEscrowInfo, setCurrentStep } = useKYCStore();
 
   // Mock verifier data - replace with API call
   const verifierDetails: VerifierDetails = {
@@ -57,11 +59,11 @@ export default function EscrowConfirmation() {
       const escrowData = await escrowResponse.json();
 
       if (escrowResponse.ok) {
-        // Navigate to KYC flow with escrow ID
+        setEscrowInfo(escrowData.escrow_id, verifierId as string);
+        setCurrentStep("selection");
+
         ToastAndroid.show("Escrow initiated successfully!", ToastAndroid.SHORT);
-        router.push(
-          `/(kyc)/selection-type?escrowId=${escrowData.escrow_id}&verifierId=${verifierId}`
-        );
+        router.push(`/(kyc)/selection-type`);
       } else {
         Alert.alert(
           "Payment Failed",
@@ -241,7 +243,7 @@ export default function EscrowConfirmation() {
           />
         </View>
 
-        {isProcessing && <ActivityIndicator />}
+        {/* {isProcessing && <ActivityIndicator />} */}
       </ScrollView>
     </SafeAreaView>
   );
