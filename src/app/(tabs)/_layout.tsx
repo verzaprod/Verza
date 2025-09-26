@@ -14,6 +14,10 @@ export default function TabsLayout() {
           animation: "shift",
           // tabBarShowLabel: false,
           tabBarActiveTintColor: theme.colors.primaryGreen,
+          tabBarIconStyle: { marginTop: 4 },
+          tabBarStyle: {
+            height: 60,
+          }
         }}
       >
         <Tabs.Screen
