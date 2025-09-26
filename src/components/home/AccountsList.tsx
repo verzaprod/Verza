@@ -41,13 +41,12 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
               opacity,
               transform: [{ scale }],
               marginTop,
-              shadowColor: theme.isDark ? "#fff" : "#111",
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.6,
-              shadowRadius: 4,
-              elevation: 10,
+              shadowColor: theme.isDark ? "#fff" : "#000",
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.15,
+              shadowRadius: 8,
+              elevation: 8,
             }}
-            // hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
             <View
               style={{
@@ -86,7 +85,6 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
                     width: 32,
                     height: 32,
                     borderRadius: 16,
-                    backgroundColor: theme.colors.textSecondary + "30",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
@@ -96,7 +94,7 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
                 </TouchableOpacity>
               </View>
 
-              { (
+              {(
                 <View className="flex-row justify-between items-center mt-4">
                   <Text
                     style={{

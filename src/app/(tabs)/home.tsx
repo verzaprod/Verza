@@ -65,7 +65,6 @@ export default function DashboardScreen() {
           <Text
             style={{
               fontSize: 24,
-              fontWeight: "bold",
               color: theme.colors.textPrimary,
               fontFamily: theme.fonts.welcomeHeading,
               marginBottom: theme.spacing.lg,
