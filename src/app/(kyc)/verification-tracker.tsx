@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "@/components/ui/Icon";
@@ -27,44 +27,75 @@ export default function VerificationTracker() {
   const [verificationStatus, setVerificationStatus] =
     useState<VerificationStatus | null>(null);
 
-  const { escrowId, setCurrentStep } = useKYCStore((state) => ({
-    escrowId: state.escrowId,
-    setCurrentStep: state.setCurrentStep,
-  }));
+  const escrowId = useKYCStore((state) => state.escrowId);
+  const setCurrentStep = useKYCStore((state) => state.setCurrentStep);
 
-  useEffect(() => {
-    // Poll verification status
-    const pollStatus = async () => {
-      try {
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const hasNavigatedRef = useRef(false);
+  const isMountedRef = useRef(true);
 
-        if (!escrowId) return;
+  const pollStatus = useCallback(async () => {
+    if (!escrowId || !isMountedRef.current || hasNavigatedRef.current) {
+      return;
+    }
 
-        const response = await apiService.getVerificationStatus(
-          escrowId as string
-        );
-        const data = await response.json();
+    try {
+      const response = await apiService.getVerificationStatus(escrowId);
+      const data = await response.json();
+
+      // ✅ Only update state if component is still mounted
+      if (isMountedRef.current && !hasNavigatedRef.current) {
         setVerificationStatus(data);
 
-        if (data.status === "completed") {
-          // Auto-redirect to results page after 2 seconds
+        if (data.status === "completed" && !hasNavigatedRef.current) {
+          hasNavigatedRef.current = true;
+          setCurrentStep("complete");
+
+          // ✅ Clear interval before navigation
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+
           setTimeout(() => {
-            router.push(`/(kyc)/verification-results`);
+            if (isMountedRef.current) {
+              router.replace("/(kyc)/verification-results");
+            }
           }, 2000);
         }
-      } catch (error) {
-        console.error("Failed to fetch status:", error);
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch status:", error);
+    }
+  }, [escrowId, setCurrentStep, router]);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    hasNavigatedRef.current = false;
 
     if (escrowId) {
+      // Initial call
       pollStatus();
-      const interval = setInterval(pollStatus, 5000);
-  
-      return () => clearInterval(interval);
-    }
-  }, [escrowId]);
 
-  const getStepIcon = (status: string) => {
+      intervalRef.current = setInterval(pollStatus, 5000);
+    }
+
+    return () => {
+      isMountedRef.current = false;
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [escrowId, pollStatus]);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const getStepIcon = useCallback((status: string) => {
     switch (status) {
       case "completed":
         return "✓";
@@ -75,27 +106,40 @@ export default function VerificationTracker() {
       default:
         return "○";
     }
-  };
+  }, []);
 
-  const getStepColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return theme.colors.primaryGreen;
-      case "active":
-        return "#F59E0B";
-      case "pending":
-        return theme.colors.textSecondary;
-      default:
-        return theme.colors.textSecondary;
+  const getStepColor = useCallback(
+    (status: string) => {
+      switch (status) {
+        case "completed":
+          return theme.colors.primaryGreen;
+        case "active":
+          return "#F59E0B";
+        case "pending":
+          return theme.colors.textSecondary;
+        default:
+          return theme.colors.textSecondary;
+      }
+    },
+    [theme.colors.primaryGreen, theme.colors.textSecondary]
+  );
+
+  // ✅ Fix 6: Memoize the navigation handler
+  const handleViewResults = useCallback(() => {
+    if (!hasNavigatedRef.current) {
+      hasNavigatedRef.current = true;
+      router.replace("/(kyc)/verification-results");
     }
-  };
+  }, [router]);
 
   if (!verificationStatus) {
     return (
       <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.colors.background }}
       >
-        <View className="flex-1 justify-center items-center">
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
           <Text style={{ color: theme.colors.textSecondary }}>Loading...</Text>
         </View>
       </SafeAreaView>
@@ -174,8 +218,11 @@ export default function VerificationTracker() {
             </Text>
 
             <View style={{ gap: 16 }}>
-              {verificationStatus.steps.map((step, index) => (
-                <View key={step.id} className="flex-row items-center">
+              {verificationStatus.steps.map((step) => (
+                <View
+                  key={step.id}
+                  style={{ flexDirection: "row", alignItems: "center" }}
+                >
                   <View
                     style={{
                       width: 32,
@@ -198,7 +245,7 @@ export default function VerificationTracker() {
                     </Text>
                   </View>
 
-                  <View className="flex-1">
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
                         fontSize: 16,
@@ -247,12 +294,7 @@ export default function VerificationTracker() {
           </View>
 
           {verificationStatus.status === "completed" && (
-            <Button
-              text="View Results"
-              onPress={() =>
-                router.push(`/(kyc)/verification-results`)
-              }
-            />
+            <Button text="View Results" onPress={handleViewResults} />
           )}
         </View>
       </ScrollView>
