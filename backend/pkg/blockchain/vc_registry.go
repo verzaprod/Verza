@@ -161,8 +161,7 @@ func NewVCRegistryFromConfig(client *Client, network string, logger *zap.Logger)
 	}
 	
 	// Load contract configuration
-	configPath := DefaultConfigPath()
-	contractConfig, err := LoadContractConfig(configPath)
+	contractConfig, err := LoadContractConfig()
 	if err != nil {
 		return nil, fmt.Errorf("failed to load contract config: %w", err)
 	}

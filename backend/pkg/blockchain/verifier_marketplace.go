@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -34,9 +35,10 @@ type VerifierInfo struct {
 func NewVerifierMarketplace(client *ethclient.Client, contractAddress string) (*VerifierMarketplace, error) {
 	address := common.HexToAddress(contractAddress)
 	
-	// For now, we'll use a basic bound contract
-	// In a full implementation, you would generate Go bindings from the ABI
-	contract := bind.NewBoundContract(address, nil, client, client, client)
+	// Create an empty ABI for basic contract interaction
+	// In a full implementation, you would generate Go bindings from the actual ABI
+	emptyABI := abi.ABI{}
+	contract := bind.NewBoundContract(address, emptyABI, client, client, client)
 	
 	return &VerifierMarketplace{
 		client:   client,
