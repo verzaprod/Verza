@@ -17,10 +17,12 @@ import (
 
 // EscrowService handles escrow-related business logic
 type EscrowService struct {
-	db           *gorm.DB
-	redisClient  *redis.Client
-	hederaClient *blockchain.HederaClient
-	emailService *EmailService
+	db                    *gorm.DB
+	redisClient          *redis.Client
+	hederaClient         *blockchain.HederaClient
+	escrowContract       *blockchain.EscrowContract
+	verifierMarketplace  *blockchain.VerifierMarketplace
+	emailService         *EmailService
 }
 
 // DisputeEvidence represents evidence for escrow disputes
@@ -33,11 +35,27 @@ type DisputeEvidence struct {
 
 // NewEscrowService creates a new escrow service
 func NewEscrowService(db *gorm.DB, redisClient *redis.Client, hederaClient *blockchain.HederaClient, emailService *EmailService) *EscrowService {
+	// Initialize contract clients
+	escrowContract, err := blockchain.NewEscrowContractFromConfig(hederaClient.GetEthClient(), hederaClient.GetNetwork())
+	if err != nil {
+		// Log error but don't fail service creation
+		// In production, you might want to handle this differently
+		fmt.Printf("Warning: Failed to initialize escrow contract client: %v\n", err)
+	}
+	
+	verifierMarketplace, err := blockchain.NewVerifierMarketplaceFromConfig(hederaClient.GetEthClient(), hederaClient.GetNetwork())
+	if err != nil {
+		// Log error but don't fail service creation
+		fmt.Printf("Warning: Failed to initialize verifier marketplace client: %v\n", err)
+	}
+	
 	return &EscrowService{
-		db:           db,
-		redisClient:  redisClient,
-		hederaClient: hederaClient,
-		emailService: emailService,
+		db:                   db,
+		redisClient:         redisClient,
+		hederaClient:        hederaClient,
+		escrowContract:      escrowContract,
+		verifierMarketplace: verifierMarketplace,
+		emailService:        emailService,
 	}
 }
 
@@ -494,7 +512,12 @@ func (es *EscrowService) ProcessAutoRelease() error {
 // Helper methods
 
 func (es *EscrowService) getEscrowContractAccountID() string {
-	// Return the escrow contract account ID
+	// Get the escrow contract address from configuration
+	if es.escrowContract != nil {
+		return es.escrowContract.GetContractAddress().Hex()
+	}
+	
+	// Fallback to hardcoded value if contract client is not available
 	return "0.0.123458" // This should be configured
 }
 

@@ -2,11 +2,11 @@
   "networks": {
     "hederaTestnet": {
       "chainId": 296,
-      "vcRegistry": "0x96E3c0a58180C442670246bDc6D3071B4B4819b6",
-      "escrowContract": "",
-      "verifierMarketplace": "",
-      "deployedAt": "2024-07-28T00:00:00Z",
-      "deployer": "0x63971b4AF5340BbEA362042Daaa04D81B57378a8",
+      "vcRegistry": "0xa26F554A4b2110300CbfF6B60450Bd3FCbD72f07",
+      "escrowContract": "0xff0153Bc7FcAE89eEA273C243E9304a9dB85DF76",
+      "verifierMarketplace": "0x2c24c526a141998660eEfc2a40dEc144eAa357A2",
+      "deployedAt": "2025-09-27T09:07:01.986Z",
+      "deployer": "0x63971b4af5340bbea362042daaa04d81b57378a8",
       "accountId": "0.0.6870887"
     }
   }

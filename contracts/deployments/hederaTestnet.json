@@ -1,0 +1,15 @@
+{
+  "network": "hederaTestnet",
+  "chainId": "296",
+  "deployer": "0x63971b4AF5340BbEA362042Daaa04D81B57378a8",
+  "blockNumber": 25458996,
+  "timestamp": "2025-09-27T09:06:59.528Z",
+  "contracts": {
+    "vcRegistry": "0xa26F554A4b2110300CbfF6B60450Bd3FCbD72f07",
+    "verifierMarketplace": "0x2c24c526a141998660eEfc2a40dEc144eAa357A2",
+    "escrowContract": "0xff0153Bc7FcAE89eEA273C243E9304a9dB85DF76"
+  },
+  "vcRegistryImplementation": "0x63BDC252582bAF25A4e296b7B9b41D402913493c",
+  "verifierMarketplaceImplementation": "0x25491EB75ef97bE6C675d97B90BF9B1b4b38a6e0",
+  "escrowContractImplementation": "0x5419Bfd80bcAe98f0556d852c18D202A1A471fEF"
+}

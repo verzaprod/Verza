@@ -24,8 +24,13 @@ type NetworkConfig struct {
 	AccountID          string `json:"accountId"`
 }
 
-// LoadContractConfig loads the contract configuration from the specified file
-func LoadContractConfig(configPath string) (*ContractConfig, error) {
+// LoadContractConfig loads the contract configuration from the default path
+func LoadContractConfig() (*ContractConfig, error) {
+	return LoadContractConfigFromPath(DefaultConfigPath())
+}
+
+// LoadContractConfigFromPath loads the contract configuration from the specified file
+func LoadContractConfigFromPath(configPath string) (*ContractConfig, error) {
 	// Check if file exists
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		return nil, fmt.Errorf("contract config file not found: %s", configPath)

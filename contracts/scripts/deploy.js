@@ -43,27 +43,84 @@ async function main() {
   // Save contract address to config
   contracts.vcRegistry = await vcRegistry.getAddress();
 
+  // Deploy VerifierMarketplace as upgradeable proxy
+  const VerifierMarketplace = await ethers.getContractFactory("VerifierMarketplace");
+  
+  console.log("Deploying VerifierMarketplace...");
+  const verifierMarketplace = await upgrades.deployProxy(
+    VerifierMarketplace,
+    [
+      deployer.address, // admin
+      ethers.parseEther("100"), // minimum stake (100 tokens)
+      ethers.parseEther("10"), // base verification fee (10 tokens)
+      ethers.ZeroAddress // staking token (use native token)
+    ],
+    {
+      initializer: "initialize",
+      kind: "uups",
+    }
+  );
+
+  await verifierMarketplace.waitForDeployment();
+  console.log("VerifierMarketplace deployed to:", await verifierMarketplace.getAddress());
+  contracts.verifierMarketplace = await verifierMarketplace.getAddress();
+
+  // Deploy EscrowContract as upgradeable proxy
+  const EscrowContract = await ethers.getContractFactory("EscrowContract");
+  
+  console.log("Deploying EscrowContract...");
+  const escrowContract = await upgrades.deployProxy(
+    EscrowContract,
+    [
+      deployer.address, // admin
+      await verifierMarketplace.getAddress(), // verifier marketplace
+      ethers.ZeroAddress, // fraud detection (placeholder)
+      ethers.ZeroAddress, // payment token (use native token)
+      deployer.address // fee recipient
+    ],
+    {
+      initializer: "initialize",
+      kind: "uups",
+    }
+  );
+
+  await escrowContract.waitForDeployment();
+  console.log("EscrowContract deployed to:", await escrowContract.getAddress());
+  contracts.escrowContract = await escrowContract.getAddress();
+
   // Save deployment info
   const deploymentInfo = {
     network: hre.network.name,
     chainId: (await ethers.provider.getNetwork()).chainId,
-    contractAddress: vcRegistry.address,
-    implementationAddress: await upgrades.erc1967.getImplementationAddress(vcRegistry.address),
-    adminAddress: await upgrades.erc1967.getAdminAddress(vcRegistry.address),
     deployer: deployer.address,
     blockNumber: (await ethers.provider.getBlockNumber()),
     timestamp: new Date().toISOString(),
+    contracts: {
+      vcRegistry: await vcRegistry.getAddress(),
+      verifierMarketplace: await verifierMarketplace.getAddress(),
+      escrowContract: await escrowContract.getAddress()
+    }
   };
 
+  // Try to get implementation addresses (may fail on Hedera testnet)
+  try {
+    deploymentInfo.vcRegistryImplementation = await upgrades.erc1967.getImplementationAddress(await vcRegistry.getAddress());
+    deploymentInfo.verifierMarketplaceImplementation = await upgrades.erc1967.getImplementationAddress(await verifierMarketplace.getAddress());
+    deploymentInfo.escrowContractImplementation = await upgrades.erc1967.getImplementationAddress(await escrowContract.getAddress());
+  } catch (error) {
+    console.log("Note: Could not retrieve implementation addresses (Hedera testnet limitation)");
+  }
+
   console.log("\nDeployment Summary:");
-  
-  // Save contract addresses to config
-  contracts.vcRegistry = vcRegistry.address;
+  console.log("VCRegistry:", await vcRegistry.getAddress());
+  console.log("VerifierMarketplace:", await verifierMarketplace.getAddress());
+  console.log("EscrowContract:", await escrowContract.getAddress());
   
   // Update config file with deployed contract addresses
   await updateConfig(networkName, contracts);
   console.log("Contract addresses saved to config file");
-  console.log(JSON.stringify(deploymentInfo, null, 2));
+  console.log(JSON.stringify(deploymentInfo, (key, value) => 
+    typeof value === 'bigint' ? value.toString() : value, 2));
 
   // Save to file
   const fs = require("fs");
@@ -75,7 +132,8 @@ async function main() {
   }
   
   const deploymentFile = path.join(deploymentsDir, `${hre.network.name}.json`);
-  fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, null, 2));
+  fs.writeFileSync(deploymentFile, JSON.stringify(deploymentInfo, (key, value) => 
+    typeof value === 'bigint' ? value.toString() : value, 2));
   
   console.log(`\nDeployment info saved to: ${deploymentFile}`);
 }
