@@ -2,15 +2,15 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"verza/backend/models"
-	"verza/backend/services"
-	"verza/backend/utils"
+	"github.com/verza/models"
+	"github.com/verza/services"
 )
 
 // EscrowHandler handles escrow-related HTTP requests
@@ -169,32 +169,52 @@ func NewEscrowHandler(escrowService *services.EscrowService, fraudService *servi
 	}
 }
 
+// Local response helpers to replace deprecated utils.SuccessResponse/ErrorResponse
+func successResponse(c *gin.Context, message string, data interface{}) {
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": message,
+		"data":    data,
+	})
+}
+
+func errorResponse(c *gin.Context, status int, message string, err interface{}) {
+	resp := gin.H{
+		"success": false,
+		"message": message,
+	}
+	if err != nil {
+		resp["error"] = err
+	}
+	c.JSON(status, resp)
+}
+
 // InitiateEscrow handles POST /escrow/initiate
 func (eh *EscrowHandler) InitiateEscrow(c *gin.Context) {
 	var req InitiateEscrowRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		errorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	// Get user ID from context
 	userID, exists := c.Get("user_id")
 	if !exists {
-		utils.ErrorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
+		errorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
 		return
 	}
 
 	// Validate verification request exists and belongs to user
 	verificationRequest, err := eh.escrowService.ValidateVerificationRequest(req.VerificationRequestID, userID.(string))
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid verification request", err)
+		errorResponse(c, http.StatusBadRequest, "Invalid verification request", err)
 		return
 	}
 
 	// Check if escrow already exists for this verification request
 	existingEscrow, err := eh.escrowService.GetEscrowByVerificationRequest(req.VerificationRequestID)
 	if err == nil && existingEscrow != nil {
-		utils.ErrorResponse(c, http.StatusConflict, "Escrow already exists for this verification request", nil)
+		errorResponse(c, http.StatusConflict, "Escrow already exists for this verification request", nil)
 		return
 	}
 
@@ -212,14 +232,14 @@ func (eh *EscrowHandler) InitiateEscrow(c *gin.Context) {
 		req.AutoReleaseHours,
 	)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to initiate escrow", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to initiate escrow", err)
 		return
 	}
 
 	// Get created escrow for response
 	escrow, err := eh.escrowService.GetEscrowByID(escrowID)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve created escrow", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to retrieve created escrow", err)
 		return
 	}
 
@@ -233,7 +253,7 @@ func (eh *EscrowHandler) InitiateEscrow(c *gin.Context) {
 		Message:       "Escrow initiated successfully",
 	}
 
-	utils.SuccessResponse(c, "Escrow initiated successfully", response)
+	successResponse(c, "Escrow initiated successfully", response)
 }
 
 // ReleaseEscrow handles POST /escrow/release

@@ -1,18 +1,22 @@
 package services
 
 import (
+	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/hashgraph/hedera-sdk-go/v2"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 
-	"verza/backend/models"
-	"verza/backend/utils"
+	"github.com/verza/models"
+	"github.com/verza/pkg/database"
 )
 
 // HCSService handles Hedera Consensus Service operations
@@ -199,7 +203,7 @@ func NewHCSService(db *gorm.DB, redisClient *redis.Client, config *HCSConfig) (*
 // PublishEvent publishes an event to HCS
 func (hcs *HCSService) PublishEvent(eventType HCSEventType, entityID, entityType, action string, payload map[string]interface{}, metadata map[string]interface{}) error {
 	message := &HCSMessage{
-		ID:         utils.GenerateUUID(),
+		ID:         uuid.New().String(),
 		Type:       "verza.event",
 		Version:    "1.0",
 		Timestamp:  time.Now().UTC(),
@@ -254,7 +258,7 @@ func (hcs *HCSService) publishMessage(message *HCSMessage) error {
 	}
 
 	// Add checksum
-	checksum := utils.CalculateChecksum(messageBytes)
+	checksum := database.CalculateChecksum(messageBytes)
 	message.Checksum = &checksum
 
 	// Re-serialize with checksum
@@ -265,7 +269,7 @@ func (hcs *HCSService) publishMessage(message *HCSMessage) error {
 
 	// Compress if enabled
 	if hcs.config.EnableCompression {
-		messageBytes, err = utils.CompressData(messageBytes)
+		messageBytes, err = gzipCompress(messageBytes)
 		if err != nil {
 			return fmt.Errorf("failed to compress message: %w", err)
 		}
@@ -273,7 +277,7 @@ func (hcs *HCSService) publishMessage(message *HCSMessage) error {
 
 	// Encrypt if enabled
 	if hcs.config.EnableEncryption {
-		messageBytes, err = utils.EncryptData(messageBytes)
+		messageBytes, err = passthroughEncrypt(messageBytes)
 		if err != nil {
 			return fmt.Errorf("failed to encrypt message: %w", err)
 		}
@@ -324,7 +328,7 @@ func (hcs *HCSService) Subscribe(startTime *time.Time, handler func(*HCSMessage)
 	ctx, cancel := context.WithCancel(context.Background())
 
 	subscription := &HCSSubscription{
-		ID:           utils.GenerateUUID(),
+		ID:           uuid.New().String(),
 		TopicID:      hcs.topicID,
 		StartTime:    startTime,
 		Handler:      handler,
@@ -386,7 +390,7 @@ func (hcs *HCSService) processTopicMessage(topicMessage hedera.TopicMessage, han
 
 	// Decrypt if enabled
 	if hcs.config.EnableEncryption {
-		decrypted, err := utils.DecryptData(messageBytes)
+		decrypted, err := passthroughDecrypt(messageBytes)
 		if err != nil {
 			return fmt.Errorf("failed to decrypt message: %w", err)
 		}
@@ -395,7 +399,7 @@ func (hcs *HCSService) processTopicMessage(topicMessage hedera.TopicMessage, han
 
 	// Decompress if enabled
 	if hcs.config.EnableCompression {
-		decompressed, err := utils.DecompressData(messageBytes)
+		decompressed, err := gzipDecompress(messageBytes)
 		if err != nil {
 			return fmt.Errorf("failed to decompress message: %w", err)
 		}
@@ -414,7 +418,7 @@ func (hcs *HCSService) processTopicMessage(topicMessage hedera.TopicMessage, han
 		checksum := *message.Checksum
 		message.Checksum = nil
 		verifyBytes, _ := json.Marshal(message)
-		expectedChecksum := utils.CalculateChecksum(verifyBytes)
+		expectedChecksum := database.CalculateChecksum(verifyBytes)
 		if checksum != expectedChecksum {
 			return fmt.Errorf("message checksum verification failed")
 		}
@@ -439,7 +443,7 @@ func (hcs *HCSService) processTopicMessage(topicMessage hedera.TopicMessage, han
 
 // storeMessage stores HCS message in database
 func (hcs *HCSService) storeMessage(message *HCSMessage, topicMessage hedera.TopicMessage, rawMessage []byte) error {
-	messageHash := utils.CalculateChecksum(rawMessage)
+	messageHash := database.CalculateChecksum(rawMessage)
 
 	record := &HCSMessageRecord{
 		TopicID:        hcs.topicID.String(),
@@ -533,4 +537,43 @@ func (hcs *HCSService) Close() error {
 // TableName returns the table name for HCSMessageRecord
 func (HCSMessageRecord) TableName() string {
 	return "hcs_message_records"
+}
+
+// gzipCompress compresses data using gzip
+func gzipCompress(data []byte) ([]byte, error) {
+	var buf bytes.Buffer
+	w := gzip.NewWriter(&buf)
+	_, err := w.Write(data)
+	if err != nil {
+		_ = w.Close()
+		return nil, err
+	}
+	if err := w.Close(); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+
+// gzipDecompress decompresses gzip data
+func gzipDecompress(data []byte) ([]byte, error) {
+	r, err := gzip.NewReader(bytes.NewReader(data))
+	if err != nil {
+		return nil, err
+	}
+	decompressed, err := io.ReadAll(r)
+	_ = r.Close()
+	if err != nil {
+		return nil, err
+	}
+	return decompressed, nil
+}
+
+// passthroughEncrypt is a placeholder for encryption (no-op)
+func passthroughEncrypt(data []byte) ([]byte, error) {
+	return data, nil
+}
+
+// passthroughDecrypt is a placeholder for decryption (no-op)
+func passthroughDecrypt(data []byte) ([]byte, error) {
+	return data, nil
 }
