@@ -18,10 +18,11 @@ import (
 
 // VerifierService handles verifier-related business logic
 type VerifierService struct {
-	db           *gorm.DB
-	redisClient  *redis.Client
-	hederaClient *blockchain.HederaClient
-	emailService *EmailService
+	db                   *gorm.DB
+	redisClient         *redis.Client
+	hederaClient        *blockchain.HederaClient
+	verifierMarketplace *blockchain.VerifierMarketplace
+	emailService        *EmailService
 }
 
 // StakeInfo represents stake information from blockchain
@@ -114,11 +115,19 @@ type VerifierListItem struct {
 
 // NewVerifierService creates a new verifier service
 func NewVerifierService(db *gorm.DB, redisClient *redis.Client, hederaClient *blockchain.HederaClient, emailService *EmailService) *VerifierService {
+	// Initialize verifier marketplace client
+	verifierMarketplace, err := blockchain.NewVerifierMarketplaceFromConfig(hederaClient.GetEthClient(), hederaClient.GetNetwork())
+	if err != nil {
+		// Log error but don't fail service creation
+		fmt.Printf("Warning: Failed to initialize verifier marketplace client: %v\n", err)
+	}
+	
 	return &VerifierService{
-		db:           db,
-		redisClient:  redisClient,
-		hederaClient: hederaClient,
-		emailService: emailService,
+		db:                   db,
+		redisClient:         redisClient,
+		hederaClient:        hederaClient,
+		verifierMarketplace: verifierMarketplace,
+		emailService:        emailService,
 	}
 }
 
@@ -488,12 +497,22 @@ func (vs *VerifierService) SendVerificationEmail(email, name, verifierID string)
 // Helper methods
 
 func (vs *VerifierService) getMarketplaceAccountID() string {
-	// Return the marketplace contract account ID
+	// Get the verifier marketplace contract address from configuration
+	if vs.verifierMarketplace != nil {
+		return vs.verifierMarketplace.GetContractAddress().Hex()
+	}
+	
+	// Fallback to hardcoded value if contract client is not available
 	return "0.0.123456" // This should be configured
 }
 
 func (vs *VerifierService) getMarketplaceContractID() string {
-	// Return the marketplace contract ID
+	// Get the verifier marketplace contract address from configuration
+	if vs.verifierMarketplace != nil {
+		return vs.verifierMarketplace.GetContractAddress().Hex()
+	}
+	
+	// Fallback to hardcoded value if contract client is not available
 	return "0.0.123457" // This should be configured
 }
 
