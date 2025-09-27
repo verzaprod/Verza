@@ -11,6 +11,7 @@ module.exports = {
         enabled: true,
         runs: 200,
       },
+      viaIR: true,
     },
   },
   networks: {
@@ -20,6 +21,18 @@ module.exports = {
     localhost: {
       url: "http://127.0.0.1:8545",
       chainId: 1337,
+    },
+    hedera: {
+      url: "https://mainnet.hashio.io/api",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 295,
+      gasPrice: 10000000, // 0.01 gwei
+    },
+    hederaTestnet: {
+      url: "https://testnet.hashio.io/api",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 296,
+      gasPrice: 500000000000, // Setting gas price above minimum (410000000000)
     },
     polygon: {
       url: process.env.POLYGON_RPC_URL || "https://polygon-rpc.com",

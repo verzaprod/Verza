@@ -1,0 +1,13 @@
+{
+  "networks": {
+    "hederaTestnet": {
+      "chainId": 296,
+      "vcRegistry": "0x96E3c0a58180C442670246bDc6D3071B4B4819b6",
+      "escrowContract": "",
+      "verifierMarketplace": "",
+      "deployedAt": "2024-07-28T00:00:00Z",
+      "deployer": "0x63971b4AF5340BbEA362042Daaa04D81B57378a8",
+      "accountId": "0.0.6870887"
+    }
+  }
+}

@@ -1,10 +1,14 @@
 const { ethers, upgrades } = require("hardhat");
+const hre = require("hardhat");
+const { updateConfig } = require("./update-config");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
+  const networkName = hre.network.name;
+  const contracts = {};
 
   console.log("Deploying contracts with the account:", deployer.address);
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  console.log("Deploying to network:", networkName);
 
   // Deploy VCRegistry as upgradeable proxy
   const VCRegistry = await ethers.getContractFactory("VCRegistry");
@@ -12,18 +16,19 @@ async function main() {
   console.log("Deploying VCRegistry...");
   const vcRegistry = await upgrades.deployProxy(
     VCRegistry,
-    [deployer.address], // admin address
+    [deployer.address, "VerzaVC", "VVC"], // admin address, name, symbol
     {
       initializer: "initialize",
       kind: "uups",
     }
   );
 
-  await vcRegistry.deployed();
+  // Wait for deployment transaction to be mined
+  await vcRegistry.waitForDeployment();
 
-  console.log("VCRegistry deployed to:", vcRegistry.address);
-  console.log("Implementation address:", await upgrades.erc1967.getImplementationAddress(vcRegistry.address));
-  console.log("Admin address:", await upgrades.erc1967.getAdminAddress(vcRegistry.address));
+  console.log("VCRegistry deployed to:", await vcRegistry.getAddress());
+  console.log("Implementation address:", await upgrades.erc1967.getImplementationAddress(await vcRegistry.getAddress()));
+  console.log("Admin address:", await upgrades.erc1967.getAdminAddress(await vcRegistry.getAddress()));
 
   // Register the deployer as an issuer for testing
   console.log("Registering deployer as issuer...");
@@ -34,6 +39,9 @@ async function main() {
   // Verify deployment
   const isAuthorized = await vcRegistry.isAuthorizedIssuer(deployer.address);
   console.log("Deployer is authorized issuer:", isAuthorized);
+  
+  // Save contract address to config
+  contracts.vcRegistry = await vcRegistry.getAddress();
 
   // Save deployment info
   const deploymentInfo = {
@@ -48,6 +56,13 @@ async function main() {
   };
 
   console.log("\nDeployment Summary:");
+  
+  // Save contract addresses to config
+  contracts.vcRegistry = vcRegistry.address;
+  
+  // Update config file with deployed contract addresses
+  await updateConfig(networkName, contracts);
+  console.log("Contract addresses saved to config file");
   console.log(JSON.stringify(deploymentInfo, null, 2));
 
   // Save to file

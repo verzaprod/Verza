@@ -150,6 +150,47 @@ func NewVCRegistry(client *Client, config VCRegistryConfig, logger *zap.Logger) 
 	return registry, nil
 }
 
+// NewVCRegistryFromConfig creates a new VCRegistry instance using the contract-config.json file
+func NewVCRegistryFromConfig(client *Client, network string, logger *zap.Logger) (*VCRegistry, error) {
+	if logger == nil {
+		return nil, fmt.Errorf("logger is required")
+	}
+	
+	if client == nil {
+		return nil, fmt.Errorf("blockchain client is required")
+	}
+	
+	// Load contract configuration
+	configPath := DefaultConfigPath()
+	contractConfig, err := LoadContractConfig(configPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load contract config: %w", err)
+	}
+	
+	// Get network configuration
+	networkConfig, err := contractConfig.GetNetworkConfig(network)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get network config: %w", err)
+	}
+	
+	if networkConfig.VCRegistry == "" {
+		return nil, fmt.Errorf("VCRegistry address not found in config for network: %s", network)
+	}
+	
+	// Create VCRegistry config
+	config := VCRegistryConfig{
+		ContractAddress: networkConfig.VCRegistry,
+		ContractABI:     DefaultVCRegistryABI,
+	}
+	
+	logger.Info("Initializing VCRegistry from config",
+		zap.String("network", network),
+		zap.String("contract_address", config.ContractAddress),
+	)
+	
+	return NewVCRegistry(client, config, logger)
+}
+
 // AnchorVC anchors a Verifiable Credential on the blockchain
 func (r *VCRegistry) AnchorVC(ctx context.Context, vcID, vcHash, metadata string) (*types.Transaction, error) {
 	r.logger.Info("Anchoring VC",

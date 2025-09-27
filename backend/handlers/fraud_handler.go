@@ -184,14 +184,14 @@ func errorResponse(c *gin.Context, status int, message string, err interface{}) 
 func (fh *FraudHandler) AnalyzeFraudRisk(c *gin.Context) {
 	var req FraudScoreRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Invalid request format", err)
+		errorResponse(c, http.StatusBadRequest, "Invalid request format", err)
 		return
 	}
 
 	// Get user ID from context for authorization
 	userID, exists := c.Get("user_id")
 	if !exists {
-		utils.ErrorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
+		errorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
 		return
 	}
 
@@ -202,7 +202,7 @@ func (fh *FraudHandler) AnalyzeFraudRisk(c *gin.Context) {
 		// Check if user owns the verification request or is the assigned verifier
 		hasAccess, err := fh.fraudService.ValidateVerificationAccess(req.VerificationRequestID, userID.(string))
 		if err != nil || !hasAccess {
-			utils.ErrorResponse(c, http.StatusForbidden, "Not authorized to analyze this verification request", nil)
+			errorResponse(c, http.StatusForbidden, "Not authorized to analyze this verification request", nil)
 			return
 		}
 	}
@@ -213,28 +213,28 @@ func (fh *FraudHandler) AnalyzeFraudRisk(c *gin.Context) {
 	// Perform fraud analysis
 	result, err := fh.fraudService.AnalyzeVerificationRequestWithData(req.VerificationRequestID, analysisData, req.SkipCache)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to analyze fraud risk", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to analyze fraud risk", err)
 		return
 	}
 
 	// Convert result to response format
 	response := fh.convertToFraudScoreResponse(result)
 
-	utils.SuccessResponse(c, "Fraud analysis completed successfully", response)
+	successResponse(c, "Fraud analysis completed successfully", response)
 }
 
 // GetFraudResult handles GET /fraud/result/:id
 func (fh *FraudHandler) GetFraudResult(c *gin.Context) {
 	resultID := c.Param("id")
 	if resultID == "" {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Result ID is required", nil)
+		errorResponse(c, http.StatusBadRequest, "Result ID is required", nil)
 		return
 	}
 
 	// Get user ID from context
 	userID, exists := c.Get("user_id")
 	if !exists {
-		utils.ErrorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
+		errorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
 		return
 	}
 
@@ -243,7 +243,7 @@ func (fh *FraudHandler) GetFraudResult(c *gin.Context) {
 	// Get fraud result
 	result, err := fh.fraudService.GetFraudResult(resultID)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusNotFound, "Fraud result not found", err)
+		errorResponse(c, http.StatusNotFound, "Fraud result not found", err)
 		return
 	}
 
@@ -251,7 +251,7 @@ func (fh *FraudHandler) GetFraudResult(c *gin.Context) {
 	if userRole != "admin" && userRole != "system" {
 		hasAccess, err := fh.fraudService.ValidateVerificationAccess(result.VerificationRequestID, userID.(string))
 		if err != nil || !hasAccess {
-			utils.ErrorResponse(c, http.StatusForbidden, "Not authorized to view this fraud result", nil)
+			errorResponse(c, http.StatusForbidden, "Not authorized to view this fraud result", nil)
 			return
 		}
 	}
@@ -259,7 +259,7 @@ func (fh *FraudHandler) GetFraudResult(c *gin.Context) {
 	// Convert to response format
 	response := fh.convertToFraudResultResponse(result)
 
-	utils.SuccessResponse(c, "Fraud result retrieved successfully", response)
+	successResponse(c, "Fraud result retrieved successfully", response)
 }
 
 // GetFraudHistory handles GET /fraud/history
@@ -280,7 +280,7 @@ func (fh *FraudHandler) GetFraudHistory(c *gin.Context) {
 	// Get user ID and role from context
 	userID, exists := c.Get("user_id")
 	if !exists {
-		utils.ErrorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
+		errorResponse(c, http.StatusUnauthorized, "User not authenticated", nil)
 		return
 	}
 
@@ -299,7 +299,7 @@ func (fh *FraudHandler) GetFraudHistory(c *gin.Context) {
 		minRiskScore, maxRiskScore, userFilter,
 	)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve fraud history", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to retrieve fraud history", err)
 		return
 	}
 
@@ -319,7 +319,7 @@ func (fh *FraudHandler) GetFraudHistory(c *gin.Context) {
 		TotalPages: totalPages,
 	}
 
-	utils.SuccessResponse(c, "Fraud history retrieved successfully", response)
+	successResponse(c, "Fraud history retrieved successfully", response)
 }
 
 // GetFraudStats handles GET /fraud/stats
@@ -329,7 +329,7 @@ func (fh *FraudHandler) GetFraudStats(c *gin.Context) {
 
 	// Only allow admin and system users to view stats
 	if userRole != "admin" && userRole != "system" {
-		utils.ErrorResponse(c, http.StatusForbidden, "Not authorized to view fraud statistics", nil)
+		errorResponse(c, http.StatusForbidden, "Not authorized to view fraud statistics", nil)
 		return
 	}
 
@@ -342,21 +342,21 @@ func (fh *FraudHandler) GetFraudStats(c *gin.Context) {
 	// Get fraud statistics
 	stats, err := fh.fraudService.GetFraudStatistics(daysBack)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to retrieve fraud statistics", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to retrieve fraud statistics", err)
 		return
 	}
 
 	// Convert to response format
 	response := fh.convertToFraudStatsResponse(stats)
 
-	utils.SuccessResponse(c, "Fraud statistics retrieved successfully", response)
+	successResponse(c, "Fraud statistics retrieved successfully", response)
 }
 
 // ReanalyzeVerification handles POST /fraud/reanalyze/:id
 func (fh *FraudHandler) ReanalyzeVerification(c *gin.Context) {
 	verificationRequestID := c.Param("id")
 	if verificationRequestID == "" {
-		utils.ErrorResponse(c, http.StatusBadRequest, "Verification request ID is required", nil)
+		errorResponse(c, http.StatusBadRequest, "Verification request ID is required", nil)
 		return
 	}
 
@@ -365,21 +365,21 @@ func (fh *FraudHandler) ReanalyzeVerification(c *gin.Context) {
 
 	// Only allow admin and system users to reanalyze
 	if userRole != "admin" && userRole != "system" {
-		utils.ErrorResponse(c, http.StatusForbidden, "Not authorized to reanalyze verification requests", nil)
+		errorResponse(c, http.StatusForbidden, "Not authorized to reanalyze verification requests", nil)
 		return
 	}
 
 	// Force reanalysis by skipping cache
 	result, err := fh.fraudService.AnalyzeVerificationRequest(verificationRequestID)
 	if err != nil {
-		utils.ErrorResponse(c, http.StatusInternalServerError, "Failed to reanalyze verification request", err)
+		errorResponse(c, http.StatusInternalServerError, "Failed to reanalyze verification request", err)
 		return
 	}
 
 	// Convert result to response format
 	response := fh.convertToFraudScoreResponse(result)
 
-	utils.SuccessResponse(c, "Verification request reanalyzed successfully", response)
+	successResponse(c, "Verification request reanalyzed successfully", response)
 }
 
 // Helper methods
