@@ -6,8 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"verza/backend/services"
-	"verza/backend/utils"
+	"github.com/verza/services"
 )
 
 // FraudHandler handles fraud detection HTTP requests
@@ -159,6 +158,26 @@ func NewFraudHandler(fraudService *services.FraudDetectionService) *FraudHandler
 	return &FraudHandler{
 		fraudService: fraudService,
 	}
+}
+
+// Local response helpers to replace deprecated utils.SuccessResponse/ErrorResponse
+func successResponse(c *gin.Context, message string, data interface{}) {
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": message,
+		"data":    data,
+	})
+}
+
+func errorResponse(c *gin.Context, status int, message string, err interface{}) {
+	resp := gin.H{
+		"success": false,
+		"message": message,
+	}
+	if err != nil {
+		resp["error"] = err
+	}
+	c.JSON(status, resp)
 }
 
 // AnalyzeFraudRisk handles POST /fraud/score
