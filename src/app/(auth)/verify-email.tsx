@@ -1,35 +1,111 @@
-import { useState } from "react"
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native"
+import { useEffect, useState } from "react"
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from "react-native"
 import { useRouter } from "expo-router"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { useTheme } from "@/theme/ThemeProvider"
 import { BackButton } from "@/components/ui/BackButton"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { InputBoxes } from "@/components/ui/InputBoxes"
+import { useSignUp } from "@clerk/clerk-expo"
+import { useAuthStore } from "@/store/authStore"
 
 export default function VerifyEmailScreen() {
   const router = useRouter()
   const theme = useTheme()
   const insets = useSafeAreaInsets()
+  const { signUp, setActive, isLoaded } = useSignUp()
+
   const [otp, setOtp] = useState("")
   const [loading, setLoading] = useState(false)
+  const { setFirstTimeUser, setAuthenticated } = useAuthStore();
+  
+  const onVerifyPress = async () => {
+    if (otp.length !== 6) return
+    if (!isLoaded || !signUp) return
 
-  const handleVerify = async () => {
-    if (otp.length !== 4) return
+    try {
+      setLoading(true)
 
-    setLoading(true)
-    // TODO: Implement API call to verify OTP
-    // await authAPI.verifyOTP(otp);
+      const signUpAttempt = await signUp.attemptEmailAddressVerification({
+        code: otp,
+      })
 
-    setTimeout(() => {
+      console.log("Verification attempt status:", signUpAttempt.status)
+
+      if (signUpAttempt.status === 'complete') {
+        await setActive({ session: signUpAttempt.createdSessionId })
+        setFirstTimeUser(true);
+        setAuthenticated(true);
+        router.replace('/(auth)/create-pin')
+        
+      } else if (signUpAttempt.status === 'missing_requirements') {
+        console.log("Missing requirements:", signUpAttempt.missingFields)
+        
+        // Check what's missing and handle accordingly
+        const missingFields = signUpAttempt.missingFields || []
+        
+        if (missingFields.includes('password') || missingFields.includes('phone_number')) {
+          // Navigate to a screen to collect missing information
+          router.push('/(auth)/complete-signup')
+        } else {
+          Alert.alert("Verification Error", "Additional information required to complete verification.")
+        }
+      }
+
+    } catch (err) {
+      console.error("Verification error:", err)
+      
+      // Handle the "already verified" error specifically
+      if (err.message?.includes('already been verified')) {
+        console.log("Already verified, checking signup status...")
+        
+        // Check if we can complete with missing requirements
+        if (signUp.status === 'missing_requirements') {
+          router.push('/(auth)/complete-signup')
+        } else {
+          router.replace('/(auth)/create-pin')
+        }
+      } else if (err?.errors && err.errors.length > 0) {
+        const errorMessage = err.errors[0]?.longMessage || err.errors[0]?.message || "Verification failed"
+        Alert.alert("Verification Failed", errorMessage)
+      } else {
+        Alert.alert("Verification Failed", "An unexpected error occurred. Please try again.")
+      }
+    } finally {
       setLoading(false)
-      router.replace("/(auth)/create-pin")
-    }, 2000)
+    }
   }
 
+  // Check if user is already verified on component mount
+  useEffect(() => {
+    if (isLoaded && signUp) {
+      console.log("Current signUp status:", signUp.status)
+      
+      // If already complete, redirect immediately
+      if (signUp.status === 'complete') {
+        console.log("SignUp already complete, redirecting...")
+        router.replace('/(auth)/create-pin')
+      }
+    }
+  }, [isLoaded, signUp, router])
+
   const handleResend = async () => {
-    // TODO: Implement resend OTP API call
-    // await authAPI.resendOTP();
+    if (!isLoaded || !signUp) return
+
+    try {
+      setLoading(true)
+      
+      // Resend the verification email
+      await signUp.prepareEmailAddressVerification()
+      
+      Alert.alert("Code Resent", "A new verification code has been sent to your email.")
+      
+    } catch (err) {
+      console.error("Resend error:", err)
+      Alert.alert("Resend Failed", "Unable to resend verification code. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -68,11 +144,11 @@ export default function VerifyEmailScreen() {
           </View>
 
           <View style={{ marginBottom: 40 }}>
-            <InputBoxes value={otp} onChangeText={setOtp} length={4} type="otp" />
+            <InputBoxes value={otp} onChangeText={setOtp} length={6} type="otp" />
           </View>
 
           <View style={{ marginBottom: 20 }}>
-            <CTAButton title="Verify Code" onPress={handleVerify} loading={loading} disabled={otp.length !== 4} />
+            <CTAButton title="Verify Code" onPress={onVerifyPress} loading={loading} disabled={otp.length !== 6} />
           </View>
 
           <View style={{ alignItems: "center" }}>

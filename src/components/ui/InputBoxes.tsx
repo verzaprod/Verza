@@ -43,7 +43,7 @@ export const InputBoxes: React.FC<InputBoxesProps> = ({ value, onChangeText, len
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          gap: 20,
+          gap: 4,
         }}
       >
         {Array.from({ length }).map((_, index) => (

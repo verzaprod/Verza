@@ -5,6 +5,7 @@ import { useTheme } from "@/theme/ThemeProvider"
 import { CTAButton } from "@/components/ui/CTAButton"
 import { IDTypeCard } from "@/components/kyc/IDTypeCard"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useKYCStore } from "@/store/kycStore"
 
 type IDType = 'passport' | 'driver-license' | 'id-card'
 
@@ -35,18 +36,19 @@ export default function SelectionType() {
   const insets = useSafeAreaInsets()
   const [selectedType, setSelectedType] = useState<IDType | null>('passport')
 
+  const { setCurrentStep, setDocumentType } = useKYCStore();
+
   const handleContinue = () => {
     if (selectedType) {
-      // router.push(`/(kyc)/doc-capture?type=${selectedType}`)
-      router.push(`/(kyc)/selfie-note`)
+      setDocumentType(selectedType)
+      setCurrentStep('docs')
+      router.push(`/(kyc)/doc-capture`)
     }
   }
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" 
-        ? "padding" : "height"}
-      style={{ 
+    <SafeAreaView 
+      style={{
         flex: 1, 
         paddingTop: insets.top, 
         backgroundColor: theme.colors.background,
@@ -97,6 +99,6 @@ export default function SelectionType() {
           disabled={!selectedType}
         />
       </View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
