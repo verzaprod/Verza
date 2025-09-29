@@ -15,7 +15,6 @@ export default function SelfieCapture() {
   const [selfieImage, setSelfieImageLocal] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
 
-  // const { setSelfieImage, setCurrentStep } = useKYCStore()
   const setSelfieImage = useKYCStore((state) => state.setSelfieImage);
   const setCurrentStep = useKYCStore((state) => state.setCurrentStep);
 
@@ -26,7 +25,7 @@ export default function SelfieCapture() {
         allowsEditing: true,
         aspect: [3, 4],
         quality: 0.8,
-        cameraType: ImagePicker.CameraType.front, // Use front camera
+        cameraType: ImagePicker.CameraType.front, 
       })
 
       if (!result.canceled && result.assets[0]) {
@@ -68,12 +67,12 @@ export default function SelfieCapture() {
         paddingTop: insets.top,
       }}
     >
-      <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}>
+      <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 0 }}>
         <View style={{ marginBottom: 32 }}>
           <Text
             style={{
               fontSize: 24,
-              fontWeight: 'bold',
+              // fontWeight: 'bold',
               color: theme.colors.textPrimary,
               fontFamily: theme.fonts.welcomeHeading,
               marginBottom: 8,

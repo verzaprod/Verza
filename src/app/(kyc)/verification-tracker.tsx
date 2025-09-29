@@ -43,7 +43,6 @@ export default function VerificationTracker() {
       const response = await apiService.getVerificationStatus(escrowId);
       const data = await response.json();
 
-      // ✅ Only update state if component is still mounted
       if (isMountedRef.current && !hasNavigatedRef.current) {
         setVerificationStatus(data);
 
@@ -124,7 +123,6 @@ export default function VerificationTracker() {
     [theme.colors.primaryGreen, theme.colors.textSecondary]
   );
 
-  // ✅ Fix 6: Memoize the navigation handler
   const handleViewResults = useCallback(() => {
     if (!hasNavigatedRef.current) {
       hasNavigatedRef.current = true;
