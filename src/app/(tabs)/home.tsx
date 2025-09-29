@@ -19,9 +19,9 @@ import { useClerk } from "@clerk/clerk-expo";
 import { useAuthStore } from "@/store/authStore";
 
 const verifiedAccounts = [
-  { id: "1", name: "Respress", status: "verified" },
+  { id: "1", name: "Rexan", status: "verified" },
   { id: "2", name: "Respress", status: "verified" },
-  { id: "3", name: "Respress", status: "verified" },
+  { id: "3", name: "Peking", status: "verified" },
 ];
 
 export default function DashboardScreen() {

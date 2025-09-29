@@ -1,74 +1,85 @@
-import { useState, useEffect } from "react"
-import { View, Text, KeyboardAvoidingView, Platform } from "react-native"
-import { useRouter } from "expo-router"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useTheme } from "@/theme/ThemeProvider"
-import { CTAButton } from "@/components/ui/CTAButton"
-import { WordChipGrid } from "@/components/auth/WordChipGrid"
-import { useAuthStore } from "@/store/authStore"
+import { useState, useEffect } from "react";
+import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
+import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTheme } from "@/theme/ThemeProvider";
+import { CTAButton } from "@/components/ui/CTAButton";
+import { WordChipGrid } from "@/components/auth/WordChipGrid";
+import { useAuthStore } from "@/store/authStore";
 
 const DEMO_WORDS = [
-  'abandon', 'ability', 'able', 'about',
-  'above', 'absent', 'absorb', 'abstract',
-  'absurd', 'abuse', 'access', 'accident'
-]
+  "beach",
+  "nuclear",
+  "vibrant",
+  "wisdom",
+  "carpet",
+  "frozen",
+  "mystery",
+  "jungle",
+  "thunder",
+  "silver",
+  "dolphin",
+  "harvest",
+];
 
-const CORRECT_SEQUENCE = ['abandon', 'ability', 'able'] // First 3 words for demo
+const CORRECT_SEQUENCE = ["beach", "nuclear", "vibrant"]; // First 3 words for demo
 
 export default function ConfirmPassphraseScreen() {
-  const router = useRouter()
-  const theme = useTheme()
-  const insets = useSafeAreaInsets()
-  const [shuffledWords, setShuffledWords] = useState<string[]>([])
-  const [selectedWords, setSelectedWords] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const theme = useTheme();
+  const insets = useSafeAreaInsets();
+  const [shuffledWords, setShuffledWords] = useState<string[]>([]);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const { setPassphraseBackedUp, setOnboardingComplete } = useAuthStore();
 
   useEffect(() => {
     // Shuffle the words for selection
-    const shuffled = [...DEMO_WORDS].sort(() => Math.random() - 0.5)
-    setShuffledWords(shuffled)
-  }, [])
+    const shuffled = [...DEMO_WORDS].sort(() => Math.random() - 0.5);
+    setShuffledWords(shuffled);
+  }, []);
 
   const handleWordSelect = (word: string) => {
     if (selectedWords.includes(word)) {
       // Remove word if already selected
-      setSelectedWords(prev => prev.filter(w => w !== word))
+      setSelectedWords((prev) => prev.filter((w) => w !== word));
     } else if (selectedWords.length < 3) {
       // Add word if less than 3 selected
-      setSelectedWords(prev => [...prev, word])
+      setSelectedWords((prev) => [...prev, word]);
     }
-  }
+  };
 
   const isCorrectSequence = () => {
-    return selectedWords.length === 3 && 
-           selectedWords.every((word, index) => word === CORRECT_SEQUENCE[index])
-  }
+    return (
+      selectedWords.length === 3 &&
+      selectedWords.every((word, index) => word === CORRECT_SEQUENCE[index])
+    );
+  };
 
   const handleContinue = async () => {
-    if (!isCorrectSequence()) return
-    
-    setLoading(true)
+    if (!isCorrectSequence()) return;
+
+    setLoading(true);
     try {
       // TODO: Implement API call to confirm passphrase
       // await authAPI.confirmPassphrase(selectedWords);
-      
+
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
         setPassphraseBackedUp(true);
         setOnboardingComplete(true);
-        router.replace('/(auth)/auth-success')
-      }, 1500)
+        router.replace("/(auth)/auth-success");
+      }, 1500);
     } catch (error) {
-      console.error('Error confirming passphrase:', error)
-      setLoading(false)
+      console.error("Error confirming passphrase:", error);
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <KeyboardAvoidingView 
-      style={{ flex: 1 }} 
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View
@@ -81,7 +92,13 @@ export default function ConfirmPassphraseScreen() {
         }}
       >
         <View>
-          <View style={{ alignItems: "flex-start", marginBottom: 40, marginTop: 40 }}>
+          <View
+            style={{
+              alignItems: "flex-start",
+              marginBottom: 40,
+              marginTop: 40,
+            }}
+          >
             <Text
               style={{
                 fontSize: 28,
@@ -98,7 +115,8 @@ export default function ConfirmPassphraseScreen() {
                 color: theme.colors.textSecondary,
               }}
             >
-              Select the first 3 words in the correct order to confirm your passphrase.
+              Select the first 3 words in the correct order to confirm your
+              passphrase.
             </Text>
           </View>
 
@@ -119,5 +137,5 @@ export default function ConfirmPassphraseScreen() {
         </View>
       </View>
     </KeyboardAvoidingView>
-  )
+  );
 }
