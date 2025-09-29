@@ -30,7 +30,7 @@ export const VerifierCard: React.FC<VerifierCardProps> = ({ verifier }) => {
       case 'offline': return theme.colors.textSecondary
       default: return theme.colors.textSecondary
     }
-  }
+  } 
 
   const handlePress = () => {
     router.push(`/(kyc)/escrow-confirmation?verifierId=${verifier.id}`)
