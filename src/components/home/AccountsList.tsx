@@ -13,11 +13,13 @@ interface VerifiedAccount {
 interface OverlappingAccountsListProps {
   accounts: VerifiedAccount[];
   onRemoveAccount: (accountId: string) => void;
+  onViewDetails?: (account: VerifiedAccount) => void;
 }
 
 export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
   accounts,
   onRemoveAccount,
+  onViewDetails,
 }) => {
   const theme = useTheme();
 
@@ -66,13 +68,20 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
     );
   };
 
+  const handleActionPress = (account: VerifiedAccount) => {
+    if (account.status === "verified" && onViewDetails) {
+      onViewDetails(account);
+    } else if (account.status === "pending") {
+      handleRemoveAccount(account.id, account.name);
+    }
+  }
+
   return (
     <View>
       {accounts.map((account, index) => {
-        const isLast = index === accounts.length - 1;
+        // const isLast = index === accounts.length - 1;
         const zIndex = accounts.length + index;
         const opacity = 1 - index * 0.05;
-        // const scale = 1 - index * 0.02;
         const marginTop = index === 0 ? 0 : -42;
 
         const accountContent = renderAccountContent(account);
@@ -96,6 +105,7 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
               shadowRadius: 8,
               elevation: 8,
             }}
+            onPress={() => handleActionPress(account)}
           >
             <View
               style={{
@@ -120,7 +130,7 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
               />
             </View>
 
-            <View className="flex-1 flex-col ite ms-end">
+            <View className="flex-1 flex-col">
               <View className="flex-1 justify-between flex-row">
                 <Text
                   style={{

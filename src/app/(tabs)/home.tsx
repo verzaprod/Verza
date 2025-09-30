@@ -16,6 +16,7 @@ import { useRouter } from "expo-router";
 import { useClerk } from "@clerk/clerk-expo";
 import { useAuthStore } from "@/store/authStore";
 import { useState } from "react";
+import { AccountDetailsModal } from "@/components/home/AccountDetailsModal.tsx";
 
 const verifiedAccounts = [
   { id: "1", name: "Rexan", status: "verified" },
@@ -30,8 +31,28 @@ export default function DashboardScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [pendingAccounts, setPendingAccounts] = useState([]);
  
+  const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState(null);
+
   const { signOut } = useClerk();
   const router = useRouter();
+
+  const handleViewDetails = (account) => {
+    setSelectedAccount(account);
+    setDetailsModalVisible(true);
+  };
+
+  const handleDisconnectAccount = (accountId) => {
+    // Remove from verified accounts if it's a verified account
+    const account = allAccounts.find(acc => acc.id === accountId);
+    if (account?.status === 'verified') {
+      // You might want to add state for verified accounts to modify them
+      console.log('Disconnecting verified account:', accountId);
+    } else {
+      // Remove from pending accounts
+      setPendingAccounts(prev => prev.filter(account => account.id !== accountId));
+    }
+  };
 
   const handleSignOut = async () => {
     try {
@@ -61,7 +82,6 @@ export default function DashboardScreen() {
 
   const handleRemoveAccount = (accountId) => {
     setPendingAccounts(prev => prev.filter(account => account.id !== accountId));
-    // setVerifiedAccounts(prev => prev.filter(account => account.id !== accountId));
   }
 
   return (
@@ -94,7 +114,7 @@ export default function DashboardScreen() {
           >
             {pendingAccounts.length > 0 ? "Accounts" : "Verified Accounts"}
           </Text>
-          <AccountsList accounts={allAccounts} onRemoveAccount={handleRemoveAccount} />
+          <AccountsList accounts={allAccounts} onRemoveAccount={handleRemoveAccount} onViewDetails={handleViewDetails}/>
         </View>
 
         <View style={{ alignItems: "center", paddingBottom: theme.spacing.xl }}>
@@ -109,6 +129,16 @@ export default function DashboardScreen() {
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
         onSelectIntegration={handleIntegrationSelect}
+      />
+
+      <AccountDetailsModal
+        visible={detailsModalVisible}
+        account={selectedAccount}
+        onClose={() => {
+          setDetailsModalVisible(false);
+          setSelectedAccount(null);
+        }}
+        onDisconnect={handleDisconnectAccount}
       />
     </SafeAreaView>
   );
