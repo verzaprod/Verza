@@ -1,7 +1,7 @@
 export const MOCK_DATA = {
   escrow: {
     initiate: {
-      escrow_id: 'escrow_123456789',
+      escrow_id: 'escrow_30a52kdfj25',
       status: 'pending',
       amount: 25.00,
       currency: 'HBAR',
@@ -38,14 +38,14 @@ export const MOCK_DATA = {
     
     results: {
       status: 'verified',
-      credentialId: 'cred_987654321',
+      credentialId: 'cred_380439ad324jd',
       vcDetails: {
-        id: 'vc_123456789abcdef',
+        id: 'vc_90ab5678cde5f12678ae34',
         issuer: 'TechCorp Solutions',
-        issuedDate: '2024-01-15',
-        expiryDate: '2025-01-15',
+        issuedDate: new Date().toLocaleString(),
+        expiryDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleString(),
         type: 'Identity Verification',
-        proofHash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef'
+        proofHash: '0xa7f8cf12de92e1b3d4567890a2345bc90abc16783456789345670abcdef12'
       }
     }
   },

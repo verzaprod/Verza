@@ -39,8 +39,8 @@ export class MockAPI {
         steps: status.steps.map((step, index) => ({
           ...step,
           status: index <= 2 ? "completed" : "pending",
-          timestamp:
-            index <= 2 ? `2024-01-15 ${10 + index}:${30 + index * 5} AM` : null,
+          // timestamp:
+          //   index <= 2 ? `2024-01-15 ${10 + index}:${30 + index * 5} AM` : null,
         })),
       };
     } else if (this.verificationProgress > 1) {
@@ -50,7 +50,7 @@ export class MockAPI {
           ...step,
           status:
             index === 0 ? "completed" : index === 1 ? "active" : "pending",
-          timestamp: index === 0 ? "2024-01-15 10:30 AM" : null,
+          // timestamp: index === 0 ? new Date().toLocaleString() : null,
         })),
       };
     }
