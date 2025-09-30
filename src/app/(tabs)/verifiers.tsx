@@ -1,57 +1,40 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { VerifiersHeader } from "@/components/verifiers/VerifiersHeader";
 import { VerifiersList } from "@/components/verifiers/VerifiersList";
 import { SearchBar } from "@/components/verifiers/SearchBar";
+import { MOCK_DATA } from "@/services/api/mockData";
 
-const verifiers = [
-  {
-    id: "1",
-    name: "TechCorp\nSolutions",
-    type: "Enterprise",
-    rating: 4.8,
-    verified: 1240,
-    logo: "shield-check",
-    status: "active" as const,
-    description: "Leading technology verification provider",
-  },
-  {
-    id: "2", 
-    name: "SecureID Pro",
-    type: "Financial",
-    rating: 4.9,
-    verified: 856,
-    logo: "shield",
-    status: "active" as const,
-    description: "Banking and financial services verification",
-  },
-  {
-    id: "3",
-    name: "VerifyNow",
-    type: "General",
-    rating: 4.6,
-    verified: 2340,
-    logo: "shield-check",
-    status: "active" as const, 
-    description: "Fast and reliable identity verification",
-  },
-  {
-    id: "4",
-    name: "TrustGuard",
-    type: "Healthcare",
-    rating: 4.7,
-    verified: 445,
-    logo: "shield",
-    status: "busy" as const,
-    description: "Healthcare industry specialist verification",
-  },
-];
+const verifiers = MOCK_DATA.verifiers;
 
 export default function VerifiersScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter verifiers based on search query
+  const filteredVerifiers = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return verifiers;
+    }
+
+    const query = searchQuery.toLowerCase();
+    return verifiers.filter(verifier => 
+      verifier.name.toLowerCase().includes(query) ||
+      verifier.type.toLowerCase().includes(query) ||
+      verifier.description.toLowerCase().includes(query)
+    );
+  }, [searchQuery]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
 
   return (
     <SafeAreaView
@@ -66,7 +49,6 @@ export default function VerifiersScreen() {
         style={{ paddingHorizontal: 20 }}
         showsVerticalScrollIndicator={false}
       >
-
         <View style={{ marginBottom: theme.spacing.lg }}>
           <Text
             style={{
@@ -87,11 +69,40 @@ export default function VerifiersScreen() {
           >
             Choose a trusted verifier to authenticate your identity
           </Text>
-          <SearchBar />
+          <SearchBar 
+            value={searchQuery}
+            onSearch={handleSearch}
+            onClear={clearSearch}
+            placeholder="Search verifiers..."
+          />
         </View>
 
         <View style={{ paddingBottom: theme.spacing.xl }}>
-          <VerifiersList verifiers={verifiers} />
+          {filteredVerifiers.length > 0 ? (
+            <VerifiersList verifiers={filteredVerifiers} />
+          ) : (
+            <View style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingVertical: theme.spacing.xl * 2,
+            }}>
+              <Text style={{
+                fontSize: 16,
+                color: theme.colors.textSecondary,
+                textAlign: 'center',
+              }}>
+                No verifiers found for "{searchQuery}"
+              </Text>
+              <Text style={{
+                fontSize: 14,
+                color: theme.colors.textSecondary,
+                textAlign: 'center',
+                marginTop: theme.spacing.sm,
+              }}>
+                Try searching with different keywords
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
