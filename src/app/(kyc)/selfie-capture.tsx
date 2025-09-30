@@ -15,7 +15,7 @@ export default function SelfieCapture() {
   const [selfieImage, setSelfieImageLocal] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
 
-  const setSelfieImage = useKYCStore((state) => state.setSelfieImage);
+  const setVerificationStatus = useKYCStore((state) => state.setVerificationStatus);
   const setCurrentStep = useKYCStore((state) => state.setCurrentStep);
 
   const handleSelfieCapture = async () => {
@@ -50,6 +50,7 @@ export default function SelfieCapture() {
       
       // setSelfieImage(selfieImage)
       setCurrentStep('processing')
+      setVerificationStatus('verified')
       
       router.replace('/(kyc)/verification-tracker')
     } catch (error) {

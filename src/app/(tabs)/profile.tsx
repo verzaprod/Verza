@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { useRouter } from "expo-router";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { CredentialsList } from "@/components/profile/CredentialsList";
 import { AddCredentialButton } from "@/components/profile/AddCredentialButton";
 import { AddCredentialModal } from "@/components/profile/AddCredentialModal";
+import { useKYCStore } from "@/store/kycStore";
 
 export default function ProfileScreen() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  
+
   const [credentials, setCredentials] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const verificationStatus = useKYCStore((state) => state.verificationStatus);
+
+  const router = useRouter();
 
   const handleAddCredential = (credentialType) => {
     const newCredential = {
@@ -21,11 +33,13 @@ export default function ProfileScreen() {
       status: "pending",
       icon: credentialType.icon,
     };
-    setCredentials(prev => [...prev, newCredential]);
+    setCredentials((prev) => [...prev, newCredential]);
   };
 
+  console.log("VerificationStatus", verificationStatus);
+
   const handleRemoveCredential = (credentialId) => {
-    setCredentials(prev => prev.filter(cred => cred.id !== credentialId));
+    setCredentials((prev) => prev.filter((cred) => cred.id !== credentialId));
   };
 
   const handleAddCredentialPress = () => {
@@ -61,34 +75,40 @@ export default function ProfileScreen() {
             >
               Enlisted Credentials
             </Text>
-            <CredentialsList 
-              credentials={credentials} 
+            <CredentialsList
+              credentials={credentials}
               onRemoveCredential={handleRemoveCredential}
             />
           </View>
         )}
 
         {credentials.length === 0 && (
-          <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: theme.spacing.xl * 2,
-          }}>
-            <Text style={{
-              fontSize: 18,
-              color: theme.colors.textSecondary,
-              textAlign: 'center',
-              marginBottom: theme.spacing.lg,
-            }}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: theme.spacing.xl * 2,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                color: theme.colors.textSecondary,
+                textAlign: "center",
+                marginBottom: theme.spacing.lg,
+              }}
+            >
               No credentials added yet
             </Text>
-            <Text style={{
-              fontSize: 14,
-              color: theme.colors.textSecondary,
-              textAlign: 'center',
-              marginBottom: theme.spacing.xl,
-            }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: theme.colors.textSecondary,
+                textAlign: "center",
+                marginBottom: theme.spacing.xl,
+              }}
+            >
               Add your first credential to get started
             </Text>
           </View>
@@ -97,6 +117,30 @@ export default function ProfileScreen() {
         <View style={{ alignItems: "center", paddingBottom: theme.spacing.xl }}>
           <AddCredentialButton onPress={handleAddCredentialPress} />
         </View>
+
+        {
+          <TouchableOpacity
+            onPress={() => router.replace("/verifier")}
+            style={{
+              backgroundColor: theme.colors.background,
+              paddingVertical: 14,
+              borderRadius: 12,
+              marginBottom: 16,
+            }}
+            className="w-full items-center justify-center py-4 rounded-xl mb -4"
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                color: theme.colors.textPrimary,
+                textAlign: "center",
+                marginBottom: theme.spacing.xl,
+              }}
+            >
+              Become a Verifier
+            </Text>
+          </TouchableOpacity>
+        }
       </ScrollView>
 
       <AddCredentialModal

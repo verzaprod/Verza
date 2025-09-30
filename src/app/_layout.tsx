@@ -55,6 +55,7 @@ export default function Layout() {
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="(kyc)" options={{ headerShown: false }} />
+              <Stack.Screen name="verifier" options={{ headerShown: false }} />
             </Stack>
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
           </ThemeProvider>
