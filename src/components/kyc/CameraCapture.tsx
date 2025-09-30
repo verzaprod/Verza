@@ -26,7 +26,8 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
       style={{
         backgroundColor: theme.colors.backgroundLight,
         borderRadius: theme.borderRadius.lg,
-        padding: 20,
+        paddingTop: 4,
+        paddingBottom: 16
       }}
     >
       <Text
@@ -41,7 +42,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
       </Text>
       <Text
         style={{
-          fontSize: 14,
+          fontSize: 16,
           color: theme.colors.textSecondary,
           marginBottom: 16,
         }}
@@ -69,7 +70,7 @@ export const CameraCapture: React.FC<CameraCaptureProps> = ({
             style={{
               width: '100%',
               height: '100%',
-              borderRadius: isCircular ? 100 : theme.borderRadius.md,
+              borderRadius: isCircular ? 50 : theme.borderRadius.md,
             }}
             resizeMode="cover"
           />
