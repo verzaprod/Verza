@@ -4,38 +4,56 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
   Pressable,
+  FlatList,
 } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Icon } from '@/components/ui/Icon';
 import Feather from '@expo/vector-icons/Feather';
 
-const integrations = [
-  { id: '1', name: 'Google', icon: 'google', color: '#4285F4' },
-  { id: '2', name: 'LinkedIn', icon: 'linkedin', color: '#0077B5' },
-  { id: '3', name: 'Facebook', icon: 'facebook', color: '#1877F2' },
-  { id: '4', name: 'Twitter', icon: 'twitter', color: '#1DA1F2' },
-  { id: '5', name: 'Instagram', icon: 'instagram', color: '#E4405F' },
-  { id: '6', name: 'GitHub', icon: 'github', color: '#333' },
-  { id: '7', name: 'Discord', icon: 'discord', color: '#5865F2' },
-  { id: '8', name: 'Slack', icon: 'slack', color: '#4A154B' },
+const credentialTypes = [
+  { 
+    id: 'driver-license', 
+    label: "Driver's\nLicense", 
+    icon: 'driver-license',
+    description: 'Government issued driving permit',
+    color: '#3B82F6'
+  },
+  { 
+    id: 'passport', 
+    label: "Passport", 
+    icon: 'passport',
+    description: 'International travel document',
+    color: '#10B981'
+  },
+  { 
+    id: 'id-card', 
+    label: "Student ID", 
+    icon: 'id-card',
+    description: 'Educational institution identification',
+    color: '#F59E0B'
+  },
 ];
 
-interface AddAccountModalProps {
+interface AddCredentialModalProps {
   visible: boolean;
   onClose: () => void;
-  onSelectIntegration: (integration: any) => void;
+  onSelect: (credentialType: any) => void;
 }
 
-export function AddAccountModal({
+export function AddCredentialModal({
   visible,
   onClose,
-  onSelectIntegration,
-}: AddAccountModalProps) {
+  onSelect,
+}: AddCredentialModalProps) {
   const theme = useTheme();
 
-  const renderIntegration = ({ item }) => (
+  const handleSelect = (credentialType) => {
+    onSelect(credentialType);
+    onClose();
+  };
+
+  const renderCredentialType = ({ item }) => (
     <TouchableOpacity
       style={{
         flexDirection: 'row',
@@ -45,35 +63,43 @@ export function AddAccountModal({
         marginBottom: theme.spacing.sm,
         borderRadius: theme.borderRadius.md,
         borderWidth: 1,
-        borderColor: theme.colors.boxBorder,
+        borderColor: theme.colors.background,
       }}
-      onPress={() => onSelectIntegration(item)}
+      onPress={() => handleSelect(item)}
     >
       <View
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: 20,
+          width: 50,
+          height: 50,
+          borderRadius: 25,
           backgroundColor: item.color,
           alignItems: 'center',
           justifyContent: 'center',
           marginRight: theme.spacing.md,
         }}
       >
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16 }}>
-          {item.name.charAt(0)}
+        <Icon name={item.icon} size={24} color="white" />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            color: theme.colors.textPrimary,
+            fontWeight: '600',
+            marginBottom: 4,
+          }}
+        >
+          {item.label}
+        </Text>
+        <Text
+          style={{
+            fontSize: 12,
+            color: theme.colors.textSecondary,
+          }}
+        >
+          {item.description}
         </Text>
       </View>
-      <Text
-        style={{
-          fontSize: 16,
-          color: theme.colors.textPrimary,
-          fontFamily: theme.fonts.onboardingTagline,
-          flex: 1,
-        }}
-      >
-        {item.name}
-      </Text>
       <Feather
         name="chevron-right"
         size={20}
@@ -105,7 +131,7 @@ export function AddAccountModal({
             paddingTop: theme.spacing.lg,
             paddingHorizontal: theme.spacing.lg,
             paddingBottom: theme.spacing.xl,
-            maxHeight: '80%',
+            maxHeight: '70%',
           }}
           onPress={(e) => e.stopPropagation()}
         >
@@ -120,11 +146,11 @@ export function AddAccountModal({
             <Text
               style={{
                 fontSize: 20,
-                fontFamily: theme.fonts.onboardingHeading,
+                fontWeight: 'bold',
                 color: theme.colors.textPrimary,
               }}
             >
-              Add Account
+              Add Credential
             </Text>
             <TouchableOpacity onPress={onClose}>
               <Feather name="x" size={24} color={theme.colors.textSecondary} />
@@ -136,15 +162,14 @@ export function AddAccountModal({
               fontSize: 14,
               color: theme.colors.textSecondary,
               marginBottom: theme.spacing.lg,
-              fontFamily: theme.fonts.onboardingTagline,
             }}
           >
-            Select a platform to connect your account
+            Select a credential type to add to your profile
           </Text>
 
           <FlatList
-            data={integrations}
-            renderItem={renderIntegration}
+            data={credentialTypes}
+            renderItem={renderCredentialType}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
           />
