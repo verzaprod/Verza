@@ -14,6 +14,7 @@ interface KYCState {
   // Process State
   currentStep: 'selection' | 'docs' | 'selfie' | 'processing' | 'complete'
   isProcessing: boolean
+  verificationStatus?: 'pending' | 'verified' | 'rejected'
 }
 
 interface KYCActions {
@@ -23,6 +24,7 @@ interface KYCActions {
   setSelfieImage: (image: string) => void
   setCurrentStep: (step: KYCState['currentStep']) => void
   setProcessing: (processing: boolean) => void
+  setVerificationStatus: (status: 'pending' | 'verified' | 'rejected') => void
   resetKYC: () => void
 }
 
@@ -31,6 +33,7 @@ type KYCStore = KYCState & KYCActions
 const initialState: KYCState = {
   currentStep: 'selection',
   isProcessing: false,
+  verificationStatus: "pending",
 }
 
 export const useKYCStore = create<KYCStore>((set) => ({
@@ -53,6 +56,9 @@ export const useKYCStore = create<KYCStore>((set) => ({
   
   setProcessing: (isProcessing) =>
     set({ isProcessing }),
+
+  setVerificationStatus: (verificationStatus) =>
+    set({ verificationStatus }),
   
   resetKYC: () =>
     set(initialState),
