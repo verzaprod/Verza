@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Icon } from '@/components/ui/Icon';
+import Feather from '@expo/vector-icons/Feather';
 
 const integrations = [
   { id: '1', name: 'Google', icon: 'google', color: '#4285F4' },
@@ -73,7 +74,7 @@ export function AddAccountModal({
       >
         {item.name}
       </Text>
-      <Icon
+      <Feather
         name="chevron-right"
         size={20}
       />
