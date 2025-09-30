@@ -30,9 +30,9 @@ export default function BackupPassphraseScreen() {
     setTimeout(() => {
       setLoading(false)
       setPassphrase([
-        'abandon', 'ability', 'able', 'about',
-        'above', 'absent', 'allow', 'abstract',
-        'absurd', 'abuse', 'access', 'accident'
+        'beach', 'nuclear', 'vibrant', 'wisdom',
+        'carpet', 'frozen', 'mystery', 'jungle',
+        'thunder', 'silver', 'dolphin', 'harvest'
       ])
     }, 2000)
 
