@@ -118,8 +118,17 @@ export default function ProfileScreen() {
           <AddCredentialButton onPress={handleAddCredentialPress} />
         </View>
 
-        {verificationStatus === "verified" && (
-          <TouchableOpacity onPress={() => router.replace("/verifier")}>
+        {
+          <TouchableOpacity
+            onPress={() => router.replace("/verifier")}
+            style={{
+              backgroundColor: theme.colors.background,
+              paddingVertical: 14,
+              borderRadius: 12,
+              marginBottom: 16,
+            }}
+            className="w-full items-center justify-center py-4 rounded-xl mb -4"
+          >
             <Text
               style={{
                 fontSize: 14,
@@ -128,10 +137,10 @@ export default function ProfileScreen() {
                 marginBottom: theme.spacing.xl,
               }}
             >
-              Switch to Verifier
+              Become a Verifier
             </Text>
           </TouchableOpacity>
-        )}
+        }
       </ScrollView>
 
       <AddCredentialModal

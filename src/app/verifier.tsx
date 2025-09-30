@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList, Modal } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, Modal, ToastAndroid, } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useKYCStore } from "@/store/kycStore";
@@ -56,12 +56,14 @@ export default function VerifierDashboard() {
   const handleApprove = (job) => {
     setVerificationStatus("verified");
     setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
+    ToastAndroid.show("Job Verified", ToastAndroid.SHORT);
     router.replace("/(tabs)/home");
   };
 
   const handleReject = (job) => {
     setVerificationStatus("rejected");
     setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
+    ToastAndroid.show("Job Rejected", ToastAndroid.SHORT);
     router.replace("/(tabs)/home");
   };
 
