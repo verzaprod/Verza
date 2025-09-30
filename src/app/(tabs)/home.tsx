@@ -59,6 +59,11 @@ export default function DashboardScreen() {
 
   const allAccounts = [...verifiedAccounts, ...pendingAccounts];
 
+  const handleRemoveAccount = (accountId) => {
+    setPendingAccounts(prev => prev.filter(account => account.id !== accountId));
+    // setVerifiedAccounts(prev => prev.filter(account => account.id !== accountId));
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -89,7 +94,7 @@ export default function DashboardScreen() {
           >
             {pendingAccounts.length > 0 ? "Accounts" : "Verified Accounts"}
           </Text>
-          <AccountsList accounts={allAccounts} />
+          <AccountsList accounts={allAccounts} onRemoveAccount={handleRemoveAccount} />
         </View>
 
         <View style={{ alignItems: "center", paddingBottom: theme.spacing.xl }}>
