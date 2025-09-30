@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, SafeAreaView, Alert, Image } from 'react-native'
+import { View, Text, SafeAreaView, Alert, Image, ScrollView } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/theme/ThemeProvider'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -82,7 +82,7 @@ export default function DocCapture() {
       }}
     >
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20 }}>
-        <View style={{ marginBottom: 32 }}>
+        <View style={{ marginBottom: 16 }}>
           <Text
             style={{
               fontSize: 24,
@@ -105,7 +105,7 @@ export default function DocCapture() {
           </Text>
         </View>
 
-        <View style={{ flex: 1, gap: 20 }}>
+        <ScrollView style={{ flex: 1, gap: 20 }} showsVerticalScrollIndicator={false}>
           {/* Front Side */}
           <CameraCapture
             title="Front Side"
@@ -123,7 +123,7 @@ export default function DocCapture() {
               onCapture={() => handleImageCapture('back')}
             />
           )}
-        </View>
+        </ScrollView>
 
         <View style={{ paddingBottom: 20 }}>
           <Button

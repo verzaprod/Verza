@@ -13,7 +13,6 @@ export default function KYCLayout() {
       <Stack.Screen name="selfie-capture" />
       <Stack.Screen name="selfie-note" />
       <Stack.Screen name="kyc-success" />
-      <Stack.Screen name="verification-state" />
       <Stack.Screen name="escrow-confirmation" />
       <Stack.Screen name="verification-results" />
       <Stack.Screen name="verification-tracker" />

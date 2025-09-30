@@ -64,7 +64,7 @@ export default function SelfieCapture() {
       style={{
         flex: 1,
         backgroundColor: theme.colors.background,
-        paddingTop: insets.top,
+        paddingTop: insets.top + 24,
       }}
     >
       <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 0 }}>
@@ -72,7 +72,6 @@ export default function SelfieCapture() {
           <Text
             style={{
               fontSize: 24,
-              // fontWeight: 'bold',
               color: theme.colors.textPrimary,
               fontFamily: theme.fonts.welcomeHeading,
               marginBottom: 8,
@@ -91,9 +90,9 @@ export default function SelfieCapture() {
           </Text>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1,  }}>
           <CameraCapture
-            title="Your Selfie"
+            title=""
             subtitle="Look directly at the camera"
             image={selfieImage}
             onCapture={handleSelfieCapture}
