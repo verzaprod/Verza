@@ -48,7 +48,7 @@ export function VerifierRating({
   if (existingRating || hasSubmitted) {
     return (
       <View style={{
-        backgroundColor: theme.colors.surface,
+        backgroundColor: theme.colors.background,
         borderRadius: theme.borderRadius.lg,
         padding: theme.spacing.lg,
         marginBottom: theme.spacing.lg,
@@ -85,7 +85,7 @@ export function VerifierRating({
 
   return (
     <View style={{
-      backgroundColor: theme.colors.surface,
+      backgroundColor: theme.colors.background,
       borderRadius: theme.borderRadius.lg,
       padding: theme.spacing.lg,
       marginBottom: theme.spacing.lg,
@@ -118,7 +118,7 @@ export function VerifierRating({
         style={{
           backgroundColor: theme.colors.background,
           borderWidth: 1,
-          borderColor: theme.colors.border,
+          borderColor: theme.colors.boxBorder,
           borderRadius: theme.borderRadius.md,
           padding: theme.spacing.md,
           fontSize: 14,
@@ -137,7 +137,7 @@ export function VerifierRating({
 
       <TouchableOpacity
         style={{
-          backgroundColor: currentRating > 0 ? theme.colors.primaryGreen : theme.colors.border,
+          backgroundColor: currentRating > 0 ? theme.colors.primaryGreen : theme.colors.boxBorder,
           borderRadius: theme.borderRadius.md,
           padding: theme.spacing.md,
           alignItems: 'center',

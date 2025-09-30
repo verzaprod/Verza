@@ -19,7 +19,7 @@ export function PaymentDetails({ verifierDetails }: PaymentDetailsProps) {
   return (
     <View
       style={{
-        backgroundColor: theme.colors.backgroundLight,
+        backgroundColor: theme.colors.background,
         borderRadius: theme.borderRadius.lg,
         padding: 20,
         marginBottom: 24,
@@ -62,7 +62,7 @@ function DetailRow({ label, value, theme, valueWeight = "500" }) {
   return (
     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
       <Text style={{ color: theme.colors.textSecondary }}>{label}</Text>
-      <Text style={{ color: theme.colors.textPrimary, fontWeight: valueWeight }}>
+      <Text style={{ color: theme.colors.textPrimary, fontWeight: valueWeight as any}}>
         {value}
       </Text>
     </View>

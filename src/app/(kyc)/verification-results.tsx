@@ -95,7 +95,7 @@ export default function VerificationResults() {
 
           <ResultsActions 
             status={result.status}
-            onNavigate={(route) => router.push(route)}
+            onNavigate={(route) => router.push(route as any)}
           />
         </View>
       </ScrollView>
