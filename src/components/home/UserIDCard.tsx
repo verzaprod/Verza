@@ -35,7 +35,7 @@ export const UserIDCard: React.FC = () => {
           fontFamily: theme.fonts.welcomeHeading,
         }}
       >
-        did:verza:1234abcd
+        did:verza:z6Mha...2doK
       </Text>
 
       <View className="flex-row justify-end">

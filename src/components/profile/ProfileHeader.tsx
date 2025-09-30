@@ -31,7 +31,7 @@ export const ProfileHeader: React.FC = () => {
           marginBottom: theme.spacing.xs,
         }}
       >
-        did:verza:1234abcd
+        did:verza:z6Mha...2doK
       </Text>
 
       <Text
@@ -40,7 +40,7 @@ export const ProfileHeader: React.FC = () => {
           color: theme.colors.textSecondary,
         }}
       >
-        helloworld@gmail.com
+        joshuastonage@gmail.com
       </Text>
     </View>
   );
