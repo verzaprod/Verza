@@ -33,7 +33,7 @@ type KYCStore = KYCState & KYCActions
 const initialState: KYCState = {
   currentStep: 'selection',
   isProcessing: false,
-  verificationStatus: "pending",
+  verificationStatus: "verified",
 }
 
 export const useKYCStore = create<KYCStore>((set) => ({
