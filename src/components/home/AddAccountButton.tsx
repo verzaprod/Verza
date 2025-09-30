@@ -7,7 +7,7 @@ interface AddAccountButtonProps {
   onPress: () => void;
 }
 
-export const AddAccountButton: React.FC = ({
+export const AddAccountButton = ({
   onPress,
 }: AddAccountButtonProps) => {
   const theme = useTheme();

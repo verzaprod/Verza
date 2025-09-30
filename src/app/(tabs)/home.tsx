@@ -7,11 +7,8 @@ import {
 } from "react-native";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon } from "@/components/ui/Icon";
 import { DashboardHeader } from "@/components/home/DashboardHeader";
-import { PatternedIDCard } from "@/components/home/PatternedIDCard";
 import { AccountsList } from "@/components/home/AccountsList";
-import { CircularAddButton } from "@/components/home/CircularAddButton";
 import { AddAccountButton } from "@/components/home/AddAccountButton";
 import { UserIDCard } from "@/components/home/UserIDCard";
 import { AddAccountModal } from "@/components/home/AddAccountModal";

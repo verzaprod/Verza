@@ -76,7 +76,6 @@ export function AddAccountModal({
       <Icon
         name="chevron-right"
         size={20}
-        color={theme.colors.textSecondary}
       />
     </TouchableOpacity>
   );
@@ -126,7 +125,7 @@ export function AddAccountModal({
               Add Account
             </Text>
             <TouchableOpacity onPress={onClose}>
-              <Icon name="x" size={24} color={theme.colors.textSecondary} />
+              <Icon name="remove" size={24} color={theme.colors.textSecondary} />
             </TouchableOpacity>
           </View>
 
