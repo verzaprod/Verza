@@ -1,6 +1,12 @@
+// import { useKYCStore } from "@/store/kycStore";
 import { Stack } from "expo-router";
 
 export default function KYCLayout() {
+
+  // const { resetKYC } = useKYCStore();
+
+  // resetKYC();
+
   return (
     <Stack
       screenOptions={{
