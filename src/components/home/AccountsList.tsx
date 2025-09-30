@@ -24,7 +24,7 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
         const isLast = index === accounts.length - 1;
         const zIndex = accounts.length + index;
         const opacity = 1 - index * 0.05;
-        const scale = 1 - index * 0.02;
+        // const scale = 1 - index * 0.02;
         const marginTop = index === 0 ? 0 : -42;
 
         return (
@@ -39,7 +39,7 @@ export const AccountsList: React.FC<OverlappingAccountsListProps> = ({
               justifyContent: "space-between",
               zIndex,
               opacity,
-              transform: [{ scale }],
+              // transform: [{ scale }],
               marginTop,
               shadowColor: theme.isDark ? "#fff" : "#000",
               shadowOffset: { width: 0, height: 0 },

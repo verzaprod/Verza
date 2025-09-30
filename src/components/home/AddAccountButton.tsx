@@ -1,15 +1,16 @@
-import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import { useTheme } from '@/theme/ThemeProvider'
-import { Icon } from '@/components/ui/Icon'
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
+import { useTheme } from "@/theme/ThemeProvider";
+import { Icon } from "@/components/ui/Icon";
 
-export const AddAccountButton: React.FC = () => {
-  const theme = useTheme()
+interface AddAccountButtonProps {
+  onPress: () => void;
+}
 
-  const handleAddAccount = () => {
-    // TODO: Implement add account functionality
-    console.log('Add account pressed')
-  }
+export const AddAccountButton = ({
+  onPress,
+}: AddAccountButtonProps) => {
+  const theme = useTheme();
 
   return (
     <TouchableOpacity
@@ -20,9 +21,9 @@ export const AddAccountButton: React.FC = () => {
         borderRadius: 50,
         borderWidth: 3,
         borderColor: theme.colors.primaryGreen,
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
       }}
-      onPress={handleAddAccount}
+      onPress={onPress}
     >
       <View
         className="items-center justify-center"
@@ -36,5 +37,5 @@ export const AddAccountButton: React.FC = () => {
         <Icon name="plus" size={24} color="white" />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
