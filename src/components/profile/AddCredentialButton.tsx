@@ -3,7 +3,11 @@ import { TouchableOpacity, Text, View } from 'react-native'
 import { useTheme } from '@/theme/ThemeProvider'
 import { Icon } from '@/components/ui/Icon'
 
-export const AddCredentialButton: React.FC = () => {
+interface AddCredentialButtonProps {
+  onPress?: () => void
+}
+
+export const AddCredentialButton = ({ onPress }: AddCredentialButtonProps) => {
   const theme = useTheme()
 
   const handleAddCredential = () => {
@@ -25,7 +29,7 @@ export const AddCredentialButton: React.FC = () => {
         backgroundColor: 'transparent',
         width: '100%',
       }}
-      onPress={handleAddCredential}
+      onPress={onPress}
     >
       <View
         style={{

@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useTheme } from "@/theme/ThemeProvider";
-import { Icon } from "@/components/ui/Icon";
+import Feather from "@expo/vector-icons/Feather";
+import { Icon } from "../ui/Icon";
 
 interface CredentialCardProps {
   type: string;
   status: "verified" | "pending";
+  // icon: React.ComponentProps<typeof Feather>['name'];
   icon: string;
 }
 

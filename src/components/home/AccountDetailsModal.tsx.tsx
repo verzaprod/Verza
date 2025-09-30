@@ -71,7 +71,7 @@ export function AccountDetailsModal({
           }}
           onPress={(e) => e.stopPropagation()}
         >
-\          <View style={{
+          <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
