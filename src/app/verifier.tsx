@@ -1,119 +1,189 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList, Modal, ToastAndroid, } from "react-native";
+import { SafeAreaView, View, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTheme } from "@/theme/ThemeProvider";
-import { useKYCStore } from "@/store/kycStore";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import VerificationJobList from "@/components/verifiers/VerificationJobList";
+import DocumentReviewModal from "@/components/verifiers/DocumentReviewModal";
+import { useKYCStore } from "@/store/kycStore";
+import { useTheme } from "@/theme/ThemeProvider";
 
 const mockJobs = [
-  { id: "1", requester: "Alice", doc: "Passport", status: "available" },
-  { id: "2", requester: "Bob", doc: "Driver License", status: "active" },
-  { id: "3", requester: "Carol", doc: "ID Card", status: "completed" },
+  { 
+    id: "1", 
+    requester: "Brandon", 
+    doc: "Identity Card", 
+    status: "pending",
+    documentImage: "https://example.com/id1.jpg",
+    avatar: "https://i.pravatar.cc/150?img=1"
+  },
+  { 
+    id: "2", 
+    requester: "Brandon", 
+    doc: "Identity Card", 
+    status: "pending",
+    documentImage: "https://example.com/id2.jpg",
+    avatar: "https://i.pravatar.cc/150?img=2"
+  },
+  { 
+    id: "3", 
+    requester: "Brandon", 
+    doc: "Identity Card", 
+    status: "pending",
+    documentImage: "https://example.com/id3.jpg",
+    avatar: "https://i.pravatar.cc/150?img=3"
+  },
+  { 
+    id: "4", 
+    requester: "Brandon", 
+    doc: "Identity Card", 
+    status: "pending",
+    documentImage: "https://example.com/id4.jpg",
+    avatar: "https://i.pravatar.cc/150?img=4"
+  },
 ];
-
-function JobDetailModal({ visible, job, onClose, onApprove, onReject }) {
-  const theme = useTheme();
-  return (
-    <Modal visible={visible} transparent animationType="slide">
-      <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "rgba(0,0,0,0.6)" }}>
-        <View style={{ backgroundColor: theme.colors.background, borderRadius: 16, padding: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold", color: theme.colors.textPrimary, marginBottom: 12 }}>
-            Job Detail
-          </Text>
-          <Text style={{ color: theme.colors.textSecondary, marginBottom: 8 }}>
-            Requester: {job?.requester}
-          </Text>
-          <Text style={{ color: theme.colors.textSecondary, marginBottom: 20 }}>
-            Document: {job?.doc}
-          </Text>
-          <TouchableOpacity
-            style={{ backgroundColor: theme.colors.primaryGreen, padding: 14, borderRadius: 12, marginBottom: 12 }}
-            onPress={() => { onApprove(job); onClose(); }}
-          >
-            <Text style={{ color: theme.colors.textPrimary, textAlign: "center", fontWeight: "bold" }}>Approve</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ backgroundColor: theme.colors.error, padding: 14, borderRadius: 12 }}
-            onPress={() => { onReject(job); onClose(); }}
-          >
-            <Text style={{ color: theme.colors.secondaryAccent, textAlign: "center", fontWeight: "bold" }}>Reject</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-  );
-}
 
 export default function VerifierDashboard() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const theme = useTheme();
-  const setVerificationStatus  = useKYCStore((state) => state.setVerificationStatus);
+  const setVerificationStatus = useKYCStore((state) => state.setVerificationStatus);
+  
   const [jobs, setJobs] = useState(mockJobs);
   const [selectedJob, setSelectedJob] = useState(null);
 
-  const router = useRouter();
-
   const handleApprove = (job) => {
     setVerificationStatus("verified");
-    setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
-    ToastAndroid.show("Job Verified", ToastAndroid.SHORT);
-    router.replace("/(tabs)/home");
+    setJobs((prev) => prev.filter((j) => j.id !== job.id));
+    setSelectedJob(null);
+    
+    if (jobs.length <= 1) {
+      router.replace("/(tabs)/home");
+    }
   };
 
   const handleReject = (job) => {
     setVerificationStatus("rejected");
-    setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
-    ToastAndroid.show("Job Rejected", ToastAndroid.SHORT);
-    router.replace("/(tabs)/home");
+    setJobs((prev) => prev.filter((j) => j.id !== job.id));
+    setSelectedJob(null);
+    
+    if (jobs.length <= 1) {
+      router.replace("/(tabs)/home");
+    }
   };
-
-  const renderJob = ({ item }) => (
-    <TouchableOpacity
-      style={{
-        padding: 16,
-        backgroundColor: theme.colors.background,
-        borderRadius: 12,
-        marginBottom: 12,
-      }}
-      onPress={() => setSelectedJob(item)}
-    >
-      <Text style={{ color: theme.colors.textPrimary, fontWeight: "600" }}>
-        {item.requester}
-      </Text>
-      <Text style={{ color: theme.colors.textSecondary, fontSize: 14 }}>
-        {item.doc} — {item.status}
-      </Text>
-    </TouchableOpacity>
-  );
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        paddingTop: insets.top,
         backgroundColor: theme.colors.background,
-        paddingHorizontal: 20,
+        paddingTop: insets.top,
       }}
     >
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "bold",
-          color: theme.colors.textPrimary,
-          marginVertical: 20,
-          textAlign: "center",
-        }}
-      >
-        Verifier Dashboard
-      </Text>
-      <FlatList data={jobs} renderItem={renderJob} keyExtractor={(item) => item.id} />
-      <JobDetailModal
+      {/* Header */}
+      <View style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        marginBottom: theme.spacing.lg,
+      }}>
+        <TouchableOpacity>
+          <View style={{
+            width: 64,
+            height: 64,
+            borderRadius: 32,
+            backgroundColor: theme.colors.primaryGreen,
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+          }}>
+            <Ionicons name="person" size={32} color="#FFFFFF" />
+          </View>
+        </TouchableOpacity>
+        
+        <View style={{ flexDirection: "row", gap: 16 }}>
+          <TouchableOpacity>
+            <Ionicons 
+              name="notifications-outline" 
+              size={28} 
+              color={theme.colors.textSecondary} 
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Ionicons 
+              name="search-outline" 
+              size={28} 
+              color={theme.colors.textSecondary} 
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <VerificationJobList
+        jobs={jobs}
+        onJobPress={setSelectedJob}
+      />
+      
+      <DocumentReviewModal
         visible={!!selectedJob}
         job={selectedJob}
         onClose={() => setSelectedJob(null)}
         onApprove={handleApprove}
         onReject={handleReject}
       />
+
+      {/* Bottom Navigation */}
+      <View 
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 96,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingHorizontal: 48,
+          backgroundColor: theme.colors.background,
+          paddingBottom: insets.bottom,
+        }}
+      >
+        <TouchableOpacity style={{ width: 48, height: 48, alignItems: "center", justifyContent: "center" }}>
+          <Ionicons 
+            name="menu-outline" 
+            size={32} 
+            color={theme.colors.textSecondary} 
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: 40,
+            backgroundColor: theme.colors.primaryGreen,
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: -40,
+            shadowColor: theme.colors.primaryGreen,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+            elevation: 8,
+          }}
+        >
+          <Ionicons name="home" size={32} color="#FFFFFF" />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{ width: 48, height: 48, alignItems: "center", justifyContent: "center" }}>
+          <Ionicons 
+            name="person-outline" 
+            size={32} 
+            color={theme.colors.textSecondary} 
+          />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
