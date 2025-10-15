@@ -1,16 +1,39 @@
 import React from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/theme/ThemeProvider";
 import VerificationJobCard from "./VerificationJobCard";
 
 export default function VerificationJobList({ jobs, onJobPress }) {
+  const { isDark } = useTheme();
+
   const renderHeader = () => (
-    <View className="flex-row justify-between items-center mt-5 mb-6">
-      <Text className="text-4xl font-bold text-gray-900">
+    <View className="flex-row justify-between items-center mb-6 px-5">
+      <Text 
+        className={`text-[36px] font-bold ${
+          isDark ? 'text-white' : 'text-gray-900'
+        }`}
+      >
         Due Tasks
       </Text>
-      <View className="w-12 h-12 bg-white rounded-xl justify-center items-center shadow-sm">
-        <Text className="text-2xl">📋</Text>
-      </View>
+      <TouchableOpacity 
+        className={`w-14 h-14 rounded-2xl items-center justify-center ${
+          isDark ? 'bg-[#1C1C1E]' : 'bg-white'
+        }`}
+        style={{
+          shadowColor: isDark ? '#000' : '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: isDark ? 0.3 : 0.08,
+          shadowRadius: 8,
+          elevation: 3,
+        }}
+      >
+        <Ionicons 
+          name="clipboard-outline" 
+          size={24} 
+          color={isDark ? '#9CA3AF' : '#6B7280'} 
+        />
+      </TouchableOpacity>
     </View>
   );
 
@@ -22,7 +45,8 @@ export default function VerificationJobList({ jobs, onJobPress }) {
         <VerificationJobCard job={item} onPress={() => onJobPress(item)} />
       )}
       ListHeaderComponent={renderHeader}
-      contentContainerClassName="pb-24"
+      contentContainerClassName="pb-32"
+      className="flex-1"
       showsVerticalScrollIndicator={false}
     />
   );
