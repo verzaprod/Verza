@@ -1,53 +1,71 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/theme/ThemeProvider";
 
 export default function VerificationJobCard({ job, onPress }) {
-  const { isDark } = useTheme();
+  const theme = useTheme();
 
   return (
     <TouchableOpacity
-      className={`mx-5 mb-4 rounded-3xl overflow-hidden ${
-        isDark ? 'bg-[#1C1C1E] border border-gray-800' : 'bg-white'
-      }`}
       style={{
-        shadowColor: isDark ? '#000' : '#000',
+        marginHorizontal: 20,
+        marginBottom: 16,
+        borderRadius: theme.borderRadius.lg * 1.5,
+        backgroundColor: theme.colors.background,
+        borderWidth: theme.isDark ? 1 : 0,
+        borderColor: theme.isDark ? theme.colors.boxBorder : "transparent",
+        shadowColor: theme.isDark ? "#fff" : "#000",
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: isDark ? 0.3 : 0.08,
+        shadowOpacity: theme.isDark ? 0.1 : 0.08,
         shadowRadius: 12,
         elevation: 4,
       }}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <View className="flex-row items-center p-5">
+      <View style={{ 
+        flexDirection: "row", 
+        alignItems: "center", 
+        padding: theme.spacing.lg 
+      }}>
         {/* Avatar */}
         <View 
-          className={`w-16 h-16 rounded-full items-center justify-center ${
-            isDark ? 'bg-gray-700' : 'bg-gray-200'
-          }`}
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: 32,
+            backgroundColor: theme.isDark 
+              ? `${theme.colors.textSecondary}30` 
+              : `${theme.colors.textSecondary}20`,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <Ionicons 
             name="person" 
             size={32} 
-            color={isDark ? '#9CA3AF' : '#6B7280'} 
+            color={theme.colors.textSecondary} 
           />
         </View>
 
         {/* Info */}
-        <View className="flex-1 ml-4">
+        <View style={{ flex: 1, marginLeft: theme.spacing.md }}>
           <Text 
-            className={`text-xl font-semibold mb-1 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}
+            style={{
+              fontSize: 20,
+              fontWeight: "600",
+              color: theme.colors.textPrimary,
+              marginBottom: 4,
+            }}
           >
             {job.requester}
           </Text>
           <Text 
-            className={`text-base ${
-              isDark ? 'text-gray-400' : 'text-gray-500'
-            }`}
+            style={{
+              fontSize: 15,
+              color: theme.colors.textSecondary,
+            }}
           >
             {job.doc}
           </Text>
@@ -55,14 +73,21 @@ export default function VerificationJobCard({ job, onPress }) {
 
         {/* Document Icon */}
         <View 
-          className={`w-12 h-12 rounded-xl items-center justify-center ${
-            isDark ? 'bg-gray-800' : 'bg-gray-100'
-          }`}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: theme.borderRadius.md,
+            backgroundColor: theme.isDark 
+              ? `${theme.colors.textSecondary}20` 
+              : `${theme.colors.textSecondary}15`,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
           <Ionicons 
             name="card-outline" 
             size={24} 
-            color={isDark ? '#9CA3AF' : '#6B7280'} 
+            color={theme.colors.textSecondary} 
           />
         </View>
       </View>

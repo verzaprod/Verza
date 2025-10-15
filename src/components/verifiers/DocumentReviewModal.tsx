@@ -1,11 +1,10 @@
 import React from "react";
 import { View, Text, Modal, TouchableOpacity, Image, Pressable } from "react-native";
-// import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/theme/ThemeProvider";
 
 export default function DocumentReviewModal({ visible, job, onClose, onApprove, onReject }) {
-  const { isDark } = useTheme();
+  const theme = useTheme();
 
   if (!job) return null;
 
@@ -18,19 +17,28 @@ export default function DocumentReviewModal({ visible, job, onClose, onApprove, 
       statusBarTranslucent
     >
       <Pressable 
-        className="flex-1 bg-black/60" 
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+        }}
         onPress={onClose}
       >
         <Pressable 
-          className="flex-1 justify-center px-5"
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            paddingHorizontal: 20,
+          }}
           onPress={(e) => e.stopPropagation()}
         >
           <View 
-            className={`rounded-[32px] overflow-hidden ${
-              isDark ? 'bg-[#1C1C1E]' : 'bg-gray-50'
-            }`}
             style={{
-              shadowColor: '#000',
+              borderRadius: theme.borderRadius.lg * 2,
+              backgroundColor: theme.isDark 
+                ? theme.colors.backgroundDark 
+                : theme.colors.backgroundLight,
+              overflow: "hidden",
+              shadowColor: "#000",
               shadowOffset: { width: 0, height: 20 },
               shadowOpacity: 0.3,
               shadowRadius: 30,
@@ -38,12 +46,15 @@ export default function DocumentReviewModal({ visible, job, onClose, onApprove, 
             }}
           >
             {/* Document Preview */}
-            <View className="p-6 pb-8">
+            <View style={{ padding: theme.spacing.xl }}>
               <View 
-                className="bg-green-500 rounded-3xl p-5 overflow-hidden"
                 style={{
+                  backgroundColor: theme.colors.primaryGreen,
+                  borderRadius: theme.borderRadius.lg * 1.5,
+                  padding: theme.spacing.lg,
+                  overflow: "hidden",
                   aspectRatio: 1.6,
-                  shadowColor: '#22C55E',
+                  shadowColor: theme.colors.primaryGreen,
                   shadowOffset: { width: 0, height: 8 },
                   shadowOpacity: 0.3,
                   shadowRadius: 16,
@@ -52,19 +63,33 @@ export default function DocumentReviewModal({ visible, job, onClose, onApprove, 
               >
                 <Image
                   source={{ uri: job.documentImage || "https://via.placeholder.com/600x375" }}
-                  className="w-full h-full rounded-2xl"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: theme.borderRadius.md,
+                  }}
                   resizeMode="contain"
                 />
               </View>
             </View>
 
             {/* Action Buttons */}
-            <View className="flex-row justify-center gap-10 pb-6">
+            <View style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 40,
+              paddingBottom: theme.spacing.xl,
+            }}>
               {/* Reject Button */}
               <TouchableOpacity
-                className="w-20 h-20 bg-red-500 rounded-full items-center justify-center active:scale-95"
                 style={{
-                  shadowColor: '#EF4444',
+                  width: 80,
+                  height: 80,
+                  backgroundColor: theme.colors.error,
+                  borderRadius: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  shadowColor: theme.colors.error,
                   shadowOffset: { width: 0, height: 6 },
                   shadowOpacity: 0.4,
                   shadowRadius: 12,
@@ -78,9 +103,14 @@ export default function DocumentReviewModal({ visible, job, onClose, onApprove, 
 
               {/* Approve Button */}
               <TouchableOpacity
-                className="w-20 h-20 bg-green-500 rounded-full items-center justify-center active:scale-95"
                 style={{
-                  shadowColor: '#22C55E',
+                  width: 80,
+                  height: 80,
+                  backgroundColor: theme.colors.primaryGreen,
+                  borderRadius: 40,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  shadowColor: theme.colors.primaryGreen,
                   shadowOffset: { width: 0, height: 6 },
                   shadowOpacity: 0.4,
                   shadowRadius: 12,
@@ -94,46 +124,71 @@ export default function DocumentReviewModal({ visible, job, onClose, onApprove, 
             </View>
 
             {/* Requester Info (Dimmed) */}
-            <View className="px-6 pb-6 opacity-60">
+            <View style={{ 
+              paddingHorizontal: theme.spacing.xl, 
+              paddingBottom: theme.spacing.xl,
+              opacity: 0.6 
+            }}>
               <View 
-                className={`flex-row items-center rounded-2xl p-4 ${
-                  isDark ? 'bg-white/10' : 'bg-white/60'
-                }`}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderRadius: theme.borderRadius.lg,
+                  padding: theme.spacing.md,
+                  backgroundColor: theme.isDark 
+                    ? "rgba(255, 255, 255, 0.1)" 
+                    : "rgba(255, 255, 255, 0.6)",
+                }}
               >
                 <View 
-                  className={`w-12 h-12 rounded-full items-center justify-center ${
-                    isDark ? 'bg-gray-700' : 'bg-gray-200'
-                  }`}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 24,
+                    backgroundColor: theme.isDark 
+                      ? `${theme.colors.textSecondary}30` 
+                      : `${theme.colors.textSecondary}20`,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   <Ionicons 
                     name="person" 
                     size={24} 
-                    color={isDark ? '#9CA3AF' : '#6B7280'} 
+                    color={theme.colors.textSecondary} 
                   />
                 </View>
                 
-                <View className="flex-1 ml-3">
+                <View style={{ flex: 1, marginLeft: theme.spacing.sm }}>
                   <Text 
-                    className={`text-lg font-semibold ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "600",
+                      color: theme.colors.textPrimary,
+                    }}
                   >
                     {job.requester}
                   </Text>
                   <Text 
-                    className={`text-sm ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    style={{
+                      fontSize: 14,
+                      color: theme.colors.textSecondary,
+                    }}
                   >
                     {job.doc}
                   </Text>
                 </View>
                 
-                <View className="w-10 h-10 items-center justify-center">
+                <View style={{ 
+                  width: 40, 
+                  height: 40, 
+                  alignItems: "center", 
+                  justifyContent: "center" 
+                }}>
                   <Ionicons 
                     name="card-outline" 
                     size={22} 
-                    color={isDark ? '#9CA3AF' : '#6B7280'} 
+                    color={theme.colors.textSecondary} 
                   />
                 </View>
               </View>
