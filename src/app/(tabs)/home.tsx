@@ -54,16 +54,6 @@ export default function DashboardScreen() {
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      setAuthenticated(false);
-      router.replace("/(auth)/sign-in");
-    } catch (err) {
-      console.error(JSON.stringify(err, null, 2));
-    }
-  };
-
   const handleAddAccount = () => {
     setModalVisible(true);
   };
@@ -120,9 +110,6 @@ export default function DashboardScreen() {
         <View style={{ alignItems: "center", paddingBottom: theme.spacing.xl }}>
           <AddAccountButton onPress={handleAddAccount} />
         </View>
-        <TouchableOpacity onPress={handleSignOut}>
-          <Text>Sign out</Text>
-        </TouchableOpacity>
       </ScrollView>
 
       <AddAccountModal
