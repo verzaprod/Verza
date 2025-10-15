@@ -14,6 +14,8 @@ import { CredentialsList } from "@/components/profile/CredentialsList";
 import { AddCredentialButton } from "@/components/profile/AddCredentialButton";
 import { AddCredentialModal } from "@/components/profile/AddCredentialModal";
 import { useKYCStore } from "@/store/kycStore";
+import { useClerk } from "@clerk/clerk-expo";
+import { useAuthStore } from "@/store/authStore";
 
 export default function ProfileScreen() {
   const theme = useTheme();
@@ -21,8 +23,10 @@ export default function ProfileScreen() {
 
   const [credentials, setCredentials] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const { signOut } = useClerk();
 
   const verificationStatus = useKYCStore((state) => state.verificationStatus);
+  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
 
   const router = useRouter();
 
@@ -34,6 +38,16 @@ export default function ProfileScreen() {
       icon: credentialType.icon,
     };
     setCredentials((prev) => [...prev, newCredential]);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      setAuthenticated(false);
+      router.replace("/(auth)/sign-in");
+    } catch (err) {
+      console.error(JSON.stringify(err, null, 2));
+    }
   };
 
   console.log("VerificationStatus", verificationStatus);
@@ -118,7 +132,7 @@ export default function ProfileScreen() {
           <AddCredentialButton onPress={handleAddCredentialPress} />
         </View>
 
-        {
+        {verificationStatus === "verified" && (
           <TouchableOpacity
             onPress={() => router.replace("/verifier")}
             style={{
@@ -140,7 +154,19 @@ export default function ProfileScreen() {
               Become a Verifier
             </Text>
           </TouchableOpacity>
-        }
+        )}
+
+        
+        <TouchableOpacity
+          onPress={handleSignOut}
+          className="w-full items-center justify-center py-4 rounded-xl mb-4"
+          style={{
+            backgroundColor: theme.colors.boxBorder,
+            borderRadius: 12,
+          }}
+        >
+          <Text style={{ color: theme.colors.error}}>Sign out</Text>
+        </TouchableOpacity>
       </ScrollView>
 
       <AddCredentialModal
