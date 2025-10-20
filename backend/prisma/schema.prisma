@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  clerkUserId   String   @unique
+  did           String?
+  walletAddress String?
+  createdAt     DateTime @default(now())
+  escrows       Escrow[]
+  credentials   Credential[]
+}
+
+model Verifier {
+  id             String   @id @default(cuid())
+  name           String
+  onchainAddress String   @unique
+  fee            BigInt   @default(0)
+  currency       String   @default("HBAR")
+  rating         Float?   
+  status         String   @default("active")
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  escrows        Escrow[]
+}
+
+model Escrow {
+  id            String   @id // escrow_id (hex bytes32)
+  requestId     String   // same as id for convenience
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  verifier      Verifier @relation(fields: [verifierId], references: [id])
+  verifierId    String
+  amount        BigInt
+  currency      String   @default("HBAR")
+  status        String   @default("submitted")
+  autoReleaseAt DateTime?
+  txHash        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  verification  Verification?
+  credential    Credential?
+}
+
+model Verification {
+  id           String   @id @default(cuid())
+  escrow       Escrow   @relation(fields: [escrowId], references: [id])
+  escrowId     String   @unique
+  docUrls      Json?
+  selfieUrl    String?
+  status       String   @default("pending")
+  steps        Json?
+  result       Json?
+  completedAt  DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Credential {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  escrow     Escrow   @relation(fields: [escrowId], references: [id])
+  escrowId   String   @unique
+  tokenId    BigInt
+  tokenUri   String
+  type       String
+  issuedAt   DateTime @default(now())
+  revokedAt  DateTime?
+}

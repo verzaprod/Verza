@@ -1,0 +1,107 @@
+What’s Missing (Backend + Contracts) To Ship
+
+- Backend APIs to replace mocks:
+  - Implement POST /escrow/initiate , GET /escrow/status/:escrowId , GET /verification/results/:escrowId
+  - Implement document and selfie upload endpoints used by upcoming capture screens (even if not yet wired)
+  - Implement verifiers catalog: GET /verifiers , GET /verifiers/:id
+  - Optional: ratings endpoints POST /verifiers/:id/ratings , GET /verifiers/:id/ratings
+- Auth integration:
+  - Validate Bearer tokens from Clerk on backend for all user endpoints
+  - Map Clerk user to wallet/DID to issue credentials properly
+- On-chain orchestration:
+  - Create escrow on-chain: call createEscrow and return a deterministic escrow_id (use contract’s requestId bytes32 , hex-encoded)
+  - Release/refund/dispute handling: call FundsReleased paths based on verification outcomes and timeouts
+  - Event listener/worker to index EscrowContract and VCRegistry events; persist to database; drive status updates
+- Verification pipeline:
+  - Accept user uploads (document, selfie), route to verifier (human/automated/provider like Sumsub/Persona/Onfido), store verification results
+  - Update /escrow/status/:escrowId step-by-step to mirror the UI tracker
+  - On success: issue a credential via VCRegistry.issueCredential and produce a VC artifact (IPFS URL, tokenId) for the mobile results screen
+- Wallet strategy:
+  - MVP: Server-initiated escrow (custodial for test) OR client-signed transactions (non-custodial, recommended)
+  - Production: Non-custodial wallet in-app using BIP39 + ethers with RN polyfills to sign Hedera EVM txs; backend prepares unsigned txs and the app signs and submits
+- Configuration and security:
+  - Production-grade storage for uploads (S3/GCS), signed URLs, virus scanning, and PII safeguards
+  - Database models for users, escrows, verifications, credentials, verifiers, and ratings
+  - Logging, metrics, and alerting for on-chain worker and API
+Backend: Proposed Design
+
+- Core services
+  - Auth middleware: Verify Clerk JWT, attach userId and claims to request
+  - Escrow service:
+    - Create escrow: resolves fee, verifier, and currency; mints requestId ; calls EscrowContract.createEscrow through ethers ; persists DB record; return { escrow_id }
+    - Worker monitors EscrowCreated , FundsReleased , RefundIssued , EscrowCancelled → updates DB and notifies
+  - Verification service:
+    - Accept document/selfie uploads (multipart or presigned PUT)
+    - Kick off verification job with provider or human verifier via VerifierMarketplace registry info
+    - Update verification state machine in DB; surface via /escrow/status/:id
+    - On success: call VCRegistry.issueCredential (authorized issuer role required), store tokenId , tokenURI , and summary fields
+  - Result service:
+    - Aggregate checks and issue final payload for /verification/results/:escrowId
+- Endpoints (final contracts used by mobile)
+  - POST /escrow/initiate
+    - Body: { verifier_id, amount, currency, auto_release_hours }
+    - Auth: Bearer (Clerk); server maps userId → user wallet/DID
+    - Returns:
+      - Non-custodial: { escrow_id, chain: {chainId, rpcUrl}, tx: { to, data, value, gasLimit } } (client signs & submits)
+      - Custodial MVP: { escrow_id, status: 'submitted' } after server submission
+  - GET /escrow/status/:escrowId
+    - Returns: { escrowId, status, steps, estimatedCompletion } aligned with UI
+  - GET /verification/results/:escrowId
+    - Returns:
+      ```
+      {
+        escrowId,
+        verified: boolean,
+        credential: verified ? {
+          type: 
+          'IdentityCredential',
+          issuer: { name, did },
+          subject: { did },
+          chain: { chainId: 296, 
+          registry: 
+          "<VCRegistryAddress>", 
+          tokenId, tokenURI },
+          issuedAt, attributes: 
+          { ... }
+        } : undefined,
+        rejectionReasons?: [{ 
+        code, message }],
+        verifier: { id, name, 
+        rating? },
+      }
+      ```
+  - (New) Upload endpoints:
+    - POST /uploads/presign → { docUploadUrl, selfieUploadUrl }
+    - POST /verification/:escrowId/documents (if not presigned flow)
+- Data model (DB)
+  - users(id, clerk_user_id, did, wallet_address, created_at)
+  - verifiers(id, name, fee, currency, rating, status, onchain_address)
+  - escrows(id, request_id, user_id, verifier_id, amount, currency, status, auto_release_at, tx_hash, created_at)
+  - verifications(id, escrow_id, doc_urls[], selfie_url, status, steps[], result, completed_at)
+  - credentials(id, user_id, escrow_id, token_id, token_uri, type, issued_at, revoked_at?)
+- Services/infra
+  - ethers v6 with Hedera RPC ( https://testnet.hashio.io/api or configured RPC)
+  - Worker: subscribe to contract events (via websocket or polling), reconcile DB
+  - Storage: S3 with KMS encryption at rest; signed URLs; virus scanning; retention policy
+  - Security: Verify Clerk tokens, rate limiting, audit logging, PII redaction, avoid handling mnemonics on server
+Smart Contracts: How Backend Should Integrate
+
+- EscrowContract
+  - Recommend using contract’s createEscrow to generate a unique requestId ( bytes32 ). Return hex string as escrow_id to the app.
+  - Trigger progress based on:
+    - EscrowCreated → status submitted
+    - Verification in progress → status in_progress
+    - On verification success → call escrow release path (via a contract function; typically the verifier/admin or rule engine triggers funds release)
+    - On failure/refund → contract RefundIssued
+  - Handle timeouts and disputes via cancelExpiredEscrow , raiseDispute , resolveDispute if needed.
+- VCRegistry
+  - Ensure deployer (or a server-controlled issuer) is registered: registerIssuer(address)
+  - Issue credential on success: issueCredential(...) with metadata stored in tokenURI (point to IPFS JSON)
+  - Recommended: include a DID in the credential and store attributes consistent with mobile’s expected display
+- VerifierMarketplace
+  - Use for listing getVerifier(id) and confirming verifier eligibility (stake, active)
+  - Optionally on-chain pricing/fee logic; backend still keeps off-chain catalog for UX performance
+- Gaps/Recommendations
+  - If you need a stable requestId from server-side values, standardize as keccak256(abi.encode(user, verifier, nonce, timestamp))
+  - Confirm EscrowContract has a callable path to release funds (emits FundsReleased ) and that verifier/admin roles are properly gated via AccessControl
+  - Add a read function if you need richer metadata (e.g., mapping escrow → verifier → fee) to avoid off-chain coupling
