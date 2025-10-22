@@ -23,6 +23,10 @@ export const env = {
   STORAGE_PROVIDER: process.env.STORAGE_PROVIDER ?? 'local',
   CONTRACTS_CONFIG_PATH: process.env.CONTRACTS_CONFIG_PATH ?? path.join('..','contracts','contract-config.json'),
   DEFAULT_VERIFIER_ADDRESS: process.env.DEFAULT_VERIFIER_ADDRESS ?? '',
+  // Optional contract address overrides
+  ESCROW_ADDRESS: process.env.ESCROW_ADDRESS,
+  VC_REGISTRY_ADDRESS: process.env.VC_REGISTRY_ADDRESS,
+  VERIFIER_MARKETPLACE_ADDRESS: process.env.VERIFIER_MARKETPLACE_ADDRESS,
 };
 
 export function projectRoot(): string {

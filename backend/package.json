@@ -19,9 +19,12 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": "22.16.0"
+  },
   "dependencies": {
     "@prisma/client": "^6.17.1",
-    "@types/node": "^24.9.0",
+    "@types/node": "^22.16.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "ethers": "^6.15.0",
