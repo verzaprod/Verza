@@ -1,0 +1,45 @@
+# Environment Variables for Render Deployment
+# Copy and paste these into your Render web service dashboard
+
+# Core Application Settings
+NODE_ENV=production
+PORT=3001
+
+# Database Configuration
+DATABASE_URL=postgresql://verzadb_user:vmgxVkv8gfTWazRk7Pyf6tr2mBQ9Hwu9@dpg-d3shrapr0fns73c5kiq0-a/verzadb
+
+# Blockchain Configuration
+RPC_URL=https://testnet.hashio.io/api
+CHAIN_ID=296
+CONTRACTS_CONFIG_PATH=../contracts/contract-config.json
+
+# Authentication
+AUTH_BYPASS=false
+CLERK_JWKS_URL=https://quality-mole-23.clerk.accounts.dev/.well-known/jwks.json
+
+# Server Wallet (Custodial Mode)
+SERVER_PRIVATE_KEY=0x6521eea70af0b116b2750f22bfd55676ff579f599f9ab825f40cf86964bc7f73
+ESCROW_MODE=custodial
+ENABLE_WORKER=true
+
+# File Storage Configuration (for uploaded documents/images)
+STORAGE_PROVIDER=local
+
+# Default Verifier Address
+DEFAULT_VERIFIER_ADDRESS=0x63971b4AF5340BbEA362042Daaa04D81B57378a8
+
+# IMPORTANT NOTES:
+# 1. DATABASE_URL: Use the internal database URL provided by Render for better performance
+# 2. NODE_ENV: Must be 'production' for Render deployment
+# 3. AUTH_BYPASS: Set to 'false' in production for security
+# 4. SERVER_PRIVATE_KEY: Generate a secure private key for production
+# 5. CONTRACTS_CONFIG_PATH: Relative path from backend directory to contracts config
+# 6. STORAGE_PROVIDER: This controls FILE STORAGE (documents/images), not database storage
+#    - 'local' means files are stored on the server's filesystem
+#    - PostgreSQL is used for structured data (users, escrows, verifications)
+#    - For production, consider cloud storage (AWS S3, Google Cloud) for files
+
+# CONTRACT ADDRESSES (automatically loaded from contract-config.json):
+# - VC Registry: 0xa26F554A4b2110300CbfF6B60450Bd3FCbD72f07
+# - Escrow Contract: 0xff0153Bc7FcAE89eEA273C243E9304a9dB85DF76
+# - Verifier Marketplace: 0x2c24c526a141998660eEfc2a40dEc144eAa357A2
