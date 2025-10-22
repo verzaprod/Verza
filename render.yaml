@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: verza-backend
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: cd backend && npm ci && npm run build && npm run prisma:generate && npm run prisma:deploy
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: RPC_URL
+        fromService:
+          type: web
+          name: verza-backend
+          envVarKey: RPC_URL
+      - key: CHAIN_ID
+        value: "296"
+      - key: CONTRACTS_CONFIG_PATH
+        value: ../contracts/contract-config.json
+      - key: AUTH_BYPASS
+        value: "false"
+      - key: CLERK_JWKS_URL
+        fromService:
+          type: web
+          name: verza-backend
+          envVarKey: CLERK_JWKS_URL
+      - key: SERVER_PRIVATE_KEY
+        fromService:
+          type: web
+          name: verza-backend
+          envVarKey: SERVER_PRIVATE_KEY
+      - key: ESCROW_MODE
+        value: custodial
+      - key: ENABLE_WORKER
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: verza-db
+          property: connectionString
+    autoDeploy: true
+
+databases:
+  - name: verza-db
+    databaseName: verzadb
+    user: verzadb_user
+    plan: starter
+    region: oregon
