@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\contracts\\EscrowContract.sol": {
-      "lastModificationDate": 1758962528956,
-      "contentHash": "9ea385df4760ee055d30199b4b2e30d0",
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\contracts\\EscrowContract.sol": {
+      "lastModificationDate": 1760983527799,
+      "contentHash": "eee61fc9c7f412d3902d6a0d93ba2e7e",
       "sourceName": "contracts/EscrowContract.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -47,8 +47,8 @@
         "IVerifierMarketplace"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol": {
-      "lastModificationDate": 1758961922572,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\AccessControlUpgradeable.sol": {
+      "lastModificationDate": 1761155134668,
       "contentHash": "e755cb2313878e08bcbc64c75b169c1e",
       "sourceName": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
       "solcConfig": {
@@ -90,8 +90,47 @@
         "AccessControlUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol": {
-      "lastModificationDate": 1758961953725,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol": {
+      "lastModificationDate": 1761155144623,
+      "contentHash": "2c309ab8cb953d5db2a280f534c113cd",
+      "sourceName": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuardUpgradeable"
+      ]
+    },
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol": {
+      "lastModificationDate": 1761155144564,
       "contentHash": "6a4b611a83035a19370ecd7eb445d4fc",
       "sourceName": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
       "solcConfig": {
@@ -130,47 +169,8 @@
         "PausableUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol": {
-      "lastModificationDate": 1758961953890,
-      "contentHash": "2c309ab8cb953d5db2a280f534c113cd",
-      "sourceName": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.19",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "ReentrancyGuardUpgradeable"
-      ]
-    },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol": {
-      "lastModificationDate": 1758961950896,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol": {
+      "lastModificationDate": 1761155144327,
       "contentHash": "b0970a564d121abf9adfff8d1a01eb16",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
       "solcConfig": {
@@ -208,8 +208,45 @@
         "Initializable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol": {
-      "lastModificationDate": 1758961955419,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1761155144663,
+      "contentHash": "9261adf6457863de3e9892f51317ec89",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.16"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\UUPSUpgradeable.sol": {
+      "lastModificationDate": 1761155145614,
       "contentHash": "c50df4f62eb9ef48d89b3a48a57e3bf5",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
       "solcConfig": {
@@ -249,45 +286,8 @@
         "UUPSUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
-      "lastModificationDate": 1758961954777,
-      "contentHash": "9261adf6457863de3e9892f51317ec89",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.19",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.16"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\IAccessControlUpgradeable.sol": {
-      "lastModificationDate": 1758961943943,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\IAccessControlUpgradeable.sol": {
+      "lastModificationDate": 1761155139653,
       "contentHash": "21b43d1337ebc77c11da3cbe3fd65316",
       "sourceName": "@openzeppelin/contracts-upgradeable/access/IAccessControlUpgradeable.sol",
       "solcConfig": {
@@ -323,8 +323,8 @@
         "IAccessControlUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol": {
-      "lastModificationDate": 1758961922864,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol": {
+      "lastModificationDate": 1761155134922,
       "contentHash": "b6dfb72ff1fd764f725ec4db364b1b20",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol",
       "solcConfig": {
@@ -362,8 +362,8 @@
         "ContextUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\StringsUpgradeable.sol": {
-      "lastModificationDate": 1758961954854,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\StringsUpgradeable.sol": {
+      "lastModificationDate": 1761155145189,
       "contentHash": "c221361be1c4953f5b71f47475b90266",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol",
       "solcConfig": {
@@ -402,8 +402,8 @@
         "StringsUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol": {
-      "lastModificationDate": 1758961930868,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\ERC165Upgradeable.sol": {
+      "lastModificationDate": 1761155136772,
       "contentHash": "7cd9c9d1dccf4a894c0f6926f5b6ac3d",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol",
       "solcConfig": {
@@ -442,8 +442,8 @@
         "ERC165Upgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\AddressUpgradeable.sol": {
-      "lastModificationDate": 1758961922637,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\AddressUpgradeable.sol": {
+      "lastModificationDate": 1761155134707,
       "contentHash": "c30c805386fda8a42ff515da963d3a95",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol",
       "solcConfig": {
@@ -479,8 +479,8 @@
         "AddressUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\math\\MathUpgradeable.sol": {
-      "lastModificationDate": 1758961951839,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\math\\MathUpgradeable.sol": {
+      "lastModificationDate": 1761155144466,
       "contentHash": "5a2a749b45b6a8eb035f4bf75addcb27",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/math/MathUpgradeable.sol",
       "solcConfig": {
@@ -516,8 +516,8 @@
         "MathUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\math\\SignedMathUpgradeable.sol": {
-      "lastModificationDate": 1758961954825,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\math\\SignedMathUpgradeable.sol": {
+      "lastModificationDate": 1761155144841,
       "contentHash": "2a6b819b2e241091ada6d645df3e3929",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/math/SignedMathUpgradeable.sol",
       "solcConfig": {
@@ -553,8 +553,8 @@
         "SignedMathUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\IERC165Upgradeable.sol": {
-      "lastModificationDate": 1758961948031,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\introspection\\IERC165Upgradeable.sol": {
+      "lastModificationDate": 1761155141091,
       "contentHash": "d6ecf203a5e72c845be9bbf2f304a289",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable.sol",
       "solcConfig": {
@@ -590,8 +590,8 @@
         "IERC165Upgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\draft-IERC1822Upgradeable.sol": {
-      "lastModificationDate": 1758961924138,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\draft-IERC1822Upgradeable.sol": {
+      "lastModificationDate": 1761155135377,
       "contentHash": "a6883cfd85607b16c121a02728369eb3",
       "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/draft-IERC1822Upgradeable.sol",
       "solcConfig": {
@@ -627,8 +627,8 @@
         "IERC1822ProxiableUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol": {
-      "lastModificationDate": 1758961930899,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\ERC1967\\ERC1967UpgradeUpgradeable.sol": {
+      "lastModificationDate": 1761155136823,
       "contentHash": "e186f91201ca317278fffbf1ea60cea0",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol",
       "solcConfig": {
@@ -671,45 +671,8 @@
         "ERC1967UpgradeUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC1967Upgradeable.sol": {
-      "lastModificationDate": 1758961948058,
-      "contentHash": "a5421a5e611067b9202e83329fbf6fc7",
-      "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/IERC1967Upgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.19",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1967Upgradeable"
-      ]
-    },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\StorageSlotUpgradeable.sol": {
-      "lastModificationDate": 1758961954847,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\StorageSlotUpgradeable.sol": {
+      "lastModificationDate": 1761155145179,
       "contentHash": "02cf959b00ba5c650708472f195f8b29",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/StorageSlotUpgradeable.sol",
       "solcConfig": {
@@ -745,8 +708,45 @@
         "StorageSlotUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\beacon\\IBeaconUpgradeable.sol": {
-      "lastModificationDate": 1758961944472,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC1967Upgradeable.sol": {
+      "lastModificationDate": 1761155141149,
+      "contentHash": "a5421a5e611067b9202e83329fbf6fc7",
+      "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/IERC1967Upgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC1967Upgradeable"
+      ]
+    },
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\beacon\\IBeaconUpgradeable.sol": {
+      "lastModificationDate": 1761155139834,
       "contentHash": "21bffd733b4ca013e125a0ffe2e52254",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/beacon/IBeaconUpgradeable.sol",
       "solcConfig": {
@@ -782,52 +782,8 @@
         "IBeaconUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\contracts\\VerifierMarketplace.sol": {
-      "lastModificationDate": 1758962529120,
-      "contentHash": "99b28d13bce185cbd7b56dcdb95bc6d0",
-      "sourceName": "contracts/VerifierMarketplace.sol",
-      "solcConfig": {
-        "version": "0.8.19",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "viaIR": true,
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.19"
-      ],
-      "artifacts": [
-        "VerifierMarketplace"
-      ]
-    },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC165Upgradeable.sol": {
-      "lastModificationDate": 1758961948022,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC165Upgradeable.sol": {
+      "lastModificationDate": 1761155141065,
       "contentHash": "0ce0dc23b57eb688403ad5169cc18a7d",
       "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/IERC165Upgradeable.sol",
       "solcConfig": {
@@ -863,8 +819,8 @@
       ],
       "artifacts": []
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC4906Upgradeable.sol": {
-      "lastModificationDate": 1758961949445,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC4906Upgradeable.sol": {
+      "lastModificationDate": 1761155141330,
       "contentHash": "fe5233feb20121d3fcadf24db464f5f8",
       "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/IERC4906Upgradeable.sol",
       "solcConfig": {
@@ -903,8 +859,8 @@
         "IERC4906Upgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC721Upgradeable.sol": {
-      "lastModificationDate": 1758961949960,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\interfaces\\IERC721Upgradeable.sol": {
+      "lastModificationDate": 1761155142050,
       "contentHash": "b6d2f759a0c41967c68a26c21d5ecbe4",
       "sourceName": "@openzeppelin/contracts-upgradeable/interfaces/IERC721Upgradeable.sol",
       "solcConfig": {
@@ -940,8 +896,8 @@
       ],
       "artifacts": []
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\IERC721Upgradeable.sol": {
-      "lastModificationDate": 1758961950005,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\IERC721Upgradeable.sol": {
+      "lastModificationDate": 1761155142597,
       "contentHash": "f6c6e71ba8413a4ba32871610dba0658",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol",
       "solcConfig": {
@@ -979,8 +935,8 @@
         "IERC721Upgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\IERC721MetadataUpgradeable.sol": {
-      "lastModificationDate": 1758961949899,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\IERC721MetadataUpgradeable.sol": {
+      "lastModificationDate": 1761155141698,
       "contentHash": "76212ca0265501d1eb3dd1175e6afca4",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/IERC721MetadataUpgradeable.sol",
       "solcConfig": {
@@ -1018,8 +974,8 @@
         "IERC721MetadataUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol": {
-      "lastModificationDate": 1758961935686,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\ERC721Upgradeable.sol": {
+      "lastModificationDate": 1761155137492,
       "contentHash": "cf4ee017d1c233e20dc46b40c0f570c1",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol",
       "solcConfig": {
@@ -1064,8 +1020,8 @@
         "ERC721Upgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\IERC721ReceiverUpgradeable.sol": {
-      "lastModificationDate": 1758961949909,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\IERC721ReceiverUpgradeable.sol": {
+      "lastModificationDate": 1761155142032,
       "contentHash": "ba28cf60b52b00d2b3a190bcdf0952bd",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721ReceiverUpgradeable.sol",
       "solcConfig": {
@@ -1101,8 +1057,8 @@
         "IERC721ReceiverUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\ERC721URIStorageUpgradeable.sol": {
-      "lastModificationDate": 1758961935702,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC721\\extensions\\ERC721URIStorageUpgradeable.sol": {
+      "lastModificationDate": 1761155137533,
       "contentHash": "647d5735ee93e70b099b114d3cca3986",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol",
       "solcConfig": {
@@ -1142,9 +1098,9 @@
         "ERC721URIStorageUpgradeable"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\contracts\\VCRegistry.sol": {
-      "lastModificationDate": 1758962691122,
-      "contentHash": "2295285b917c4d95d7b9d1ec955efe43",
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\contracts\\VCRegistry.sol": {
+      "lastModificationDate": 1760983527800,
+      "contentHash": "3b3bb0bfd8afdd6e73ea2f7e745fa8f8",
       "sourceName": "contracts/VCRegistry.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -1188,8 +1144,8 @@
         "VCRegistry"
       ]
     },
-    "C:\\Users\\User\\Desktop\\Verza prod\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\CountersUpgradeable.sol": {
-      "lastModificationDate": 1758961922906,
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\CountersUpgradeable.sol": {
+      "lastModificationDate": 1761155134940,
       "contentHash": "2e908c762a799baea365e68a50500e2c",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol",
       "solcConfig": {
@@ -1223,6 +1179,50 @@
       ],
       "artifacts": [
         "CountersUpgradeable"
+      ]
+    },
+    "C:\\Users\\User\\Desktop\\Verza\\contracts\\contracts\\VerifierMarketplace.sol": {
+      "lastModificationDate": 1761155254262,
+      "contentHash": "4083a122e78ee31f9500d31c14459ea5",
+      "sourceName": "contracts/VerifierMarketplace.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "VerifierMarketplace"
       ]
     }
   }

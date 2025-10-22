@@ -231,6 +231,136 @@ contract VerifierMarketplace is
     }
     
     /**
+     * @dev Get comprehensive verifier information
+     * @param verifier Address of the verifier
+     * @return name Verifier name (extracted from metadata)
+     * @return metadataURI URI pointing to verifier metadata JSON
+     * @return baseFee Current verification fee for this verifier
+     * @return isActive Whether the verifier is currently active
+     * @return reputationScore Reputation score (0-10000 basis points)
+     * @return totalVerifications Total number of verifications completed
+     * @return successfulVerifications Number of successful verifications
+     * @return stakedAmount Amount currently staked by verifier
+     */
+    function getVerifierDetails(address verifier) 
+        external 
+        view 
+        returns (
+            string memory name,
+            string memory metadataURI,
+            uint256 baseFee,
+            bool isActive,
+            uint256 reputationScore,
+            uint256 totalVerifications,
+            uint256 successfulVerifications,
+            uint256 stakedAmount
+        ) 
+    {
+        require(verifiers[verifier].verifierAddress != address(0), "Verifier not found");
+        
+        Verifier memory v = verifiers[verifier];
+        
+        // Extract name from metadata if it's JSON format, otherwise use address as fallback
+        name = _extractNameFromMetadata(v.metadata, verifier);
+        metadataURI = v.metadata;
+        baseFee = calculateVerificationFee(verifier);
+        isActive = v.isActive;
+        reputationScore = v.reputationScore;
+        totalVerifications = v.totalVerifications;
+        successfulVerifications = v.successfulVerifications;
+        stakedAmount = v.stakedAmount;
+    }
+    
+    /**
+     * @dev Get all active verifiers with their basic info
+     * @return verifierAddresses Array of active verifier addresses
+     * @return names Array of verifier names
+     * @return fees Array of current verification fees
+     * @return reputationScores Array of reputation scores
+     */
+    function getActiveVerifiersWithDetails() 
+        external 
+        view 
+        returns (
+            address[] memory verifierAddresses,
+            string[] memory names,
+            uint256[] memory fees,
+            uint256[] memory reputationScores
+        ) 
+    {
+        // Count active verifiers
+        uint256 activeCount = 0;
+        for (uint256 i = 0; i < verifierList.length; i++) {
+            if (verifiers[verifierList[i]].isActive) {
+                activeCount++;
+            }
+        }
+        
+        // Initialize arrays
+        verifierAddresses = new address[](activeCount);
+        names = new string[](activeCount);
+        fees = new uint256[](activeCount);
+        reputationScores = new uint256[](activeCount);
+        
+        // Populate arrays
+        uint256 index = 0;
+        for (uint256 i = 0; i < verifierList.length; i++) {
+            address verifierAddr = verifierList[i];
+            if (verifiers[verifierAddr].isActive) {
+                verifierAddresses[index] = verifierAddr;
+                names[index] = _extractNameFromMetadata(verifiers[verifierAddr].metadata, verifierAddr);
+                fees[index] = calculateVerificationFee(verifierAddr);
+                reputationScores[index] = verifiers[verifierAddr].reputationScore;
+                index++;
+            }
+        }
+    }
+    
+    /**
+     * @dev Extract name from metadata string (simple JSON parsing or fallback to address)
+     * @param metadata The metadata string (JSON or IPFS hash)
+     * @param verifierAddr Fallback verifier address
+     * @return name Extracted name or formatted address
+     */
+    function _extractNameFromMetadata(string memory metadata, address verifierAddr) 
+        internal 
+        pure 
+        returns (string memory name) 
+    {
+        // Simple check if metadata looks like JSON (starts with '{')
+        bytes memory metadataBytes = bytes(metadata);
+        if (metadataBytes.length > 0 && metadataBytes[0] == 0x7B) { // '{'
+            // For now, return a placeholder - in practice, you'd parse JSON
+            // This is a simplified implementation
+            return "Verifier"; // Could be enhanced with actual JSON parsing
+        } else if (metadataBytes.length > 0) {
+            // Assume it's an IPFS hash or URI, return generic name
+            return "Verified Professional";
+        } else {
+            // Fallback to formatted address
+            return string(abi.encodePacked("Verifier ", _addressToString(verifierAddr)));
+        }
+    }
+    
+    /**
+     * @dev Convert address to string
+     * @param addr Address to convert
+     * @return String representation of address
+     */
+    function _addressToString(address addr) internal pure returns (string memory) {
+        bytes32 value = bytes32(uint256(uint160(addr)));
+        bytes memory alphabet = "0123456789abcdef";
+        bytes memory str = new bytes(42);
+        str[0] = '0';
+        str[1] = 'x';
+        for (uint256 i = 0; i < 20; i++) {
+            str[2 + i * 2] = alphabet[uint8(value[i + 12] >> 4)];
+            str[3 + i * 2] = alphabet[uint8(value[i + 12] & 0x0f)];
+        }
+        return string(str);
+    }
+
+    /**
      * @dev Calculate verification fee based on verifier reputation
      * @param verifier Address of the verifier
      * @return fee The calculated fee

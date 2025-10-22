@@ -43,7 +43,7 @@ function readAddresses() {
 }
 
 export function getContracts(): Contracts {
-  const provider = new JsonRpcProvider(env.RPC_URL, env.CHAIN_ID);
+  const provider = new JsonRpcProvider(env.RPC_URL, env.CHAIN_ID, { batchMaxCount: 1 });
   const signer = env.SERVER_PRIVATE_KEY ? new Wallet(env.SERVER_PRIVATE_KEY, provider) : undefined;
 
   const addresses = readAddresses();
