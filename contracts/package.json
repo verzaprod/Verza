@@ -9,6 +9,7 @@
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
     "deploy:base": "hardhat run scripts/deploy.js --network base",
+    "deploy:midnight": "hardhat run scripts/deploy.js --network midnightTestnet",
     "verify": "hardhat verify",
     "node": "hardhat node",
     "generate-bindings": "abigen --abi ./artifacts/contracts/VCRegistry.sol/VCRegistry.json --pkg contracts --out ../pkg/contracts/vcregistry.go"

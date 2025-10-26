@@ -58,6 +58,13 @@ module.exports = {
       chainId: 84532,
       gasPrice: 1000000000, // 1 gwei
     },
+    // Added Midnight testnet (placeholder values; set env vars to use)
+    midnightTestnet: {
+      url: process.env.MIDNIGHT_RPC_URL || "https://midnight-testnet.example",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: Number(process.env.MIDNIGHT_CHAIN_ID || 513100),
+      gasPrice: Number(process.env.MIDNIGHT_GAS_PRICE || 1000000000), // 1 gwei default
+    },
   },
   etherscan: {
     apiKey: {

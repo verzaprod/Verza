@@ -32,13 +32,14 @@ function readAddresses() {
   const configPath = contractsConfigPath();
   const raw = fs.readFileSync(configPath, 'utf-8');
   const cfg = JSON.parse(raw);
-  const net = cfg.networks?.hederaTestnet;
-  if (!net) throw new Error('hederaTestnet not found in contract-config.json');
+  const key = env.NETWORK;
+  const net = cfg.networks?.[key];
+  if (!net) throw new Error(`${key} not found in contract-config.json`);
   return {
     escrow: env.ESCROW_ADDRESS ?? net.escrowContract,
     registry: env.VC_REGISTRY_ADDRESS ?? net.vcRegistry,
     marketplace: env.VERIFIER_MARKETPLACE_ADDRESS ?? net.verifierMarketplace,
-    chainId: net.chainId ?? env.CHAIN_ID,
+    chainId: Number(net.chainId ?? env.CHAIN_ID),
   };
 }
 
@@ -60,7 +61,7 @@ export function getContracts(): Contracts {
   const registry = new Contract(addresses.registry, registryArtifact.abi, signer ?? provider);
   const marketplace = new Contract(addresses.marketplace, marketplaceArtifact.abi, signer ?? provider);
 
-  logger.info({ escrow: addresses.escrow, registry: addresses.registry, marketplace: addresses.marketplace }, 'Loaded contracts');
+  logger.info({ network: env.NETWORK, chainId: env.CHAIN_ID, escrow: addresses.escrow, registry: addresses.registry, marketplace: addresses.marketplace }, 'Loaded contracts');
 
   return {
     provider,

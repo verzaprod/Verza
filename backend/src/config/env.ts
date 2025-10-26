@@ -15,6 +15,7 @@ export const env = {
   PORT: Number(process.env.PORT ?? 3001),
   RPC_URL: process.env.RPC_URL ?? 'https://testnet.hashio.io/api',
   CHAIN_ID: Number(process.env.CHAIN_ID ?? 296),
+  NETWORK: process.env.NETWORK ?? 'hederaTestnet',
   ESCROW_MODE: (process.env.ESCROW_MODE ?? 'noncustodial') as EscrowMode,
   AUTH_BYPASS: toBool(process.env.AUTH_BYPASS ?? 'true'),
   CLERK_JWKS_URL: process.env.CLERK_JWKS_URL ?? '',

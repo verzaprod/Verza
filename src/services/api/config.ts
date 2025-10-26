@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  USE_MOCK: true, // Set to false when backend is ready
-  BASE_URL: 'https://your-backend-url.com/api',
+  USE_MOCK: false, // Use real backend API
+  BASE_URL: 'http://localhost:3001',
   MOCK_DELAY: 2000, // 2 second delay to simulate network
 }
