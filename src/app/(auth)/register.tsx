@@ -14,15 +14,15 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import { InputBox } from "@/components/ui/InputBox";
 import { Icon } from "@/components/ui/Icon";
 import { WIDTH, HEIGHT } from "@/constants";
-import { useAuth, useSignUp } from "@clerk/clerk-expo";
+import { useSignUp } from "@clerk/clerk-expo";
 import { useSafeAreaInsets, } from "react-native-safe-area-context";
 
 export default function RegisterScreen() {
   const theme = useTheme();
   const router = useRouter();
-const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
 
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
