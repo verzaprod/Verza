@@ -11,7 +11,7 @@ import { useTheme } from "@/theme/ThemeProvider";
 const mockJobs = [
   { 
     id: "1", 
-    requester: "Brandon", 
+    requester: "James", 
     doc: "Identity Card", 
     status: "pending",
     documentImage: "https://example.com/id1.jpg",
@@ -19,7 +19,7 @@ const mockJobs = [
   },
   { 
     id: "2", 
-    requester: "Brandon", 
+    requester: "Aliyat", 
     doc: "Identity Card", 
     status: "pending",
     documentImage: "https://example.com/id2.jpg",
@@ -27,7 +27,7 @@ const mockJobs = [
   },
   { 
     id: "3", 
-    requester: "Brandon", 
+    requester: "Richard", 
     doc: "Identity Card", 
     status: "pending",
     documentImage: "https://example.com/id3.jpg",
@@ -35,7 +35,7 @@ const mockJobs = [
   },
   { 
     id: "4", 
-    requester: "Brandon", 
+    requester: "Tunde", 
     doc: "Identity Card", 
     status: "pending",
     documentImage: "https://example.com/id4.jpg",
@@ -184,6 +184,6 @@ export default function VerifierDashboard() {
           />
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaView> 
   );
-}
+} 

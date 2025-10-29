@@ -132,7 +132,7 @@ export default function ProfileScreen() {
           <AddCredentialButton onPress={handleAddCredentialPress} />
         </View>
 
-        {verificationStatus === "verified" && (
+        { (
           <TouchableOpacity
             onPress={() => router.replace("/verifier")}
             style={{
