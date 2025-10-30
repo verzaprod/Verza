@@ -17,6 +17,8 @@ SplashScreen.preventAutoHideAsync();
 export default function Layout() {
   const colorScheme = useColorScheme();
 
+  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+
   const [loaded] = useFonts({
     SansationLight: require("@/assets/fonts/Sansation-Light.ttf"),
     SFPro: require("@/assets/fonts/sf-pro-med.ttf"),
@@ -43,7 +45,7 @@ export default function Layout() {
         <ErrorFallback error={error} onReset={resetError} />
       )}
     >
-      <ClerkProvider tokenCache={tokenCache}>
+      <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
         <SafeAreaProvider>
           <ThemeProvider>
             <Stack screenOptions={{ headerShown: false }}>
