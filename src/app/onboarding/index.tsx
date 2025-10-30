@@ -21,7 +21,7 @@ const onboardingData = [
     image: "onboarding-2",
   },
   {
-    title: "Seamless Access",
+    title: "Seamless Accesss",
     subtitle: "Move freely across platforms with one account. Verza keeps it effortless.",
     image: "onboarding-3",
   },
@@ -37,12 +37,12 @@ export default function OnboardingScreen() {
     if (currentPage < onboardingData.length - 1) {
       setCurrentPage(currentPage + 1)
     } else {
-      router.replace("/(auth)/register")
+      router.push("/(auth)/register")
     }
   }
 
   const handleSkip = () => {
-    router.replace("/(auth)/register")
+    router.push("/(auth)/register")
   }
 
   const handleBack = () => {
