@@ -45,7 +45,7 @@ export const ErrorFallback: React.FC<{ onReset: () => void; error?: Error }> = (
           We encountered an unexpected error. Don't worry, your data is safe.
         </Text>
 
-        {__DEV__ && error && (
+        {error && (
           <View
             style={{
               backgroundColor: '#fef2f2',
