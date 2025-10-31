@@ -12,7 +12,7 @@ A cross-platform KYC verification platform that enables users to complete identi
 ## Overview
 
 Verza is a reusable KYC verification platform that streamlines identity verification across multiple platforms. Users complete verification once and can authenticate seamlessly across integrated services.
-### APK File: https://drive.google.com/file/d/1LJBjNBh489vnNG-tzTEddlUnVSfEkDEs/view?usp=drivesdk
+### Google APK File: https://drive.google.com/file/d/1LJBjNBh489vnNG-tzTEddlUnVSfEkDEs/view?usp=drivesdk
 
 ### Key Features
 
