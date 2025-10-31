@@ -9,6 +9,7 @@
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "deploy:polygon": "hardhat run scripts/deploy.js --network polygon",
     "deploy:base": "hardhat run scripts/deploy.js --network base",
+    "deploy:hedera": "hardhat run scripts/deploy.js --network hederaTestnet",
     "deploy:midnight": "hardhat run scripts/deploy.js --network midnightTestnet",
     "verify": "hardhat verify",
     "node": "hardhat node",

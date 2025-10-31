@@ -97,6 +97,160 @@ EXPO_PUBLIC_ENVIRONMENT=development
 }
 ```
 
+## Architecture Overview
+
+Verza is built on a three-tier architecture combining a React Native frontend, TypeScript/Express backend, and Hedera-deployed smart contracts for decentralized verification and credential management.
+
+## Smart Contracts
+
+Verza's smart contract infrastructure is deployed on **Hedera Testnet** and consists of three main upgradeable contracts:
+
+### Deployed Contracts (Hedera Testnet)
+
+| Contract | Address | Purpose |
+|----------|---------|---------|
+| **VCRegistry** | `0xa26F554A4b2110300CbfF6B60450Bd3FCbD72f07` | Verifiable Credentials as Soulbound Tokens |
+| **VerifierMarketplace** | `0x2c24c526a141998660eEfc2a40dEc144eAa357A2` | Verifier staking and reputation system |
+| **EscrowContract** | `0xff0153Bc7FcAE89eEA273C243E9304a9dB85DF76` | Secure payment escrow for verifications |
+
+### VCRegistry Contract
+
+**Purpose**: Manages Verifiable Credentials as non-transferable NFTs (Soulbound Tokens)
+
+**Key Features**:
+- **Credential Types**: Identity, Education, Professional, Financial, Health, Government, Custom
+- **DID Integration**: Full Hedera DID support with document management
+- **Soulbound Tokens**: Non-transferable credentials tied to user identity
+- **Credential Lifecycle**: Active, Suspended, Revoked, Expired states
+- **Batch Operations**: Efficient multi-credential issuance
+- **Access Control**: Role-based permissions (Issuer, Upgrader, DID Resolver)
+
+**Main Functions**:
+- `issueCredential()` - Issue new verifiable credentials
+- `revokeCredential()` - Revoke existing credentials
+- `updateCredentialStatus()` - Manage credential lifecycle
+- `registerDID()` - Register new Decentralized Identifiers
+- `resolveDID()` - Resolve DID documents
+
+### VerifierMarketplace Contract
+
+**Purpose**: Decentralized marketplace for identity verifiers with staking and reputation
+
+**Key Features**:
+- **Staking Mechanism**: Verifiers stake HBAR/tokens to participate
+- **Dynamic Pricing**: Reputation-based fee calculation
+- **Reputation System**: Score tracking based on verification success
+- **Slashing Protection**: Fraud detection and penalty system
+- **Activity Monitoring**: Inactivity detection and management
+
+**Configuration**:
+- Minimum Stake: 100 HBAR
+- Base Verification Fee: 10 HBAR
+- Slashing Percentage: Configurable for fraud/inactivity
+- Reputation Multiplier: Dynamic pricing based on performance
+
+**Main Functions**:
+- `registerVerifier()` - Register new verifiers with stake
+- `updateReputation()` - Update verifier reputation scores
+- `calculateVerificationFee()` - Dynamic fee calculation
+- `slashVerifier()` - Penalize fraudulent verifiers
+- `withdrawStake()` - Stake withdrawal with timelock
+
+### EscrowContract Contract
+
+**Purpose**: Secure escrow system for verification payments with dispute resolution
+
+**Key Features**:
+- **Multi-Token Support**: HBAR and ERC-20 token payments
+- **Fraud Detection**: AI-powered risk assessment integration
+- **Dispute Resolution**: Multi-party dispute handling system
+- **Automatic Release**: Time-based automatic fund release
+- **Platform Fees**: Configurable fee structure (2.5% default)
+
+**Escrow Lifecycle**:
+1. **Created** - Escrow request initiated
+2. **FundsLocked** - Payment secured in contract
+3. **VerificationSubmitted** - Verifier submits results
+4. **FraudCheckCompleted** - AI fraud detection completed
+5. **FundsReleased** - Payment released to verifier
+6. **DisputeRaised** - Dispute initiated (if needed)
+
+**Main Functions**:
+- `createEscrow()` - Initialize new escrow request
+- `lockFunds()` - Secure payment in escrow
+- `submitVerification()` - Submit verification results
+- `releaseFunds()` - Release payment to verifier
+- `raiseDispute()` - Initiate dispute resolution
+- `resolveDispute()` - Admin dispute resolution
+
+## Backend API
+
+The backend is a **TypeScript/Express** API that orchestrates the verification process and integrates with the smart contracts.
+
+### Core Services
+
+**Database**: PostgreSQL with Prisma ORM
+**Authentication**: Clerk JWT verification
+**Blockchain**: Ethers.js integration with Hedera
+**Storage**: Local development / S3 for production
+
+### API Endpoints
+
+| Endpoint | Method | Purpose | Auth Required |
+|----------|--------|---------|---------------|
+| `/escrow/initiate` | POST | Start verification escrow | ✅ |
+| `/escrow/status/:escrowId` | GET | Check escrow status | ✅ |
+| `/verifiers` | GET | List available verifiers | ✅ |
+| `/verifiers/:id` | GET | Get verifier details | ✅ |
+| `/uploads/presign` | POST | Get upload URLs | ✅ |
+| `/uploads/verification/:escrowId/documents` | POST | Upload documents | ✅ |
+| `/verification/results/:escrowId` | GET | Get verification results | ✅ |
+| `/health` | GET | Health check | ❌ |
+
+### Database Schema
+
+**Core Models**:
+- **User**: Clerk integration with wallet/DID mapping
+- **Verifier**: Verifier profiles with on-chain data sync
+- **Escrow**: Verification request lifecycle tracking
+- **Verification**: Document upload and processing status
+- **Credential**: Issued verifiable credentials with token metadata
+
+### Chain Worker
+
+**Purpose**: Real-time blockchain event monitoring and database synchronization
+
+**Monitored Events**:
+- `EscrowCreated` - New escrow requests
+- `FundsLocked` - Payment confirmations
+- `VerificationSubmitted` - Verifier submissions
+- `FundsReleased` - Payment releases
+- `DisputeRaised` - Dispute notifications
+- `CredentialIssued` - New credential issuance
+
+### Environment Configuration
+
+```env
+# Blockchain
+RPC_URL=https://testnet.hashio.io/api
+CHAIN_ID=296
+NETWORK=hederaTestnet
+
+# Authentication
+CLERK_JWKS_URL=https://your-clerk-instance.clerk.accounts.dev/.well-known/jwks.json
+AUTH_BYPASS=false
+
+# Escrow Mode
+ESCROW_MODE=custodial
+SERVER_PRIVATE_KEY=0x...
+
+# Database
+DATABASE_URL=postgresql://...
+
+# Features
+ENABLE_WORKER=true
+```
+
 ## KYC Integration
 
 Verza integrates with Onfido SDK for enterprise-grade identity verification:
