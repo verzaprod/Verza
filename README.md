@@ -9,6 +9,10 @@ A cross-platform KYC verification platform that enables users to complete identi
 [![React Native](https://img.shields.io/badge/React%20Native-0.79.5-green.svg)](https://reactnative.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)](https://www.typescriptlang.org/)
 
+-----PitchDeck Link----- https://drive.google.com/file/d/1b1fVmSJmftBgnrAiUzhexj8edPHRK8kq/view?usp=sharing
+-----Hedera Certificate link---  https://drive.google.com/file/d/1JcwHrIGCkipyuEZNfZUSdA-lRiCgSeWZ/view?usp=sharing
+
+
 ## Overview
 
 Verza is a reusable KYC verification platform that streamlines identity verification across multiple platforms. Users complete verification once and can authenticate seamlessly across integrated services.
@@ -434,6 +438,9 @@ npx expo start
 - 📱 [Expo Router](https://docs.expo.dev/router/introduction/)
 - 🎨 [Tailwind CSS](https://tailwindcss.com/docs)
 - 🔧 [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+-----PitchDeck Link----- https://drive.google.com/file/d/1b1fVmSJmftBgnrAiUzhexj8edPHRK8kq/view?usp=sharing
+-----Hedera Certificate link---  https://drive.google.com/file/d/1JcwHrIGCkipyuEZNfZUSdA-lRiCgSeWZ/view?usp=sharing
 
 ---
 
