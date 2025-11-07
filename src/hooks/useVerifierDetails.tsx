@@ -60,7 +60,7 @@ export function useVerifierDetails(verifierId: string) {
     }
   }, [verifierId]);
 
-  const handleConfirmPayment = async () => {
+  const handleConfirmPayment = async (selectedToken: string = "HBAR") => {
     if (!verifierDetails) return;
 
     setIsProcessing(true);
@@ -69,7 +69,7 @@ export function useVerifierDetails(verifierId: string) {
       const escrowResponse = await apiService.initiateEscrow({
         verifier_id: verifierId,
         amount: verifierDetails.fee,
-        currency: verifierDetails.currency,
+        currency: selectedToken, // Use the selected token instead of verifierDetails.currency
         auto_release_hours: 24,
       });
 
@@ -79,7 +79,7 @@ export function useVerifierDetails(verifierId: string) {
         setEscrowInfo(escrowData.escrow_id, verifierId);
         setCurrentStep("selection");
         ToastAndroid.show("Escrow initiated successfully!", ToastAndroid.SHORT);
-        router.push(`/(kyc)/selection-type`);
+        router.replace(`/(kyc)/selection-type`);
       } else {
         Alert.alert("Payment Failed", escrowData.error || "Unable to process payment");
       }
