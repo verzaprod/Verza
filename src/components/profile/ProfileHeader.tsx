@@ -2,9 +2,14 @@ import React from "react";
 import { View, Text } from "react-native";
 import { useTheme } from "@/theme/ThemeProvider";
 import { Icon } from "@/components/ui/Icon";
+import { useUser } from "@clerk/clerk-expo";
 
 export const ProfileHeader: React.FC = () => {
   const theme = useTheme();
+  const { user } = useUser();
+
+  // Get the user's email from Clerk
+  const userEmail = user?.primaryEmailAddress?.emailAddress || user?.emailAddresses?.[0]?.emailAddress || "No email available";
 
   return (
     <View style={{ alignItems: "center", marginBottom: theme.spacing.xxl }}>
@@ -40,7 +45,7 @@ export const ProfileHeader: React.FC = () => {
           color: theme.colors.textSecondary,
         }}
       >
-        joshuastonage@gmail.com
+        {userEmail}
       </Text>
     </View>
   );

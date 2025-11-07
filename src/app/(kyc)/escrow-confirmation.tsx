@@ -20,6 +20,8 @@ export default function EscrowConfirmation() {
     verifierDetails,
     isLoading,
     isProcessing,
+    selectedToken,
+    updateSelectedToken,
     handleConfirmPayment
   } = useVerifierDetails(verifierId as string);
 
@@ -48,6 +50,8 @@ export default function EscrowConfirmation() {
         <PaymentActions
           verifierDetails={verifierDetails}
           isProcessing={isProcessing}
+          selectedToken={selectedToken}
+          onTokenChange={updateSelectedToken}
           onConfirmPayment={handleConfirmPayment}
           onCancel={() => router.back()}
         />

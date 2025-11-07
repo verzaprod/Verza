@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import { useTheme } from "@/theme/ThemeProvider";
 import { Button } from "@/components/ui/Button";
 
 type TokenType = "HBAR" | "ADA" | "NIGHT";
 
 interface PaymentActionsProps {
-  verifierDetails: { fee: number; currency: string };
+  verifierDetails: { 
+    fee: number; 
+    currency: string;
+    fees?: {
+      HBAR: number;
+      ADA: number;
+      NIGHT: number;
+    };
+  };
   isProcessing: boolean;
+  selectedToken: TokenType;
+  onTokenChange: (token: TokenType) => void;
   onConfirmPayment: (selectedToken: TokenType) => void;
   onCancel: () => void;
 }
@@ -15,7 +25,7 @@ interface PaymentActionsProps {
 interface Token {
   symbol: TokenType;
   name: string;
-  icon: string;
+  iconSource: any;
   color: string;
 }
 
@@ -23,19 +33,19 @@ const AVAILABLE_TOKENS: Token[] = [
   {
     symbol: "HBAR",
     name: "Hedera",
-    icon: "Ⓗ",
+    iconSource: require("@/assets/images/shield.png"), // You can replace with actual HBAR logo
     color: "#4F46E5",
   },
   {
     symbol: "ADA",
     name: "Cardano",
-    icon: "₳",
+    iconSource: require("@/assets/images/shield-check.png"), // You can replace with actual ADA logo
     color: "#0033AD",
   },
   {
     symbol: "NIGHT",
     name: "Night Token",
-    icon: "🌙",
+    iconSource: require("@/assets/images/wifi.png"), // You can replace with actual NIGHT logo
     color: "#7C3AED",
   },
 ];
@@ -43,11 +53,16 @@ const AVAILABLE_TOKENS: Token[] = [
 export function PaymentActions({
   verifierDetails,
   isProcessing,
+  selectedToken,
+  onTokenChange,
   onConfirmPayment,
   onCancel,
 }: PaymentActionsProps) {
   const theme = useTheme();
-  const [selectedToken, setSelectedToken] = useState<TokenType>("HBAR");
+
+  // Get the fee for the selected token - now comes directly from verifierDetails
+  const currentFee = verifierDetails.fee;
+  const currentCurrency = verifierDetails.currency;
 
   return (
     <View style={{ paddingBottom: 40 }}>
@@ -76,53 +91,89 @@ export function PaymentActions({
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ gap: 12 }}
         >
-          {AVAILABLE_TOKENS.map((token) => (
-            <TouchableOpacity
-              key={token.symbol}
-              onPress={() => setSelectedToken(token.symbol)}
-              style={{
-                paddingHorizontal: 20,
-                paddingVertical: 16,
-                borderRadius: theme.borderRadius.md,
-                borderWidth: 2,
-                borderColor:
-                  selectedToken === token.symbol
-                    ? token.color
-                    : theme.colors.boxBorder,
-                backgroundColor:
-                  selectedToken === token.symbol
-                    ? `${token.color}15`
-                    : theme.colors.background,
-                minWidth: 120,
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 28, marginBottom: 8 }}>
-                {token.icon}
-              </Text>
-              <Text
+          {AVAILABLE_TOKENS.map((token) => {
+            const tokenFee = verifierDetails.fees?.[token.symbol] || verifierDetails.fee;
+            
+            return (
+              <TouchableOpacity
+                key={token.symbol}
+                onPress={() => onTokenChange(token.symbol)}
                 style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                  color:
+                  paddingHorizontal: 20,
+                  paddingVertical: 16,
+                  borderRadius: theme.borderRadius.md,
+                  borderWidth: 2,
+                  borderColor:
                     selectedToken === token.symbol
                       ? token.color
-                      : theme.colors.textPrimary,
-                  marginBottom: 4,
+                      : theme.colors.boxBorder,
+                  backgroundColor:
+                    selectedToken === token.symbol
+                      ? `${token.color}15`
+                      : theme.colors.background,
+                  minWidth: 120,
+                  alignItems: "center",
                 }}
               >
-                {token.symbol}
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: theme.colors.textSecondary,
-                }}
-              >
-                {token.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    marginBottom: 8,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image
+                    source={token.iconSource}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      tintColor:
+                        selectedToken === token.symbol
+                          ? token.color
+                          : theme.colors.textSecondary,
+                    }}
+                    resizeMode="contain"
+                  />
+                </View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "600",
+                    color:
+                      selectedToken === token.symbol
+                        ? token.color
+                        : theme.colors.textPrimary,
+                    marginBottom: 4,
+                  }}
+                >
+                  {token.symbol}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: theme.colors.textSecondary,
+                    marginBottom: 4,
+                  }}
+                >
+                  {token.name}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "700",
+                    color:
+                      selectedToken === token.symbol
+                        ? token.color
+                        : theme.colors.textPrimary,
+                  }}
+                >
+                  {tokenFee} {token.symbol}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
        
       </View>
@@ -132,7 +183,7 @@ export function PaymentActions({
         text={
           isProcessing
             ? "Processing..."
-            : `Pay ${verifierDetails.fee} ${selectedToken}`
+            : `Pay ${currentFee} ${currentCurrency}`
         }
         onPress={() => onConfirmPayment(selectedToken)}
         disabled={isProcessing}

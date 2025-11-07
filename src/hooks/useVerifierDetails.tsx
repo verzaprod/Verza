@@ -12,6 +12,11 @@ interface VerifierDetails {
   currency: string;
   description: string;
   estimatedTime: string;
+  fees: {
+    HBAR: number;
+    ADA: number;
+    NIGHT: number;
+  };
 }
 
 export function useVerifierDetails(verifierId: string) {
@@ -19,6 +24,7 @@ export function useVerifierDetails(verifierId: string) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [verifierDetails, setVerifierDetails] = useState<VerifierDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedToken, setSelectedToken] = useState<"HBAR" | "ADA" | "NIGHT">("HBAR");
   const { setEscrowInfo, setCurrentStep } = useKYCStore();
 
   useEffect(() => {
@@ -36,6 +42,11 @@ export function useVerifierDetails(verifierId: string) {
             currency: "HBAR",
             description: verifier.description,
             estimatedTime: "2-5 minutes",
+            fees: {
+              HBAR: 25.0,
+              ADA: 15.0,
+              NIGHT: 50.0,
+            },
           });
         } else {
           setVerifierDetails({
@@ -45,6 +56,11 @@ export function useVerifierDetails(verifierId: string) {
             currency: "HBAR",
             description: "Enterprise-grade identity verification",
             estimatedTime: "2-5 minutes",
+            fees: {
+              HBAR: 25.0,
+              ADA: 15.0,
+              NIGHT: 50.0,
+            },
           });
         }
       } catch (error) {
@@ -60,16 +76,32 @@ export function useVerifierDetails(verifierId: string) {
     }
   }, [verifierId]);
 
-  const handleConfirmPayment = async (selectedToken: string = "HBAR") => {
+  // Function to update the selected token and recalculate fee
+  const updateSelectedToken = (token: "HBAR" | "ADA" | "NIGHT") => {
+    setSelectedToken(token);
+    
+    if (verifierDetails) {
+      setVerifierDetails({
+        ...verifierDetails,
+        currency: token,
+        fee: verifierDetails.fees[token],
+      });
+    }
+  };
+
+  const handleConfirmPayment = async (token: string = "HBAR") => {
     if (!verifierDetails) return;
+
+    // Get the fee based on selected token
+    const tokenFee = verifierDetails.fees[token as keyof typeof verifierDetails.fees] || verifierDetails.fee;
 
     setIsProcessing(true);
 
     try {
       const escrowResponse = await apiService.initiateEscrow({
         verifier_id: verifierId,
-        amount: verifierDetails.fee,
-        currency: selectedToken, // Use the selected token instead of verifierDetails.currency
+        amount: tokenFee,
+        currency: token,
         auto_release_hours: 24,
       });
 
@@ -94,6 +126,8 @@ export function useVerifierDetails(verifierId: string) {
     verifierDetails,
     isLoading,
     isProcessing,
+    selectedToken,
+    updateSelectedToken,
     handleConfirmPayment
   };
 }
