@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/Button";
 type TokenType = "HBAR" | "ADA" | "NIGHT";
 
 interface PaymentActionsProps {
-  verifierDetails: { 
-    fee: number; 
+  verifierDetails: {
+    fee: number;
     currency: string;
     fees?: {
       HBAR: number;
@@ -33,19 +33,19 @@ const AVAILABLE_TOKENS: Token[] = [
   {
     symbol: "HBAR",
     name: "Hedera",
-    iconSource: require("@/assets/images/shield.png"), // You can replace with actual HBAR logo
+    iconSource: require("@/assets/images/hedera.png"),
     color: "#4F46E5",
   },
   {
     symbol: "ADA",
     name: "Cardano",
-    iconSource: require("@/assets/images/shield-check.png"), // You can replace with actual ADA logo
+    iconSource: require("@/assets/images/cardano-ada-logo.png"),
     color: "#0033AD",
   },
   {
     symbol: "NIGHT",
     name: "Night Token",
-    iconSource: require("@/assets/images/wifi.png"), // You can replace with actual NIGHT logo
+    iconSource: require("@/assets/images/midnight-token.png"),
     color: "#7C3AED",
   },
 ];
@@ -60,7 +60,6 @@ export function PaymentActions({
 }: PaymentActionsProps) {
   const theme = useTheme();
 
-  // Get the fee for the selected token - now comes directly from verifierDetails
   const currentFee = verifierDetails.fee;
   const currentCurrency = verifierDetails.currency;
 
@@ -92,8 +91,9 @@ export function PaymentActions({
           contentContainerStyle={{ gap: 12 }}
         >
           {AVAILABLE_TOKENS.map((token) => {
-            const tokenFee = verifierDetails.fees?.[token.symbol] || verifierDetails.fee;
-            
+            const tokenFee =
+              verifierDetails.fees?.[token.symbol] || verifierDetails.fee;
+
             return (
               <TouchableOpacity
                 key={token.symbol}
@@ -130,9 +130,11 @@ export function PaymentActions({
                       width: 40,
                       height: 40,
                       tintColor:
-                        selectedToken === token.symbol
-                          ? token.color
-                          : theme.colors.textSecondary,
+                        token.symbol === "NIGHT"
+                          ? theme.isDark
+                            ? token.color
+                            : theme.colors.textSecondary
+                          : undefined,
                     }}
                     resizeMode="contain"
                   />
@@ -175,10 +177,8 @@ export function PaymentActions({
             );
           })}
         </ScrollView>
-       
       </View>
 
-      {/* Payment Buttons */}
       <Button
         text={
           isProcessing
