@@ -54,7 +54,7 @@ export default function VerificationResults() {
   };
 
   const verifier = MOCK_DATA.verifiers.find(v => v.id === verifierId);
-  const verifierName = verifier?.name || 'Unknown Verifier';
+  const verifierName = verifier ? verifier?.name : 'Unknown Verifier';
 
   if (!result) {
     return <LoadingState />;

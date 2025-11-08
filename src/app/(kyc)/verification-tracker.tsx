@@ -58,7 +58,7 @@ export default function VerificationTracker() {
 
           setTimeout(() => {
             if (isMountedRef.current) {
-              router.replace("/(kyc)/verification-results");
+              router.replace("/(kyc)/verification-results"); 
             }
           }, 2000);
         }
@@ -198,7 +198,7 @@ export default function VerificationTracker() {
 
           <View
             style={{
-              backgroundColor: theme.colors.backgroundLight,
+              backgroundColor: theme.colors.background,
               borderRadius: theme.borderRadius.lg,
               padding: 20,
               marginBottom: 24,
