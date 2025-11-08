@@ -27,7 +27,7 @@ export function CredentialDetails({ vcDetails }: CredentialDetailsProps) {
   return (
     <View
       style={{
-        backgroundColor: theme.colors.backgroundLight,
+        backgroundColor: theme.colors.background,
         borderRadius: theme.borderRadius.lg,
         padding: 20,
         marginBottom: 24,

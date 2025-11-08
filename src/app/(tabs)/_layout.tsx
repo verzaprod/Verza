@@ -33,20 +33,20 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name="profile"
-          options={{
-            tabBarLabel: "Profile",
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome5 name="user-check" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
           name="verifiers"
           options={{
             tabBarLabel: "Verifiers",
             tabBarIcon: ({ color, size }) => (
               <Entypo name="shop" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            tabBarLabel: "Profile",
+            tabBarIcon: ({ color, size }) => (
+              <FontAwesome5 name="user-check" size={size} color={color} />
             ),
           }}
         />
