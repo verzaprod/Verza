@@ -8,6 +8,7 @@ import verifiersRouter from './routes/verifiers';
 import escrowRouter from './routes/escrow';
 import resultsRouter from './routes/results';
 import uploadsRouter from './routes/uploads';
+import midnightRouter from './routes/midnight';
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ app.use('/verifiers', verifiersRouter);
 app.use('/escrow', escrowRouter);
 app.use('/verification', resultsRouter);
 app.use('/uploads', uploadsRouter);
+app.use('/midnight', midnightRouter);
 
 app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   logger.error({ err }, 'Unhandled error');

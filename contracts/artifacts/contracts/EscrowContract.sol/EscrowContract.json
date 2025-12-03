@@ -1,0 +1,54 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": false, "name": "requestId", "type": "bytes32"},
+        {"indexed": false, "name": "user", "type": "address"},
+        {"indexed": false, "name": "verifier", "type": "address"},
+        {"indexed": false, "name": "amount", "type": "uint256"}
+      ],
+      "name": "EscrowCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": false, "name": "requestId", "type": "bytes32"},
+        {"indexed": false, "name": "amount", "type": "uint256"},
+        {"indexed": false, "name": "expiresAt", "type": "uint256"}
+      ],
+      "name": "FundsLocked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{"indexed": false, "name": "requestId", "type": "bytes32"}],
+      "name": "FundsReleased",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{"indexed": false, "name": "requestId", "type": "bytes32"}],
+      "name": "RefundIssued",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [{"indexed": false, "name": "requestId", "type": "bytes32"}],
+      "name": "EscrowCancelled",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {"internalType": "bytes32", "name": "requestId", "type": "bytes32"},
+        {"internalType": "address", "name": "verifier", "type": "address"}
+      ],
+      "name": "createEscrow",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ]
+}
+

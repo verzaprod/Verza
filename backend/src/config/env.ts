@@ -28,6 +28,8 @@ export const env = {
   ESCROW_ADDRESS: process.env.ESCROW_ADDRESS,
   VC_REGISTRY_ADDRESS: process.env.VC_REGISTRY_ADDRESS,
   VERIFIER_MARKETPLACE_ADDRESS: process.env.VERIFIER_MARKETPLACE_ADDRESS,
+  MIDNIGHT_COMPACT_PATH: process.env.MIDNIGHT_COMPACT_PATH ?? '/home/ekko/.local/bin/compact',
+  ENABLE_MIDNIGHT_WORKER: toBool(process.env.ENABLE_MIDNIGHT_WORKER ?? 'false'),
 };
 
 export function projectRoot(): string {

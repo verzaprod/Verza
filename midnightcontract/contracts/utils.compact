@@ -1,0 +1,15 @@
+/*
+  @title Utility Library
+  @notice Common helper circuits for hashing and comparisons
+*/
+
+pragma language_version >= 0.16;
+import CompactStandardLibrary;
+
+/* @notice Hash bytes32 with a prefix */
+export circuit hashWithPrefix(prefix: Bytes, data: Bytes32): [Bytes32] {
+  let merged = concat prefix data;
+  let h = blake2b merged;
+  return [h];
+}
+

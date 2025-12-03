@@ -1,0 +1,16 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {"internalType": "address", "name": "verifier", "type": "address"}
+      ],
+      "name": "calculateVerificationFee",
+      "outputs": [
+        {"internalType": "uint256", "name": "fee", "type": "uint256"}
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}
+

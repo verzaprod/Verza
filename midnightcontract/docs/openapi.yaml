@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Verza Midnight Integration API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+paths:
+  /midnight/health:
+    get:
+      summary: Health check for Midnight integration
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  compactVersion:
+                    type: string
+  /midnight/compile:
+    post:
+      summary: Compile Compact contracts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Compile started
+        '401':
+          description: Unauthorized
+  /midnight/registry/set:
+    post:
+      summary: Set a registry record
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+                value:
+                  type: string
+      responses:
+        '200':
+          description: Operation result
+        '400':
+          description: Missing key/value
+        '401':
+          description: Unauthorized
+  /midnight/registry/get:
+    get:
+      summary: Get a registry record
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: key
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Operation result
+        '400':
+          description: Missing key
+        '401':
+          description: Unauthorized

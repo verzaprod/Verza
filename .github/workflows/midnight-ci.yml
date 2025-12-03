@@ -1,0 +1,34 @@
+name: Midnight Contract CI
+
+on:
+  push:
+    paths:
+      - 'midnightcontract/**'
+      - 'backend/src/**'
+  pull_request:
+    paths:
+      - 'midnightcontract/**'
+      - 'backend/src/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        working-directory: midnightcontract
+        run: npm ci
+      - name: Typecheck
+        working-directory: midnightcontract
+        run: npm run typecheck
+      - name: Compile Compact (skipped in CI)
+        working-directory: midnightcontract
+        run: |
+          echo "Compact compile requires local WSL tool. Skipping in CI."
+      - name: Run tests
+        working-directory: midnightcontract
+        run: npm test --silent
+

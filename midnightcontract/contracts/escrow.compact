@@ -1,0 +1,57 @@
+/*
+  @title Simple Escrow Contract
+  @notice Locks funds and releases or refunds based on verifier decision
+*/
+
+pragma language_version >= 0.16;
+import CompactStandardLibrary;
+
+/* @dev Escrow statuses */
+export ledger statuses: Map<Bytes32, U8>;
+
+/* @dev Escrow amount per request */
+export ledger amounts: Map<Bytes32, U64>;
+
+/* @dev Verifier address per request */
+export ledger verifiers: Map<Bytes32, Address>;
+
+/*
+  @notice Create a new escrow
+  @param requestId Unique request identifier
+  @param verifier Verifier address
+  @param amount Amount to lock
+*/
+export circuit createEscrow(requestId: Bytes32, verifier: Address, amount: U64): [] {
+  // 0 = created
+  statuses[requestId] = 0;
+  amounts[requestId] = amount;
+  verifiers[requestId] = verifier;
+}
+
+/*
+  @notice Mark escrow as funds locked
+  @param requestId Unique request identifier
+*/
+export circuit markLocked(requestId: Bytes32): [] {
+  // 1 = locked
+  statuses[requestId] = 1;
+}
+
+/*
+  @notice Release funds to verifier
+  @param requestId Unique request identifier
+*/
+export circuit release(requestId: Bytes32): [] {
+  // 2 = released
+  statuses[requestId] = 2;
+}
+
+/*
+  @notice Refund funds to requester
+  @param requestId Unique request identifier
+*/
+export circuit refund(requestId: Bytes32): [] {
+  // 3 = refunded
+  statuses[requestId] = 3;
+}
+

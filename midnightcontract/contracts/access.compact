@@ -1,0 +1,26 @@
+/*
+  @title Access Control Contract
+  @notice Maintains a set of admin addresses
+*/
+
+pragma language_version >= 0.16;
+import CompactStandardLibrary;
+
+export ledger admins: Set<Address>;
+
+/* @notice Add an admin */
+export circuit addAdmin(addr: Address): [] {
+  insert admins addr;
+}
+
+/* @notice Remove an admin */
+export circuit removeAdmin(addr: Address): [] {
+  delete admins addr;
+}
+
+/* @notice Check admin membership */
+export circuit isAdmin(addr: Address): [Bool] {
+  let exists = contains admins addr;
+  return [exists];
+}
+

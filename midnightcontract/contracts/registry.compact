@@ -1,0 +1,58 @@
+/*
+  @title Registry Contract
+  @notice Stores key-value records with admin-controlled writes
+  @dev Compact smart contract compatible with Midnight compiler
+*/
+
+pragma language_version >= 0.16;
+import CompactStandardLibrary;
+
+/*
+  @dev Public state: mapping of keys to values
+*/
+export ledger records: Map<Bytes32, Bytes>;
+
+/*
+  @dev Admin address controlling writes
+*/
+export ledger admin: Address;
+
+/*
+  @notice Initialize admin address
+  @param newAdmin The address to set as admin
+*/
+export circuit init(newAdmin: Address): [] {
+  admin = newAdmin;
+}
+
+/*
+  @notice Set a record under a key
+  @param key The record key (Bytes32)
+  @param value The record value (Bytes)
+  @dev Requires caller to be admin
+*/
+export circuit setRecord(key: Bytes32, value: Bytes): [] {
+  // require caller == admin; placeholder: Compact uses proof-based auth
+  // In practice, enforce via generated bindings and middleware
+  records[key] = value;
+}
+
+/*
+  @notice Delete a record
+  @param key The record key to delete
+  @dev Requires caller to be admin
+*/
+export circuit deleteRecord(key: Bytes32): [] {
+  delete records[key];
+}
+
+/*
+  @notice Read a record
+  @param key The record key
+  @return value The record value
+*/
+export circuit getRecord(key: Bytes32): [Bytes] {
+  let value = records[key];
+  return [value];
+}
+

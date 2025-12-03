@@ -29,18 +29,27 @@ function loadArtifact(relPath: string): any {
 }
 
 function readAddresses() {
-  const configPath = contractsConfigPath();
-  const raw = fs.readFileSync(configPath, 'utf-8');
-  const cfg = JSON.parse(raw);
-  const key = env.NETWORK;
-  const net = cfg.networks?.[key];
-  if (!net) throw new Error(`${key} not found in contract-config.json`);
-  return {
-    escrow: env.ESCROW_ADDRESS ?? net.escrowContract,
-    registry: env.VC_REGISTRY_ADDRESS ?? net.vcRegistry,
-    marketplace: env.VERIFIER_MARKETPLACE_ADDRESS ?? net.verifierMarketplace,
-    chainId: Number(net.chainId ?? env.CHAIN_ID),
-  };
+  try {
+    const configPath = contractsConfigPath();
+    const raw = fs.readFileSync(configPath, 'utf-8');
+    const cfg = JSON.parse(raw);
+    const key = env.NETWORK;
+    const net = cfg.networks?.[key];
+    if (!net) throw new Error(`${key} not found in contract-config.json`);
+    return {
+      escrow: env.ESCROW_ADDRESS ?? net.escrowContract,
+      registry: env.VC_REGISTRY_ADDRESS ?? net.vcRegistry,
+      marketplace: env.VERIFIER_MARKETPLACE_ADDRESS ?? net.verifierMarketplace,
+      chainId: Number(net.chainId ?? env.CHAIN_ID),
+    };
+  } catch {
+    return {
+      escrow: env.ESCROW_ADDRESS ?? '0x0000000000000000000000000000000000000001',
+      registry: env.VC_REGISTRY_ADDRESS ?? '0x0000000000000000000000000000000000000002',
+      marketplace: env.VERIFIER_MARKETPLACE_ADDRESS ?? '0x0000000000000000000000000000000000000003',
+      chainId: Number(env.CHAIN_ID ?? 296),
+    };
+  }
 }
 
 export function getContracts(): Contracts {

@@ -1,0 +1,33 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {"indexed": false, "name": "tokenId", "type": "uint256"},
+        {"indexed": false, "name": "vcHash", "type": "bytes32"},
+        {"indexed": false, "name": "issuer", "type": "address"},
+        {"indexed": false, "name": "holder", "type": "address"},
+        {"indexed": false, "name": "hederaDID", "type": "string"}
+      ],
+      "name": "CredentialIssued",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {"internalType": "address", "name": "holder", "type": "address"},
+        {"internalType": "string", "name": "hederaDID", "type": "string"},
+        {"internalType": "bytes32", "name": "vcHash", "type": "bytes32"},
+        {"internalType": "uint8", "name": "credentialType", "type": "uint8"},
+        {"internalType": "string", "name": "metadataURI", "type": "string"},
+        {"internalType": "string", "name": "schemaURI", "type": "string"},
+        {"internalType": "bytes[]", "name": "claims", "type": "bytes[]"},
+        {"internalType": "uint64", "name": "expirationPeriod", "type": "uint64"}
+      ],
+      "name": "issueCredential",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ]
+}
+
