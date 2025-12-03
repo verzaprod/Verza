@@ -1,4 +1,4 @@
-import process from 'process';
+import * as process from 'process';
 
 const arg = (name: string, def?: string) => {
   const i = process.argv.indexOf(`--${name}`);

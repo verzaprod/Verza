@@ -10,7 +10,6 @@
     "outDir": "dist",
     "resolveJsonModule": true
   },
-  "include": ["scripts", "interfaces", "migrations", "tests"],
+  "include": ["scripts", "interfaces", "migrations", "tests", "types"],
   "exclude": ["node_modules", "dist"]
 }
-
