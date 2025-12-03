@@ -3,17 +3,19 @@
   @notice Locks funds and releases or refunds based on verifier decision
 */
 
-pragma language_version >= 0.16;
+pragma language_version >= 0.16 && <= 0.26;
 import CompactStandardLibrary;
 
-/* @dev Escrow statuses */
-export ledger statuses: Map<Bytes32, U8>;
+/* @dev Simplified status counters */
+export ledger created: Counter;
+export ledger locked: Counter;
+export ledger released: Counter;
+export ledger refunded: Counter;
 
-/* @dev Escrow amount per request */
-export ledger amounts: Map<Bytes32, U64>;
-
-/* @dev Verifier address per request */
-export ledger verifiers: Map<Bytes32, Address>;
+/* @dev Last escrow details (simplified) */
+export ledger lastRequest: Bytes<32>;
+export ledger lastVerifier: Bytes<32>;
+export ledger lastAmount: Bytes<8>;
 
 /*
   @notice Create a new escrow
@@ -21,37 +23,39 @@ export ledger verifiers: Map<Bytes32, Address>;
   @param verifier Verifier address
   @param amount Amount to lock
 */
-export circuit createEscrow(requestId: Bytes32, verifier: Address, amount: U64): [] {
-  // 0 = created
-  statuses[requestId] = 0;
-  amounts[requestId] = amount;
-  verifiers[requestId] = verifier;
+export circuit createEscrow(requestId: Bytes<32>, verifier: Bytes<32>, amount: Bytes<8>): [] {
+  lastRequest = disclose(requestId);
+  lastVerifier = disclose(verifier);
+  lastAmount = disclose(amount);
+  created.increment(1);
 }
 
 /*
   @notice Mark escrow as funds locked
   @param requestId Unique request identifier
 */
-export circuit markLocked(requestId: Bytes32): [] {
-  // 1 = locked
-  statuses[requestId] = 1;
+export circuit markLocked(requestId: Bytes<32>): [] {
+  if (disclose(lastRequest == requestId)) {
+    locked.increment(1);
+  }
 }
 
 /*
   @notice Release funds to verifier
   @param requestId Unique request identifier
 */
-export circuit release(requestId: Bytes32): [] {
-  // 2 = released
-  statuses[requestId] = 2;
+export circuit release(requestId: Bytes<32>, verifier: Bytes<32>): [] {
+  if (disclose(lastRequest == requestId) && disclose(lastVerifier == verifier)) {
+    released.increment(1);
+  }
 }
 
 /*
   @notice Refund funds to requester
   @param requestId Unique request identifier
 */
-export circuit refund(requestId: Bytes32): [] {
-  // 3 = refunded
-  statuses[requestId] = 3;
+export circuit refund(requestId: Bytes<32>): [] {
+  if (disclose(lastRequest == requestId)) {
+    refunded.increment(1);
+  }
 }
-

@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.cjs",
+  "sourceRoot": "../../../../contracts/",
+  "sources": ["counter.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;MAKA,AAAA,SAEC;;;;;;;;;;;;;;;;;;;;;;OAAA;;;GAEA;EATD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAGA;;;;;;;;;uDAA6B;;;;;;;GAM5B;EAJD,AAAA,YAEC;UADC,KAAK;IAAL;;;;;;;;;;2EAAA,KAAK;;;;sDAAA;;GACN;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAJD;qCAAA;;;;;;;;;;;wFAA6B;KAAA;;;;;;;;;;;;;;"
+}

@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  proof-server:
+    image: ghcr.io/midnightntwrk/proof-server:latest
+    restart: unless-stopped
+    environment:
+      - MN_NETWORK=testnet
+      - MN_LOG_LEVEL=info
+    ports:
+      - '3040:3040'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3040/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

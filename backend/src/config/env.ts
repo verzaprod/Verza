@@ -30,6 +30,7 @@ export const env = {
   VERIFIER_MARKETPLACE_ADDRESS: process.env.VERIFIER_MARKETPLACE_ADDRESS,
   MIDNIGHT_COMPACT_PATH: process.env.MIDNIGHT_COMPACT_PATH ?? '/home/ekko/.local/bin/compact',
   ENABLE_MIDNIGHT_WORKER: toBool(process.env.ENABLE_MIDNIGHT_WORKER ?? 'false'),
+  PROOF_SERVER_URL: process.env.PROOF_SERVER_URL ?? 'http://localhost:3040',
 };
 
 export function projectRoot(): string {

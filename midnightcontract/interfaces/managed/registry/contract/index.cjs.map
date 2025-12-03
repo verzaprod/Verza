@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.cjs",
+  "sourceRoot": "../../../../contracts/",
+  "sources": ["registry.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAMA;;;;;;;;;;MAkBA,AAAA,SAIC;;;;;cAJwB,KAAc;cAAE,OAAgB;;;;;;;;;;;;;;;;;;;;;;;;;yCAAhC,KAAc,+BAAE,OAAgB;;;;;;;;;2CAAhC,KAAc;2CAAE,OAAgB;;;OAIxD;MAcD,AAAA,SAKC;;;;;cALwB,KAAc;;;;;;;;;;;;;;;;;;yCAAd,KAAc;;;;;;;sEAAd,KAAc;;;OAKtC;;;;;;GACA;EA1CD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAMA;;;;;;;;;uDAAoC;IACpC;;;;;;;;;uDAAsC;IACtC;;;;;;;;;uDAA+B;;;;;;;GAkC9B;EAxBD,AAAA,YAIC,4BAJwB,KAAc,EAAE,OAAgB;IAEvD;;;;;;;yGAAsB,KAAG;;uDAAf;IACV;;;;;;;yGAAwB,OAAK;;uDAAjB;;GACb;EAcD,AAAA,YAKC,4BALwB,KAAc;8CACxB;;;;;;;;;;;iGAAU;sBAAI,KAAG;;sCACpB;;;;;;;;;;;yFAAY;;sCAEd;;;;;;;;;;;yFAAK;;GACd;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAnCD;qCAAA;;;;;;;;;;;wFAAoC;KAAA;IACpC;qCAAA;;;;;;;;;;;wFAAsC;KAAA;IACtC;qCAAA;;;;;;;;;;;wFAA+B;KAAA;;;;;;;;;;;;;;"
+}
