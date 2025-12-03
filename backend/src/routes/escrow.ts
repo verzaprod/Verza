@@ -11,7 +11,7 @@ const router = Router();
 
 const initiateSchema = z.object({
   verifier_id: z.string(),
-  currency: z.string().default('HBAR'),
+  currency: z.string().default('tDUST'),
   auto_release_hours: z.number().int().min(1).max(168).optional(),
   wallet_address: z.string().optional(), // for non-custodial; server may already have mapping
 });

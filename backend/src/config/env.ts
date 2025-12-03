@@ -13,9 +13,9 @@ function toBool(val: any, def = false): boolean {
 export const env = {
   NODE_ENV: process.env.NODE_ENV ?? 'development',
   PORT: Number(process.env.PORT ?? 3001),
-  RPC_URL: process.env.RPC_URL ?? 'https://testnet.hashio.io/api',
-  CHAIN_ID: Number(process.env.CHAIN_ID ?? 296),
-  NETWORK: process.env.NETWORK ?? 'hederaTestnet',
+  RPC_URL: process.env.RPC_URL ?? 'http://localhost',
+  CHAIN_ID: Number(process.env.CHAIN_ID ?? 0),
+  NETWORK: process.env.NETWORK ?? 'midnightTestnet',
   ESCROW_MODE: (process.env.ESCROW_MODE ?? 'noncustodial') as EscrowMode,
   AUTH_BYPASS: toBool(process.env.AUTH_BYPASS ?? 'true'),
   CLERK_JWKS_URL: process.env.CLERK_JWKS_URL ?? '',

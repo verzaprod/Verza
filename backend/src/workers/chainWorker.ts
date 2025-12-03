@@ -17,7 +17,7 @@ export async function startChainWorker() {
           id: requestId,
           requestId,
           amount,
-          currency: 'HBAR',
+          currency: 'tDUST',
           status: 'submitted',
           user: { connectOrCreate: { where: { clerkUserId: user.toLowerCase() }, create: { clerkUserId: user.toLowerCase(), walletAddress: user } } },
           verifier: { connectOrCreate: { where: { onchainAddress: verifier }, create: { name: 'Verifier', onchainAddress: verifier, currency: 'HBAR' } } },
@@ -79,7 +79,7 @@ export async function startChainWorker() {
         escrowId: requestId,
         did: hederaDID,
         holder,
-        network: 'hederaTestnet',
+        network: 'midnightTestnet',
         issuedAt: new Date().toISOString(),
       };
       const metadataURI = `data:application/json;base64,${Buffer.from(JSON.stringify(meta)).toString('base64')}`;
