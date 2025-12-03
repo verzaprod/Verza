@@ -20,7 +20,7 @@
   "license": "ISC",
   "type": "commonjs",
   "engines": {
-    "node": "22.16.0"
+    "node": ">=18 <20"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",
