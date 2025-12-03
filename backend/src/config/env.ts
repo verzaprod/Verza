@@ -31,6 +31,10 @@ export const env = {
   MIDNIGHT_COMPACT_PATH: process.env.MIDNIGHT_COMPACT_PATH ?? '/home/ekko/.local/bin/compact',
   ENABLE_MIDNIGHT_WORKER: toBool(process.env.ENABLE_MIDNIGHT_WORKER ?? 'false'),
   PROOF_SERVER_URL: process.env.PROOF_SERVER_URL ?? 'http://localhost:3040',
+  MIDNIGHT_INDEXER_URL: process.env.MIDNIGHT_INDEXER_URL ?? 'https://indexer.testnet.midnight.network/api/v1/graphql',
+  MIDNIGHT_INDEXER_WS_URL: process.env.MIDNIGHT_INDEXER_WS_URL ?? 'wss://indexer.testnet.midnight.network/api/v1/graphql',
+  MIDNIGHT_RPC_URL: process.env.MIDNIGHT_RPC_URL ?? 'https://rpc.testnet.midnight.network',
+  MIDNIGHT_NETWORK_ID: process.env.MIDNIGHT_NETWORK_ID ?? 'TestNet',
 };
 
 export function projectRoot(): string {
